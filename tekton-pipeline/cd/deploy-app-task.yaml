@@ -28,3 +28,14 @@ spec:
           echo Applying manifests in $(inputs.params.manifest_dir) directory
           oc apply -f $(inputs.params.manifest_dir)
           echo -----------------------------------
+    - name: clean-orphan-pods
+      image: quay.io/openshift/origin-cli:latest
+      command: ["/bin/bash", "-c"]
+      args:
+        - |-
+          echo cleaning terminated pods
+          oc delete pods -l app.kubernetes.io/managed-by=tekton-pipelines
+          echo -----------------------------------
+
+
+
