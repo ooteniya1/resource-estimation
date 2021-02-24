@@ -11,6 +11,8 @@ spec:
   resources:
     - name: appSource
       type: git
+    - name: manifestSource
+      type: git  
     - name: appImage
       type: image
   tasks:
@@ -27,17 +29,17 @@ spec:
         outputs:
           - name: builtImage
             resource: appImage
-    # - name: deploy-java-app
-    #   taskRef:
-    #     name: deploy-app
-    #   runAfter:
-    #     - build-java-app 
-    #   params:
-    #     - name: manifest_dir
-    #       value: $(params.manifest_dir)
-    #     - name: contextDir
-    #       value: $(params.contextDir)  
-    #   resources:
-    #     inputs:
-    #       - name: source
-    #         resource: manifestSource
+    - name: deploy-java-app
+      taskRef:
+        name: deploy-app
+      runAfter:
+        - build-java-app 
+      params:
+        - name: manifest_dir
+          value: $(params.manifest_dir)
+        - name: contextDir
+          value: $(params.contextDir)  
+      resources:
+        inputs:
+          - name: source
+            resource: manifestSource
