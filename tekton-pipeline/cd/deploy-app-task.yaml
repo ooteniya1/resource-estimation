@@ -17,6 +17,9 @@ spec:
     - name: contextDir
       description: the context dir within source
       default: .
+    - name: imageTag
+      description: image tag
+      default: v1.0.0
   steps:
     - name: ls-build-sources
       image: busybox
@@ -32,7 +35,7 @@ spec:
           echo -----------------------------------  
       env:
         - name: IMG
-          value: $(inputs.resources.image-out.url)
+          value: $(inputs.resources.image-out.url):$(inputs.params.imageTag)
     - name: apply
       image: quay.io/openshift/origin-cli:latest
       workingDir: /workspace/source/$(inputs.params.contextDir)

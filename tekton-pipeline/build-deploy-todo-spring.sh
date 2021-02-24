@@ -31,6 +31,7 @@ tkn pipeline start todo-build-deploy-pipeline \
  --param="manifest_dir=k8s" \
  --param="dockerfile=Dockerfile" \
  --param="profile=spring" \
+ --param="imageTag="$1  \
  --serviceaccount='pipeline'\
  --showlog
 

@@ -9,9 +9,11 @@ spec:
     - name: manifest_dir
       description: the directory for the application manifest
     - name: profile
-      description: the directory for the application manifest
+      description: maven profile
     - name: dockerfile
-      description: the directory for the application manifest
+      description: the dockerfile for building application
+    - name: imageTag
+      description: image tag
   resources:
     - name: appSource
       type: git
@@ -28,6 +30,8 @@ spec:
           value: $(params.dockerfile)
         - name: buildProfile
           value: $(params.profile)  
+        - name: imageTag
+          value: $(params.imageTag)  
       resources:
         inputs:
           - name: source
@@ -45,6 +49,8 @@ spec:
           value: $(params.manifest_dir)
         - name: contextDir
           value: $(params.contextDir)  
+        - name: imageTag
+          value: $(params.imageTag)    
       resources:
         inputs:
           - name: source

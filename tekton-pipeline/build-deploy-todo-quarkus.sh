@@ -31,9 +31,10 @@ tkn pipeline start todo-build-deploy-pipeline \
  --param="manifest_dir=k8s" \
  --param="dockerfile=Dockerfile.jvm" \
  --param="profile=quarkus" \
+ --param="imageTag="$1  \
  --serviceaccount='pipeline'\
  --showlog
 
 
  # clean up all tekton pods
- #oc delete pods -l app.kubernetes.io/managed-by=tekton-pipelines
+ oc delete pods -l app.kubernetes.io/managed-by=tekton-pipelines

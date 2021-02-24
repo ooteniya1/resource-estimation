@@ -45,13 +45,16 @@ spec:
       default: https://repo.maven.apache.org/maven2/
     - name: destinationImage
       description: the fully qualified image name
-      default: "$(outputs.resources.builtImage.url)"
+      default: $(outputs.resources.builtImage.url):$(inputs.params.imageTag)
     - name: dockerFile
       description: the docker file to used for building the application
       default: Dockerfile.jvm
     - name: buildProfile
       description: the docker file to used for building the application
       default: quarkus
+    - name: imageTag
+      description: image tag
+      default: v1.0.0
     - name: tlsVerify
       description: tls verify
       type: string
@@ -88,7 +91,7 @@ spec:
         - "-f"
         - "$(inputs.params.dockerFile)"
         - "-t"
-        - "$(inputs.params.destinationImage)"
+        - "$(outputs.resources.builtImage.url):$(inputs.params.imageTag)"
         - "."
       securityContext:
         privileged: true
@@ -104,8 +107,8 @@ spec:
       args:
         - "push"
         - "--tls-verify=$(inputs.params.tlsVerify)"
-        - $(inputs.params.destinationImage)
-        - "docker://$(inputs.params.destinationImage)"
+        - $(outputs.resources.builtImage.url):$(inputs.params.imageTag)
+        - "docker://$(outputs.resources.builtImage.url):$(inputs.params.imageTag)"
       securityContext:
         runAsUser: 0
         privileged: true
