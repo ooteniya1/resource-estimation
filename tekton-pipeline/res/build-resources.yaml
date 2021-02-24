@@ -13,7 +13,7 @@ spec:
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
-  name: todo-app-image
+  name: todo-quarkus-image
 spec:
   type: image
   params:

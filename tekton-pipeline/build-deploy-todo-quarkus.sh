@@ -26,7 +26,7 @@ oc apply -f todo-pipeline.yaml
 
 tkn pipeline start todo-build-deploy-pipeline \
  --resource="appSource=todo-app-source" \
- --resource="appImage=todo-spring-image" \
+ --resource="appImage=todo-quarkus-image" \
  --param="contextDir=todo-spring-quarkus" \
  --param="manifest_dir=k8s" \
  --param="dockerfile=Dockerfile.jvm" \
@@ -36,4 +36,4 @@ tkn pipeline start todo-build-deploy-pipeline \
 
 
  # clean up all tekton pods
- oc delete pods -l app.kubernetes.io/managed-by=tekton-pipelines
+ #oc delete pods -l app.kubernetes.io/managed-by=tekton-pipelines
