@@ -3,19 +3,19 @@ kind: Task
 metadata:
   name: deploy-app
 spec:
-  # resources:
-  #   inputs:
-  #     - {type: git, name: source}
+  resources:
+    inputs:
+      - name: source
+        type: git
   params:
     - name: manifest_dir
       description: The directory in source that contains yaml manifests
       type: string
       default: "k8s"
   steps:
-    steps:
     - name: ls-build-sources
       image: busybox
-      command: ["ls", "-ltr", "/workspace/source/"]
+      command: ["ls", "-ltr", "/workspace/source/$(inputs.params.manifest_dir)"]
     - name: apply
       image: quay.io/openshift/origin-cli:latest
       workingDir: /workspace/source

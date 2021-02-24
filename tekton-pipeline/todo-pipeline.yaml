@@ -35,7 +35,7 @@ spec:
       params:
         - name: manifest_dir
           value: $(params.manifest_dir)
-      # resources:
-      #   inputs:
-      #     - name: source
-      #       resource: appSource
+      resources:
+        inputs:
+          - name: source
+            resource: appSource
