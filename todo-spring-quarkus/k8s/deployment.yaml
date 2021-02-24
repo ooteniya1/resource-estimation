@@ -17,14 +17,14 @@ spec:
       containers:
         - image: PIPELINE_REPLACE:latest
           imagePullPolicy: Always
-          name: to-do
+          name: todo-spring-quarkus
           resources:
+            limits:
+              memory: "128Mi"
+              cpu: "60m"  
             requests:
               memory: "64Mi"
-              cpu: "250m"
-            limits:
-              memory: "512Mi"
-              cpu: "300m"  
+              cpu: "30m"
           ports:
             - containerPort: 8080
               protocol: TCP
