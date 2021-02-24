@@ -12,6 +12,10 @@ spec:
       type: string
       default: "k8s"
   steps:
+    steps:
+    - name: ls-build-sources
+      image: busybox
+      command: ["ls", "-ltr", "/workspace/source/"]
     - name: apply
       image: quay.io/openshift/origin-cli:latest
       workingDir: /workspace/source

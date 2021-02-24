@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - image: quay.io/ooteniya/tekton-tutorial-greeter:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           name: to-do
           resources:
             requests:
