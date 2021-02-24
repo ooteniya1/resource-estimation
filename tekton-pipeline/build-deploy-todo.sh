@@ -7,7 +7,7 @@ oc apply -f tekton-pipeline/res/*.yaml
 oc apply -f tekton-pipeline/ci/*.yaml
 oc apply -f tekton-pipeline/todo-pipeline.yaml
 
-tkn pipeline start todo-deploy-pipeline \
+tkn pipeline start todo-pipeline \
  --resource="appSource=todo-app-source" \
  --resource="appImage=todo-app-image" \
  --resource="manifestSource=todo-app-manifest" \
