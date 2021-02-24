@@ -7,6 +7,8 @@ spec:
     inputs:
       - name: source
         type: git
+      - name: image-out
+        type: image  
   params:
     - name: manifest_dir
       description: The directory in source that contains yaml manifests
@@ -19,6 +21,18 @@ spec:
     - name: ls-build-sources
       image: busybox
       command: ["ls", "-ltr", "/workspace/source/$(inputs.params.contextDir)"]
+    - name: update-image-in-yaml
+      image: quay.io/openshift/origin-cli:latest
+      workingDir: /workspace/source/$(inputs.params.contextDir)
+      command: ["/bin/bash", "-c"]
+      args:
+        - |-
+          echo cleaning terminated pods
+          find ./$(inputs.params.manifest_dir) -type f -exec sed -i -e s!"image: PIPELINE_REPLACE:latest"!"image: ${IMG}"!g {} \;
+          echo -----------------------------------  
+      env:
+        - name: IMG
+          value: $(inputs.resources.image-out.url)
     - name: apply
       image: quay.io/openshift/origin-cli:latest
       workingDir: /workspace/source/$(inputs.params.contextDir)
@@ -28,14 +42,14 @@ spec:
           echo Applying manifests in $(inputs.params.manifest_dir) directory
           oc apply -f $(inputs.params.manifest_dir)
           echo -----------------------------------
-    - name: clean-orphan-pods
-      image: quay.io/openshift/origin-cli:latest
-      command: ["/bin/bash", "-c"]
-      args:
-        - |-
-          echo cleaning terminated pods
-          oc delete pods -l app.kubernetes.io/managed-by=tekton-pipelines
-          echo -----------------------------------
+    # - name: clean-orphan-pods
+    #   image: quay.io/openshift/origin-cli:latest
+    #   command: ["/bin/bash", "-c"]
+    #   args:
+    #     - |-
+    #       echo cleaning terminated pods
+    #       oc delete pods -l app.kubernetes.io/managed-by=tekton-pipelines
+    #       echo -----------------------------------
 
 
 

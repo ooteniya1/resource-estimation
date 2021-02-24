@@ -49,6 +49,9 @@ spec:
     - name: dockerFile
       description: the docker file to used for building the application
       default: Dockerfile.jvm
+    - name: buildProfile
+      description: the docker file to used for building the application
+      default: quarkus
     - name: tlsVerify
       description: tls verify
       type: string
@@ -70,7 +73,7 @@ spec:
         - -DskipTests
         - clean
         - package
-        - -Pquarkus
+        - -P$(inputs.params.buildProfile)
       env:
         - name: user.home
           value: /home/tekton

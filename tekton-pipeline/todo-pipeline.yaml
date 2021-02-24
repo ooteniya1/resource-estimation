@@ -8,6 +8,10 @@ spec:
       description: the context directory from where to build the application
     - name: manifest_dir
       description: the directory for the application manifest
+    - name: profile
+      description: the directory for the application manifest
+    - name: dockerfile
+      description: the directory for the application manifest
   resources:
     - name: appSource
       type: git
@@ -20,6 +24,10 @@ spec:
       params:
         - name: contextDir
           value: $(params.contextDir)
+        - name: dockerFile
+          value: $(params.dockerfile)
+        - name: buildProfile
+          value: $(params.profile)  
       resources:
         inputs:
           - name: source
@@ -41,3 +49,5 @@ spec:
         inputs:
           - name: source
             resource: appSource
+          - name: image-out
+            resource: appImage
