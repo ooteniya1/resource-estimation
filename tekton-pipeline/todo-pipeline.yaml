@@ -35,9 +35,9 @@ spec:
       runAfter:
         - build-java-app 
       params:
-        - name: manifest_dir
+        - name: "manifest_dir"
           value: $(params.manifest_dir)
-        - name: contextDir
+        - name: "contextDir"
           value: $(params.contextDir)  
       resources:
         inputs:
