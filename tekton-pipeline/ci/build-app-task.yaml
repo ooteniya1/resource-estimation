@@ -48,7 +48,7 @@ spec:
       default: "$(outputs.resources.builtImage.url)"
     - name: dockerFile
       description: the docker file to used for building the application
-      default: Dockerfile.native
+      default: Dockerfile.jvm
     - name: tlsVerify
       description: tls verify
       type: string
@@ -70,8 +70,7 @@ spec:
         - -DskipTests
         - clean
         - package
-        - -Pquarkus-native
-        - -DplatformArtifactId=quarkus-bom
+        - -Pquarkus
       env:
         - name: user.home
           value: /home/tekton
