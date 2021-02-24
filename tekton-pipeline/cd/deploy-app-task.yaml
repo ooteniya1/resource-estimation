@@ -13,6 +13,7 @@ spec:
       default: "k8s"
     - name: contextDir
       description: The directory in source that contains yaml manifests
+      default: "todo-spring-quarkus"
   steps:
     - name: apply
       image: quay.io/openshift/origin-cli:latest
