@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - image: quay.io/ooteniya/todo-res:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           name: to-do
           resources:
             requests:
