@@ -2,13 +2,13 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   labels:
-    app: to-do
-  name: to-do
+    app: todo-spring-quarkus
+  name: todo-spring-quarkus
 spec:
   port:
     targetPort: 8080-tcp
   to:
     kind: Service
-    name: to-do
+    name: todo-spring-quarkus
     weight: 100
 

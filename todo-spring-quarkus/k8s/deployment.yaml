@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: to-do
-  name: to-do
+    app: todo-spring-quarkus
+  name: todo-spring-quarkus
 spec:
   replicas: 2
   selector:
