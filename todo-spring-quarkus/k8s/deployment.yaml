@@ -5,7 +5,7 @@ metadata:
     app: todo-spring-quarkus
   name: todo-spring-quarkus
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: to-do
