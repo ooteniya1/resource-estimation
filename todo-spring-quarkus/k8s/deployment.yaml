@@ -15,7 +15,7 @@ spec:
         app: to-do
     spec:
       containers:
-        - image: quay.io/ooteniya/tekton-tutorial-greeter:latest
+        - image: quay.io/ooteniya/todo-res:latest
           imagePullPolicy: IfNotPresent
           name: to-do
           resources:
