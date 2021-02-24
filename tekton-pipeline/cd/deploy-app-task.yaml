@@ -3,14 +3,18 @@ kind: Task
 metadata:
   name: deploy-app
 spec:
-  # resources:
-  #   inputs:
-  #     - {type: git, name: source}
+  resources:
+    inputs:
+      - name: manifest-source
+        type: git
   params:
     - name: manifest_dir
       description: The directory in source that contains yaml manifests
       type: string
       default: "k8s"
+    - name: contextDir
+      description: The directory in source that contains yaml manifests
+      type: string
   steps:
     - name: apply
       image: quay.io/openshift/origin-cli:latest
@@ -18,6 +22,6 @@ spec:
       command: ["/bin/bash", "-c"]
       args:
         - |-
-          echo Applying manifests in $(inputs.params.manifest_dir) directory
-          oc apply -f $(inputs.params.manifest_dir)
+          echo Applying manifests in $(inputs.params.contextDir)/$(inputs.params.manifest_dir) directory
+          oc apply -f $(inputs.params.contextDir)/$(inputs.params.manifest_dir)
           echo -----------------------------------

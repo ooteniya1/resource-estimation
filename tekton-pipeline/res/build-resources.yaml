@@ -6,7 +6,7 @@ spec:
   type: git
   params:
     - name: url
-      value: https://github.com/ooteniya1/tekton-tutorial-greeter
+      value: https://github.com/ooteniya1/resource-estimation.git
     - name: revision
       value: master
 ---
@@ -31,7 +31,7 @@ spec:
   type: git
   params:
     - name: url
-      value: https://github.com/ooteniya1/tekton-tutorial-greeter
+      value: https://github.com/ooteniya1/resource-estimation.git
     - name: revision
-      value: k8s
+      value: master
 
