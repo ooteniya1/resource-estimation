@@ -1,0 +1,41 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: todo-deploy-pipeline
+spec:
+  params:
+    - name: contextDir
+      description: the context directory from where to build the application
+    - name: manifest_dir
+      description: the directory for the application manifest
+  resources:
+    - name: appSource
+      type: git
+    - name: appImage
+      type: image
+  tasks:
+    - name: build-java-app
+      taskRef:
+        name: build-app
+      params:
+        - name: contextDir
+          value: $(params.contextDir)
+      resources:
+        inputs:
+          - name: source
+            resource: appSource
+        outputs:
+          - name: builtImage
+            resource: appImage
+    - name: deploy-java-app
+      taskRef:
+        name: deploy-app
+      runAfter:
+        - build-java-app 
+      params:
+        - name: manifest_dir
+          value: $(params.manifest_dir)
+      # resources:
+      #   inputs:
+      #     - name: source
+      #       resource: appSource

@@ -1,0 +1,37 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: todo-app-source
+spec:
+  type: git
+  params:
+    - name: url
+      value: https://github.com/ooteniya1/tekton-tutorial-greeter
+    - name: revision
+      value: master
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: todo-app-image
+spec:
+  type: image
+  params:
+    - name: url
+      # use external registry
+      value: quay.io/ooteniya/todo
+      # if you are on OpenShift uncomment the line below
+      #value: "image-registry.openshift-image-registry.svc:5000/resource-estimation/todo"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: todo-app-manifest
+spec:
+  type: git
+  params:
+    - name: url
+      value: https://github.com/ooteniya1/tekton-tutorial-greeter
+    - name: revision
+      value: k8s
+
