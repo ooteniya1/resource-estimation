@@ -7,7 +7,7 @@ oc apply -f res/*.yaml
 oc apply -f ci/*.yaml
 oc apply -f todo-pipeline.yaml
 
-tkn pipeline start todo-deploy-pipeline \
+tkn pipeline start todo-build-deploy-pipeline \
  --resource="appSource=todo-app-source" \
  --resource="appImage=todo-app-image" \
  --param="contextDir=todo-spring-quarkus" \
