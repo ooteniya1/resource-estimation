@@ -13,7 +13,6 @@ spec:
       default: "k8s"
     - name: contextDir
       description: The directory in source that contains yaml manifests
-      default: .
   steps:
     - name: apply
       image: quay.io/openshift/origin-cli:latest
