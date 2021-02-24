@@ -11,8 +11,8 @@ tkn pipeline start todo-deploy-pipeline \
  --resource="appSource=todo-app-source" \
  --resource="appImage=todo-app-image" \
  --resource="manifestSource=todo-app-manifest" \
- --param contextDir="todo-spring-quarkus" \
- --param manifest_dir="k8s" \
+ --param="contextDir=todo-spring-quarkus" \
+ --param="manifest_dir=k8s" \
  --serviceaccount='pipeline'\
  --showlog
 
