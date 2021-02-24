@@ -8,10 +8,10 @@ spec:
       - name: source
         type: git
   params:
-    - name: manifest_path
+    - name: manifest_dir
       description: The directory in source that contains yaml manifests
       default: "k8s"
-    - name: context_dir
+    - name: contextDir
       description: The directory in source that contains yaml manifests
       default: .
   steps:
