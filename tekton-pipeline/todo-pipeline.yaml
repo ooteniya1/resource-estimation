@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: todo-pipeline
+  name: todo-deploy-pipeline
 spec:
   params:
     - name: contextDir
@@ -11,8 +11,6 @@ spec:
   resources:
     - name: appSource
       type: git
-    - name: manifestSource
-      type: git  
     - name: appImage
       type: image
   tasks:
@@ -35,11 +33,9 @@ spec:
       runAfter:
         - build-java-app 
       params:
-        # - name: contextDir
-        #   value: $(params.contextDir) 
         - name: manifest_dir
           value: $(params.manifest_dir)
-      resources:
-        inputs:
-          - name: source
-            resource: manifestSource
+      # resources:
+      #   inputs:
+      #     - name: source
+      #       resource: appSource
