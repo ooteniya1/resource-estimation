@@ -9,7 +9,7 @@ oc apply -f tekton-pipeline/todo-pipeline.yaml
 
 tkn pipeline start todo-deploy-pipeline \
  --resource="appSource=todo-app-source" \
- --resource="manifest-source=todo-app-manifest" \
+ --resource="manifestSource=todo-app-manifest" \
  --resource="appImage=todo-app-image" \
  --param="contextDir=todo-spring-quarkus" \
  --param="manifest_dir=k8s" \

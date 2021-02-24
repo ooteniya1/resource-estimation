@@ -35,7 +35,9 @@ spec:
       params:
         - name: manifest_dir
           value: $(params.manifest_dir)
-      # resources:
-      #   inputs:
-      #     - name: source
-      #       resource: appSource
+        - name: contextDir
+          value: $(params.contextDir)  
+      resources:
+        inputs:
+          - name: source
+            resource: manifestSource
