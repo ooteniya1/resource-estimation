@@ -12,13 +12,16 @@ spec:
       description: The directory in source that contains yaml manifests
       type: string
       default: "k8s"
+    - name: contextDir
+      description: the context dir within source
+      default: .
   steps:
     - name: ls-build-sources
       image: busybox
-      command: ["ls", "-ltr", "/workspace/source/$(inputs.params.manifest_dir)"]
+      command: ["ls", "-ltr", "/workspace/source/$(inputs.params.contextDir)"]
     - name: apply
       image: quay.io/openshift/origin-cli:latest
-      workingDir: /workspace/source
+      workingDir: /workspace/source/$(inputs.params.contextDir)
       command: ["/bin/bash", "-c"]
       args:
         - |-

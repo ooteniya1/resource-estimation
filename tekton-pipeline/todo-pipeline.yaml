@@ -35,6 +35,8 @@ spec:
       params:
         - name: manifest_dir
           value: $(params.manifest_dir)
+        - name: contextDir
+          value: $(params.contextDir)  
       resources:
         inputs:
           - name: source
