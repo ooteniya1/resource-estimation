@@ -23,7 +23,7 @@
       </dependency>
     </dependencies> 
   </dependencyManagement> -->
-  <!-- <dependencies>
+  <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-autoconfigure</artifactId>
@@ -34,7 +34,7 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-openshift</artifactId>
     </dependency>
-  </dependencies> -->
+  </dependencies>
   <profiles>
     <profile>
       <id>spring</id>
