@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: todo-spring
-  name: todo-spring
+    app: todo-quarkus
+  name: todo-quarkus
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: todo-spring
+      app: todo-quarkus
   template:
     metadata:
       labels:
-        app: todo-spring
+        app: todo-quarkus
     spec:
       containers:
         - image: PIPELINE_REPLACE:latest
           imagePullPolicy: Always
-          name: todo-spring
+          name: todo-quarkus
           resources:
             limits:
               memory: "512Mi"
