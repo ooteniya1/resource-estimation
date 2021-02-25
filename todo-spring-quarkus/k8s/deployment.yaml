@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: to-do
+      app: todo-spring-quarkus
   template:
     metadata:
       labels:
-        app: to-do
+        app: todo-spring-quarkus
     spec:
       containers:
         - image: PIPELINE_REPLACE:latest
