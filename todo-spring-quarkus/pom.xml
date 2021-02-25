@@ -30,10 +30,10 @@
       <version>${spring.version}</version>
       <optional>true</optional>
     </dependency>
-    <dependency>
+    <!-- <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-openshift</artifactId>
-    </dependency>
+    </dependency> -->
   </dependencies>
   <profiles>
     <profile>
