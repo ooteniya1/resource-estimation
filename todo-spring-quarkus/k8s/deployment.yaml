@@ -21,7 +21,7 @@ spec:
           resources:
             limits:
               memory: "512Mi"
-              cpu: "200m"  
+              cpu: "400m"  
             requests:
               memory: "128Mi"
               cpu: "100m"
@@ -34,7 +34,7 @@ spec:
               port: 8080
               scheme: HTTP
             initialDelaySeconds: 2
-            timeoutSeconds: 1
+            timeoutSeconds: 50
             periodSeconds: 10
             successThreshold: 1
             failureThreshold: 3
@@ -43,7 +43,7 @@ spec:
               path: /actuator/health
               port: 8080
               scheme: HTTP
-            timeoutSeconds: 1
+            timeoutSeconds: 50
             periodSeconds: 10
             successThreshold: 1
             failureThreshold: 3 
