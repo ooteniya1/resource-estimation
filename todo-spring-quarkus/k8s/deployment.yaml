@@ -15,16 +15,16 @@ spec:
         app: todo-quarkus
     spec:
       containers:
-        - image: PIPELINE_REPLACE:latest
+        - image: quay.io/ooteniya/todo-quarkus:v1.0.8
           imagePullPolicy: Always
           name: todo-quarkus
           resources:
             limits:
               memory: "512Mi"
-              cpu: "400m"  
+              cpu: "60m"  
             requests:
               memory: "128Mi"
-              cpu: "100m"
+              cpu: "30m"
           ports:
             - containerPort: 8080
               protocol: TCP

@@ -12,3 +12,6 @@ Objective of the test
 6. Setup thread group to simulate users
 7. Configure your graphs
 8. Load test the applications
+
+Steps:
+What is the minimum memory requried to start the application?
