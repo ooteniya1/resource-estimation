@@ -2,29 +2,29 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: todo-quarkus
-  name: todo-quarkus
+    app: todo-spring
+  name: todo-spring
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: todo-quarkus
+      app: todo-spring
   template:
     metadata:
       labels:
-        app: todo-quarkus
+        app: todo-spring
     spec:
       containers:
-        - image: quay.io/ooteniya/todo-quarkus:v1.0.8
+        - image: PIPELINE_REPLACE:latest
           imagePullPolicy: Always
-          name: todo-quarkus
+          name: todo-spring
           resources:
             limits:
               memory: "512Mi"
-              cpu: "900m"  
+              cpu: "60m"  
             requests:
               memory: "128Mi"
-              cpu: "400m"
+              cpu: "30m"
           ports:
             - containerPort: 8080
               protocol: TCP

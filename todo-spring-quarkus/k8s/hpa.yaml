@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: todo-quarkus-hpa
+  name: todo-spring-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: todo-quarkus
+    name: todo-spring
   minReplicas: 1
   maxReplicas: 3
   metrics:

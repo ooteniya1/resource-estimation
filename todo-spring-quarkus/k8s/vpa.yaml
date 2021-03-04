@@ -1,11 +1,11 @@
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
-  name: vpa-recommender
+  name: todo-recommender
 spec:
   targetRef:
     apiVersion: "apps/v1"
     kind:       Deployment 
-    name:       todo-quarkus 
+    name:       todo-spring 
   updatePolicy:
     updateMode: "Off" 

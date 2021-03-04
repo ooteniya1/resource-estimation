@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: todo-quarkus
-  name: todo-quarkus
+    app: todo-spring
+  name: todo-spring
 spec:
   type: ClusterIP
   ports:
@@ -12,6 +12,6 @@ spec:
       targetPort: 8080
       protocol: TCP
   selector:
-    app: todo-quarkus
+    app: todo-spring
 
 
