@@ -15,3 +15,5 @@ Objective of the test
 
 Steps:
 What is the minimum memory requried to start the application?
+What does a single application with maximum load requires?
+At what point do you need to scale your replicas? What is the resource requirement?

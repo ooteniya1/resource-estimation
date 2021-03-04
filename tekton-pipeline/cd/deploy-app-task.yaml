@@ -43,7 +43,9 @@ spec:
       args:
         - |-
           echo Applying manifests in $(inputs.params.manifest_dir) directory
-          oc apply -f $(inputs.params.manifest_dir)
+          oc apply -f $(inputs.params.manifest_dir)/deployment.yaml
+          oc apply -f $(inputs.params.manifest_dir)/service.yaml
+          oc apply -f $(inputs.params.manifest_dir)/route.yaml
           echo -----------------------------------
     # - name: clean-orphan-pods
     #   image: quay.io/openshift/origin-cli:latest
