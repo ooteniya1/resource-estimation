@@ -1,7 +1,7 @@
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
-  name: todo-recommender
+  name: todo-recommender-vpa
 spec:
   targetRef:
     apiVersion: "apps/v1"

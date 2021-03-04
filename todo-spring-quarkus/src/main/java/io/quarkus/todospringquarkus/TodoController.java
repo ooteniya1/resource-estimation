@@ -24,24 +24,27 @@ public class TodoController {
 
     @GetMapping
     public List<TodoEntity> findAll() {
-        System.out.println("Printing mesage from: ");
+        System.out.println("Printing mesage from: GET ");
         return todoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
  
     @GetMapping("/{id}")
     public TodoEntity findById(@PathVariable("id") Long id) {
+        System.out.println("Printing mesage from: GET By ID ");
         return todoRepository.findById(id).get();
     }
 
     @PutMapping
     @Transactional
     public void update(@RequestBody TodoEntity resource) {
+        System.out.println("Printing mesage from: PUT ");
         todoRepository.save(resource);
     }
  
     @PostMapping
     @Transactional
     public TodoEntity create(@RequestBody TodoEntity resource) {
+        System.out.println("Printing mesage from: POST ");
         return todoRepository.save(resource);
     }
  
