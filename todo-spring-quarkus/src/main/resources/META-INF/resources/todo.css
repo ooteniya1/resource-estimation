@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 
 :root {
-    --main-accent-color: Blue;
+    --main-accent-color: blue;
     --todo-text-color: black;
 }
 
 body {
     background: white;
     font-family: 'Raleway', sans-serif;
-    color: black;
+    color: blue;
 }
 
 body > h1 {
@@ -16,10 +16,8 @@ body > h1 {
     margin: 4rem;
     font-size: 2.5rem;
     font-weight: bold;
-    color: blue;
+    color: var(--main-accent-color);
 }
-
-
 
 todo-component {
     text-align: center;
