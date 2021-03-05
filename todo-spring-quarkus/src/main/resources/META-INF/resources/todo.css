@@ -2,13 +2,13 @@
 
 :root {
     --main-accent-color: Blue;
-    --todo-text-color: white;
+    --todo-text-color: black;
 }
 
 body {
     background: white;
     font-family: 'Raleway', sans-serif;
-    color: white;
+    color: var(--main-accent-color);
 }
 
 body > h1 {
