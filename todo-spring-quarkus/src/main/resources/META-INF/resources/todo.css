@@ -16,7 +16,7 @@ body > h1 {
     margin: 4rem;
     font-size: 2.5rem;
     font-weight: bold;
-    color: var(--todo-text-color);
+    color: black;
 }
 
 todo-component {
