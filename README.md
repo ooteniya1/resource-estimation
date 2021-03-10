@@ -17,3 +17,11 @@ Steps:
 What is the minimum memory requried to start the application?
 What does a single application with maximum load requires?
 At what point do you need to scale your replicas? What is the resource requirement?
+
+
+Run JMeter from Command line
+# Normal load CLI command
+./apache-jmeter-5.4.1/bin/jmeter.sh -n -t Todo-ThreadGroup_OCP_NORMAL.jmx -l result.txt -e -o ./report
+
+# Peak load CLI command
+./apache-jmeter-5.4.1/bin/jmeter.sh -n -t Todo-ThreadGroup_OCP_PEAK.jmx -l result.txt -e -o ./report

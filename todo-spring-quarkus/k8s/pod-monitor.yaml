@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  labels:
+    k8s-app: todo-spring-podmonitor
+  name: todo-spring-podmonitor
+spec:
+  podMetricsEndpoints:
+  - interval: 5s
+    port: 8080-tcp
+    scheme: http
+  selector:
+    matchLabels:
+      app: todo-spring
