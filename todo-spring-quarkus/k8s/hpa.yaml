@@ -7,12 +7,12 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: todo-spring
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 3
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
-          averageUtilization: 20
+          averageUtilization: 60
           type: Utilization
