@@ -16,15 +16,28 @@ In this workshop, we'll be walking you through the process of properly estimatin
 ![](images/estimate.png)
 *Figure 1*
 
-## Concepts
-Before we dive into codes, let's clear up some concepts.
+## Definitions
+Before we dive into codes, let's define some concepts.
 
-### Definitions
-Definitions
-#### Compute Resource Types
-X
+### Compute Resource Types
+Compute resources are measurable quantities that can be requested, allocated, and consumed. These are diffirent from API resources such as Pods, Services, Routes etc that are accessible and modified through the Kubernetes/Openshift API server. 
+
+There are two types of Compute resources:
+1. **Compressible resources**: these are resources that are technically available in limited quality in a given time slice, however, there is an unlimited amount of them if you can wait. Examples of this type of resource are CPU, block i/o, and network i/o.
+
+With respect to application resource estimation, we will focus on CPU. Once an application hits the CPU limits allocated, the application start throttling, which adversely leads to performance degradation. Openshift/Kubernetes will not terminate those applications.
+
+2. **Incompressible resources**: these are resources that aare technically limited, once you run out of them, you application will not get any more. Examples of such is are memory and disk space.
+
+Unlike CPU, memory can't be made to run slower. Instead, Openshif/Kubernetes automatically restarts or terminates the applications once it reaches the memory limit.
+
+An Architect therefore needs to put these behaviours into consideration during application resource planning to avoid unpleasant behaviour in production.
+
 #### Resource Units
-X
+1. **CPU:** - CPU resources are measured in millicore. If a node has 2 cores, the node’s CPU capacity would be represented as 2000m. The unit suffix m stands for “thousandth of a core.”
+
+2. **Memory**: Memory on the other hand is measured in bytes. However, you can express memory with various suffixes (E,P,T,G,M,K and Ei, Pi, Ti, Gi, Mi, Ki) to express mebibytes (Mi) to petabytes (Pi). Most simply use Mi.
+
 #### Resource Quotas
 X
 #### Limit Ranges
