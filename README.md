@@ -29,16 +29,16 @@ There are two types of Compute resources:
 
 An Architect therefore needs to put these behaviours into consideration during application resource planning to avoid unpleasant behaviour in production.
 
-#### Resource Units
+### Resource Units
 1. **CPU:** - CPU resources are measured in millicore. If a node has 2 cores, the node’s CPU capacity would be represented as 2000m. The unit suffix m stands for “thousandth of a core.”
 
 2. **Memory**: Memory on the other hand is measured in bytes. However, you can express memory with various suffixes (E,P,T,G,M,K and Ei, Pi, Ti, Gi, Mi, Ki) to express mebibytes (Mi) to petabytes (Pi). Most simply use Mi.
 
-#### Resource Quotas
+### Resource Quotas
 X
-#### Limit Ranges
+### Limit Ranges
 X
-#### Quality of Service (QoS)
+### Quality of Service (QoS)
 X
 ### Application Estimation: Well-estimation, Over-estimation and Under-estimation
 X
