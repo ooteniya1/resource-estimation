@@ -12,7 +12,7 @@ Estimating the resources an application need is very challenging to be honest be
 
 In this workshop, we'll be walking you through the process of properly estimating your application resources, in term of memory and CPU. At the end, you should be able to come up with figure 1 below, which will be used to create the resource quota for the project.
 
-![Alt text](image/estimate.png?raw=true "Figure 1")
+![Alt text](./image/estimate.png?raw=true "Figure 1")
 
 Before we dive into codes, let's clear up some concepts.
 
