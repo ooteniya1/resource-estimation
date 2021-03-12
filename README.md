@@ -15,9 +15,32 @@ In this workshop, we'll be walking you through the process of properly estimatin
 ![](images/estimate.png)
 *Figure 1*
 
+## Concepts
 Before we dive into codes, let's clear up some concepts.
 
+### Definitions
+Definitions
+#### Compute Resource Types
+X
+#### Resource Units
+X
+#### Resource Quotas
+X
+#### Limit Ranges
+X
+#### Quality of Service (QoS)
+X
+### Application Estimation: Well-estimation, Over-estimation and Under-estimation
+X
 
+### Resource Estimation Approach
+
+#### Performance Tuning Good Practice
+#### Load Testing
+
+### Scaling
+
+## Good Practice
 
 ## Prerequisites
 1. Access to Openshiuft Cluster
