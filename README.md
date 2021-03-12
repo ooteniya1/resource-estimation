@@ -10,7 +10,7 @@ The benefits of properly estimating the resources an application needs before ge
 
 Estimating the resources an application need is very challenging to be honest because it involves some trial and error. Identifying accurately how many resources a container for instance will require, and how many replicas a service will need at a given time to meet service-level agreements takes time and effort, hence the process is more of an art than science. You’ll first want to identify what a good starting point is for the application; aiming for a good balance of CPU and memory. After you’ve decided on a sensible resource size for the application you will also need to setup a process where you can constantly monitor the application's resource actual usage over a period of time. 
 
-In this workshop, we'll be walking you through the process of properly estimating your application resources, in term of memory and CPU. At the end, you should be able to come up with figure 1 below, which will be used to create the resource quota for the project.
+In this workshop, we'll be walking you through the process of properly estimating your application resources, in terms of memory and CPU. At the end, you should be able to come up with figure 1, which can be used to create the resource quota for the namespace.
 
 ![](images/estimate.png)
 *Figure 1*
