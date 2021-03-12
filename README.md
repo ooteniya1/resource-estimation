@@ -1,17 +1,16 @@
 # Cloud-Native Application Resource Estimation
 As a developer or an Architect, one of the very first decisions you need to make when deploying an application to the cloud (whether public, private or on-prem) is to determine how much resources the application needs. Teams get their applications to production before they realize the resources are either under or over estimated which often leads to fire fighting in Production environment. Most the operational challenges faced in production are as a result of the fact that this process is often overlooked. 
 
-The benefits of Application resource estimation before getting to production among others are:
+The benefits of properly estimating the resources an application needs before getting to production among others are:
 
-1. It helps in understanding  application requirements in terms of how much memory and CPU the application needs. Is the application more memory intensive or CPU intesive?
-2. Proper resource estimation simplifies carving od resources on Openshift which in turn simplifies the creation of qiotas and limits
-3. It allows capacity planning from oeprations perpective
-4. Cost savings.
+1. It helps in understanding application requirements in terms of how much memory and CPU the application needs. 2. It help to understand wehther an application is more memory intensive or CPU intesive.
+2. It simplifies carving of resources on Openshift/Kubernetes which in turn simplifies the creation of qotas and limits for the application namespace.
+3. It allows capacity planning from oeprations perpective, for instance, a cluster administrator can easily determine how many worker nodes in the cluster.
+4. It leads to huge cost savings especially if your kubernetes cluster is in the public cloud infrastructure.
 
-Estimating the resources an application need is very challenging becuase it's more of an art than science.
-You’ll first want to identify what a good starting point is for the application; aiming for a good balance of CPU and memory. After you’ve decided on a sensible resource size for the application and the application is running you will also need to setup a process where you can constantly monitor the application over a period of time to determine the actual usage.
+Estimating the resources an application need is very challenging to be honest because it involves some trial and error to arrive at a close to actual estimation, hence the process is more of an art than science. You’ll first want to identify what a good starting point is for the application; aiming for a good balance of CPU and memory. After you’ve decided on a sensible resource size for the application and the application is running you will also need to setup a process where you can constantly monitor the application over a period of time to determine the actual usage.
 
-In this workshop, we'll be walking you through the process of properly estimating the resources, in term of memory and CPU, that an application needs. This will help in determining resource quota during the application onboarding process in a multitenant environment.
+In this workshop, we'll be walking you through the process of properly estimating your application resources, in term of memory and CPU. This will help in determining the over all resource quota needed for proper functioning of the application especially in a multitenant environment.
 
 ## Prerequisites
 1. Access to Openshiuft Cluster
