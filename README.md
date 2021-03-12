@@ -14,6 +14,8 @@ In this workshop, we'll be walking you through the process of properly estimatin
 
 ![Alt text](./images/estimate.png?raw=true "Figure 1")
 ![Figure 1](images/estimate.png)
+![](images/estimate.png)
+*Figure 1*
 
 Before we dive into codes, let's clear up some concepts.
 
