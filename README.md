@@ -34,6 +34,25 @@ An Architect therefore needs to put these behaviours into consideration during a
 
 2. **Memory**: Memory on the other hand is measured in bytes. However, you can express memory with various suffixes (E,P,T,G,M,K and Ei, Pi, Ti, Gi, Mi, Ki) to express mebibytes (Mi) to petabytes (Pi). Most simply use Mi.
 
+``` yaml
+...
+spec:
+    containers:
+    - image: quay.io/ooteniya/todo-spring:v1.3.6
+        imagePullPolicy: Always
+        name: todo-spring
+        resources:
+        limits:
+            memory: "512Mi"
+            cpu: "60m"  
+        requests:
+            memory: "128Mi"
+            cpu: "30m"
+...
+```
+
+>Here's an example of a Container that has a request of 30m cpu and 126MiB of memory. The Container has a limit of 60m cpu and 512MiB of memory.
+
 ### Resource Quotas
 X
 ### Limit Ranges
