@@ -3,10 +3,11 @@ As a developer or an Architect, one of the very first decisions you need to make
 
 The benefits of properly estimating the resources an application needs before getting to production among others are:
 
-1. It helps in understanding application requirements in terms of how much memory and CPU the application needs. 2. It help to understand wehther an application is more memory intensive or CPU intesive.
-2. It simplifies carving of resources on Openshift/Kubernetes which in turn simplifies the creation of qotas and limits for the application namespace.
-3. It allows capacity planning from oeprations perpective, for instance, a cluster administrator can easily determine how many worker nodes in the cluster.
-4. It leads to huge cost savings especially if your kubernetes cluster is in the public cloud infrastructure.
+1. It helps in understanding application requirements in terms of how much memory and CPU the application needs
+2. It help to understand wehther an application is more memory intensive or CPU intesive.
+3. It simplifies carving of resources on Openshift/Kubernetes which in turn simplifies the creation of qotas and limits for the application namespace.
+4. It allows capacity planning from oeprations perpective, for instance, a cluster administrator can easily determine how many worker nodes in the cluster.
+5. It leads to huge cost savings especially if your kubernetes cluster is in the public cloud infrastructure.
 
 Estimating the resources an application need is very challenging to be honest because it involves some trial and error. Identifying accurately how many resources a container for instance will require, and how many replicas a service will need at a given time to meet service-level agreements takes time and effort, hence the process is more of an art than science. You’ll first want to identify what a good starting point is for the application; aiming for a good balance of CPU and memory. After you’ve decided on a sensible resource size for the application you will also need to setup a process where you can constantly monitor the application's resource actual usage over a period of time. 
 
