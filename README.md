@@ -104,9 +104,9 @@ Run JMeter from Command line
 ## Peak load CLI command
 ./apache-jmeter-5.4.1/bin/jmeter.sh -n -t Todo-ThreadGroup_OCP_PEAK.jmx -l result.txt -e -o ./report
 
-References
-1. [I'm an inline-style link](https://www.google.com)
-2. [11 Simple Java Performance Tuning Tips – Stackify](https://stackify.com/java-performance-tuning/)
-3. [Best Website Performance Testing Tools – Stackify](https://stackify.com/best-website-performance-testing-tools/)
-4. [How Full is My Cluster - Part 3: Capacity Management](https://www.openshift.com/blog/full-cluster-part-3-capacity-management)
-5. [O'reilly Kubernetes Best Practices](https://learning.oreilly.com/library/view/kubernetes-best-practices/9781492056461/ch08.html)
+## References
+
+1. [11 Simple Java Performance Tuning Tips – Stackify](https://stackify.com/java-performance-tuning/)
+2. [Best Website Performance Testing Tools – Stackify](https://stackify.com/best-website-performance-testing-tools/)
+3. [How Full is My Cluster - Part 3: Capacity Management](https://www.openshift.com/blog/full-cluster-part-3-capacity-management)
+4. [O'reilly Kubernetes Best Practices](https://learning.oreilly.com/library/view/kubernetes-best-practices/9781492056461/ch08.html)
