@@ -51,10 +51,12 @@ spec:
 ...
 ```
 
->Here's an example of a Container that has a request of 30m cpu and 126MiB of memory. The Container has a limit of 60m cpu and 512MiB of memory.
+>Here's an example of a Container that has a request of 30m cpu and 128MiB of memory. The Container has a limit of 60m cpu and 512MiB of memory.
 
 ### Resource Quotas
-X
+
+A [resource quota](https://docs.openshift.com/container-platform/4.7/applications/quotas/quotas-setting-per-project.html#quotas-resources-managed_quotas-setting-per-project), provides constraints that limit aggregate resource consumption per project. It can limit the quantity of objects that can be created in a project by type, as well as the total amount of compute resources and storage that might be consumed by resources in that project. It is defined by a `ResourceQuota` object.
+
 ### Limit Ranges
 X
 ### Request and Limits
