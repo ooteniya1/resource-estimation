@@ -8,9 +8,15 @@ The benefits of properly estimating the resources an application needs before ge
 3. It allows capacity planning from oeprations perpective, for instance, a cluster administrator can easily determine how many worker nodes in the cluster.
 4. It leads to huge cost savings especially if your kubernetes cluster is in the public cloud infrastructure.
 
-Estimating the resources an application need is very challenging to be honest because it involves some trial and error to arrive at a close to actual estimation, hence the process is more of an art than science. You’ll first want to identify what a good starting point is for the application; aiming for a good balance of CPU and memory. After you’ve decided on a sensible resource size for the application and the application is running you will also need to setup a process where you can constantly monitor the application over a period of time to determine the actual usage.
+Estimating the resources an application need is very challenging to be honest because it involves some trial and error. Identifying accurately how many resources a container for instance will require, and how many replicas a service will need at a given time to meet service-level agreements takes time and effort, hence the process is more of an art than science. You’ll first want to identify what a good starting point is for the application; aiming for a good balance of CPU and memory. After you’ve decided on a sensible resource size for the application you will also need to setup a process where you can constantly monitor the application's resource actual usage over a period of time. 
 
-In this workshop, we'll be walking you through the process of properly estimating your application resources, in term of memory and CPU. This will help in determining the over all resource quota needed for proper functioning of the application especially in a multitenant environment.
+In this workshop, we'll be walking you through the process of properly estimating your application resources, in term of memory and CPU. At the end, you should be able to come up with figure 1 below, which will be used to create the resource quota for the project.
+
+![Alt text](image/estimate.png?raw=true "Figure 1"
+
+Before we dive into codes, let's clear up some concepts.
+
+
 
 ## Prerequisites
 1. Access to Openshiuft Cluster
