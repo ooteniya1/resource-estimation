@@ -27,7 +27,7 @@ There are two types of Compute resources:
 
 2. **Incompressible resources**: these are resources that aare technically limited, once you run out of them, you application will not get any more. Examples of such is are memory and disk space. Unlike CPU, memory can't be made to run slower. Instead, Openshif/Kubernetes automatically restarts or terminates the applications once it reaches the memory limit.
 
-An Architect therefore needs to put these behaviours into consideration during application resource planning to avoid unpleasant behaviour in production.
+An Architect therefore needs to put these behaviours into consideration during application resource planning to avoid any issues in production.
 
 ### Resource Units
 1. **CPU:** - CPU resources are measured in millicore. If a node has 2 cores, the node’s CPU capacity would be represented as 2000m. The unit suffix m stands for “thousandth of a core.”
@@ -37,6 +37,8 @@ An Architect therefore needs to put these behaviours into consideration during a
 ### Resource Quotas
 X
 ### Limit Ranges
+X
+### Request and Limits
 X
 ### Quality of Service (QoS)
 X
