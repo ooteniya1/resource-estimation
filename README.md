@@ -176,7 +176,18 @@ Perform application load testing to determine the right amount of memory and CPU
 
 ### Scaling
 
-## Good Practice
+## Conclusion
+In summary, it is important to follow the recommendation below to arrive at a very good application resource estimate:
+
+1. Perform load testing
+
+2. Ensure that you set memory and CPU for all pods.
+
+3. Start with manual scaling until you understand your application profile on Openshift.
+
+4.Use VPA in Development to determine your application resource usage.
+ 
+5. Use the HPA for workloads that are variable and that have unexpected spikes in their usage.
 
 ## Resource Estimation Setup
 In this workshop, we will be determining the resource requirement of a [Todo-spring-quakus](https://github.com/ooteniya1/resource-estimation) application which was originally setup by [Eric Deandrea](https://github.com/edeandrea) but customized to fit the purpose of this workshop.
