@@ -156,10 +156,14 @@ As
 
 ## Good Practice
 
-##
+## Resource Estimation Setup
+In this workshop, we will be determining the resource requirement of a [Todo-spring-quakus](https://github.com/ooteniya1/resource-estimation) application which was originally setup by [Eric Deandrea](https://github.com/edeandrea).
+
+The Architecture diagram below highlights the key compoenents of the estimation process.
+
 ![](images/estimation_setup.png)
 
-*Application Resource Estimation Setup*
+*Resource Estimation Setup*
 
 ## Prerequisites
 1. Access to Openshiuft Cluster
