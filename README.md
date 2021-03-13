@@ -81,23 +81,23 @@ spec:
 
 ```yaml
 ...
-    containers:
-        - image: quay.io/ooteniya/todo-spring:v1.3.6
-            imagePullPolicy: Always
-            name: todo-spring
-            resources:
-            limits:
-                memory: "512Mi"
-                cpu: "60m"  
-            requests:
-                memory: "128Mi"
-                cpu: "30m"
+containers:
+    - image: quay.io/ooteniya/todo-spring:v1.3.6
+        imagePullPolicy: Always
+        name: todo-spring
+        resources:
+        limits:
+            memory: "512Mi"
+            cpu: "60m"  
+        requests:
+            memory: "128Mi"
+            cpu: "30m"
 ...
 ```
-> Requests are evaluated at Scheduling Time and it's counted towards the quota. Limits in turn is evaluated at RUn Time and it's not counted towards the quata.
+> Requests are evaluated at Scheduling Time and it's counted towards the quota. Limits in turn are evaluated at Run Time and it's not counted towards the quata.
 
 ### Limit Range
-A [limit range](https://docs.openshift.com/container-platform/4.7/nodes/clusters/nodes-cluster-limit-ranges.html)restricts resource consumption in a project. In the project you can set specific resource limits for a pod, container, image, image stream, or persistent volume claim (PVC). It is defined by a `LimitRange` object.
+A [limit range](https://docs.openshift.com/container-platform/4.7/nodes/clusters/nodes-cluster-limit-ranges.html) restricts resource consumption in a project. In the project you can set specific resource limits for a pod, container, image, image stream, or persistent volume claim (PVC). It is defined by a `LimitRange` object.
 
 ```yaml
 apiVersion: "v1"
@@ -122,7 +122,9 @@ spec:
       maxLimitRequestRatio:
         cpu: "10"
 ```
-> When Request and Limit are not set for a container, whatever is defined by the administrator for the namespace is used as the default. It is strongly recommended that application Architects and developers should always specify resource request and limit for their pods.
+![](images/limitrange.png)
+
+> When Request and Limit are not set for a container, whatever is defined by the administrator for the namespace is used as the default. It is strongly recommended that application Architects and developers should always specify resource request and limits for their pods.
 
 ### Quality of Service (QoS)
 X
