@@ -211,7 +211,7 @@ In summary, it is important to follow the recommendation below to arrive at a ve
 
 ## Credits
 1. [Eric Deandrea](https://github.com/edeandrea)  for the original [Todo-spring-quarkus](https://github.com/edeandrea/todo-spring-quarkus) application.
-2. 
+2. Ed Seymour for the QoS and Limit Range diagrams 
 
 # Cloud-Native Application Resource Estimation - Part 2
 In the first first part of this article, we touched on the concepts and approach of Application resource estimation. In this secoind part, we will be walking you through a pratical example of Application resource estimation.
