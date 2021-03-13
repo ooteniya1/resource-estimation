@@ -134,7 +134,13 @@ There are three classes:
 2. A **Burstable** quality of service is provided when a request is specified that is less than an optionally specified limit
 3. A **Guaranteed** quality of service is provided when a limit is specified that is equal to an optionally specified request.
 
+![](images/qos-cpu.png)
+*QoS behavior with respect to CPU
+
 In terms of priority, the Guaranteed, Burstable and BestEffort have priority 1 (highest), priority 2 and priority 3 (lowest) respectively.
+
+![](images/qos-memory.png)
+*QoS behavior with respect to Memory
 
 ### Resource Estimation: Well-estimation, Over-estimation and Under-estimation
 As mentioned, the request set on a pod is counted towards the quota. To determine whether an application is well estimated, under estimated or over estimated depends on the comparison between the resource requests and the actual resource consumption.
