@@ -57,10 +57,73 @@ spec:
 
 A [resource quota](https://docs.openshift.com/container-platform/4.7/applications/quotas/quotas-setting-per-project.html#quotas-resources-managed_quotas-setting-per-project), provides constraints that limit aggregate resource consumption per project. It can limit the quantity of objects that can be created in a project by type, as well as the total amount of compute resources and storage that might be consumed by resources in that project. It is defined by a `ResourceQuota` object.
 
-### Limit Ranges
-X
+Below snippet defines a resource quota object on cpu and memory.
+
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-resources
+spec:
+  hard:
+    pods: "4" 
+    requests.cpu: "1" 
+    requests.memory: 1Gi 
+    requests.ephemeral-storage: 2Gi 
+    limits.cpu: "2" 
+    limits.memory: 2Gi 
+    limits.ephemeral-storage: 4Gi 
+```
+> This is usually defined to limit how many resources a single tenant in a multitenant environment can request so that they don't take over the cluster. This is evaluated at Request Time.
+
 ### Request and Limits
-X
+
+
+```yaml
+...
+    containers:
+        - image: quay.io/ooteniya/todo-spring:v1.3.6
+            imagePullPolicy: Always
+            name: todo-spring
+            resources:
+            limits:
+                memory: "512Mi"
+                cpu: "60m"  
+            requests:
+                memory: "128Mi"
+                cpu: "30m"
+...
+```
+> Requests are evaluated at Scheduling Time and it's counted towards the quota. Limits in turn is evaluated at RUn Time and it's not counted towards the quata.
+
+### Limit Range
+A [limit range](https://docs.openshift.com/container-platform/4.7/nodes/clusters/nodes-cluster-limit-ranges.html)restricts resource consumption in a project. In the project you can set specific resource limits for a pod, container, image, image stream, or persistent volume claim (PVC). It is defined by a `LimitRange` object.
+
+```yaml
+apiVersion: "v1"
+kind: "LimitRange"
+metadata:
+  name: "resource-limits"
+spec:
+  limits:
+    - type: "Container"
+      max:
+        cpu: "2"
+        memory: "1Gi"
+      min:
+        cpu: "100m"
+        memory: "4Mi"
+      default:
+        cpu: "300m"
+        memory: "200Mi"
+      defaultRequest:
+        cpu: "200m"
+        memory: "100Mi"
+      maxLimitRequestRatio:
+        cpu: "10"
+```
+> When Request and Limit are not set for a container, whatever is defined by the administrator for the namespace is used as the default. It is strongly recommended that application Architects and developers should always specify resource request and limit for their pods.
+
 ### Quality of Service (QoS)
 X
 ### Application Estimation: Well-estimation, Over-estimation and Under-estimation
