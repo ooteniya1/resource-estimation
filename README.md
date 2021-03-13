@@ -149,12 +149,17 @@ Now that we have a very good understanding of some concepts that Openshift/Kunbe
 *Compute Resource Estimation Approach*
 
 ### Performance Tuning Good Practice
-
+As 
 ### Load Testing
 
 ### Scaling
 
 ## Good Practice
+
+##
+![](images/estimation_setup.png)
+
+*Application Resource Estimation Setup*
 
 ## Prerequisites
 1. Access to Openshiuft Cluster
