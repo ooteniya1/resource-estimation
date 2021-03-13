@@ -135,11 +135,13 @@ There are three classes:
 3. A **Guaranteed** quality of service is provided when a limit is specified that is equal to an optionally specified request.
 
 ![](images/qos-cpu.png)
+
 *QoS behavior with respect to CPU
 
 In terms of priority, the Guaranteed, Burstable and BestEffort have priority 1 (highest), priority 2 and priority 3 (lowest) respectively.
 
 ![](images/qos-memory.png)
+
 *QoS behavior with respect to Memory
 
 ### Resource Estimation: Well-estimation, Over-estimation and Under-estimation
