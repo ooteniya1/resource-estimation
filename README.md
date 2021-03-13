@@ -149,8 +149,30 @@ Now that we have a very good understanding of some concepts that Openshift/Kunbe
 *Compute Resource Estimation Approach*
 
 ### Performance Tuning Good Practice
-As 
+
+1. Don’t optimize before you know it’s necessary - You need to define how fast your application code has to be, for example, by specifying a maximum response time for all API calls or the number of records that you want to import within a specified time frame. Measure which parts of your application are too slow and need to be improved.
+
+2. Use a profiler to find the real bottleneck - There are two ways of doing this. It's either you can take a look at your code and start with the part that looks suspicious or where you feel that it might create problems or you use a profiler and get detailed information about the behavior and performance of each part of your code.
+The profiler-based method gives you a better understanding of the performance implications of your code and allows you to focus on the most critical parts.
+
+3. Use lightweight frameworks and avoid the overhead of heavy application servers - Use lightweight frameworks and avoid the overhead of heavy application servers if possible. Use frameworks that are based for instance, on microprofiles instead of a heavy JEE Compliant application servers.
+
+4. Create a performance test suite for the whole application - It's important to work on the perform performance or load test on an application to determine the breaking point of the application etc. Based on the result of the test, work on the most significant performance problem first.
+
+
+5. Work on the biggest bottleneck first - It might be tempting to start with the quick wins because you will be able to show first results soon. Sometimes, that might be necessary to convince other team members or your management that the performance analysis was worth the effort. But in general, I recommend starting at the top and begin work on the most significant performance problem first.
+
+6. Use Efficient Serialization Techniques - Use efficient serialization formats like protocol buffers, commonly used in gRPC. Another areas to consider for example is, if you have a request with a large message payload and operates on only a handful of fields in a large message payload, before passing it to a downstream service, put those fields into headers so the service does not need to deserialize or reserialize the payload. 
+
 ### Load Testing
+Load testing will identify the following:
+1. maximum operating capacity
+2. the ability of an application to run in the actual environment
+3. sustainability of the application during peak user load
+4. maximum concurrent users the application can support
+
+Perform application load testing to determine the right amount of memory and CPU for an application to function properly at all times. There are several tools such as [WedLoad](https://www.radview.com/webload-download?utm_campaign=top-15-tools&utm_medium=top-15-tools&utm_source=softwaretestinghelp), [Apache JMeter](https://jmeter.apache.org/), [LoadNinja](https://loadninja.com/), [Smart Meter](https://www.smartmeter.io/), [k6](https://k6.io/), [Locust](https://locust.io/) etc. available to aid this process.
+
 
 ### Scaling
 
