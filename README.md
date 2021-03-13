@@ -175,6 +175,11 @@ Perform application load testing to determine the right amount of memory and CPU
 
 
 ### Scaling
+Openshift/Kubernetes scaling capabilities provide a mechanism to dynamically adjust to user worloads. Scaling can be manual or automatic. For workloads that are static or when you have insight into when an application experience spikes, manual scaling can be used to provide optimal configuration to match the workload. Also it's provides an avenue to discover and apply the optimal configuration to handle the workload. This can be done imperatively using the `oc` or `kubectl` commands. Alternatively, it could aldo be done declaratively on the deployment or deploymentConfig objects of the application.
+
+For worloads that experience sudden spikes, automatic scaling is the most ideal as you can not readily predict the spike periods.
+
+Scaling can be [Horizontal](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-autoscaling.html) i.e changing the replica of a pod, or [Veritcal](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html), changing the resource constraints of he containers in the pod.
 
 ## Conclusion
 In summary, it is important to follow the recommendation below to arrive at a very good application resource estimate:
@@ -188,6 +193,17 @@ In summary, it is important to follow the recommendation below to arrive at a ve
 4. Use VPA in Development to determine your application resource usage.
  
 5. Use the HPA for workloads that are variable and that have unexpected spikes in their usage.
+
+## References
+
+1. [11 Simple Java Performance Tuning Tips – Stackify](https://stackify.com/java-performance-tuning/)
+2. [Best Website Performance Testing Tools – Stackify](https://stackify.com/best-website-performance-testing-tools/)
+3. [How Full is My Cluster - Part 3: Capacity Management](https://www.openshift.com/blog/full-cluster-part-3-capacity-management)
+4. [O'reilly Kubernetes Best Practices](https://learning.oreilly.com/library/view/kubernetes-best-practices/9781492056461/ch08.html)
+
+## Credits
+1. [Eric Deandrea](https://github.com/edeandrea)  for the original [Todo-spring-quarkus](https://github.com/edeandrea/todo-spring-quarkus) application.
+2. 
 
 # Cloud-Native Application Resource Estimation - Part 2
 In the first first part of this article, we touched on the concepts and approach of Application resource estimation. In this secoind part, we will be walking you through a pratical example of Application resource estimation.
@@ -263,13 +279,3 @@ Run JMeter from Command line
 ## Peak load CLI command
 ./apache-jmeter-5.4.1/bin/jmeter.sh -n -t Todo-ThreadGroup_OCP_PEAK.jmx -l result.txt -e -o ./report
 
-## References
-
-1. [11 Simple Java Performance Tuning Tips – Stackify](https://stackify.com/java-performance-tuning/)
-2. [Best Website Performance Testing Tools – Stackify](https://stackify.com/best-website-performance-testing-tools/)
-3. [How Full is My Cluster - Part 3: Capacity Management](https://www.openshift.com/blog/full-cluster-part-3-capacity-management)
-4. [O'reilly Kubernetes Best Practices](https://learning.oreilly.com/library/view/kubernetes-best-practices/9781492056461/ch08.html)
-
-## Credits
-1. [Eric Deandrea](https://github.com/edeandrea)  for the original [Todo-spring-quarkus](https://github.com/edeandrea/todo-spring-quarkus) application.
-2. 
