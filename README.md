@@ -157,7 +157,7 @@ As
 ## Good Practice
 
 ## Resource Estimation Setup
-In this workshop, we will be determining the resource requirement of a [Todo-spring-quakus](https://github.com/ooteniya1/resource-estimation) application which was originally setup by [Eric Deandrea](https://github.com/edeandrea).
+In this workshop, we will be determining the resource requirement of a [Todo-spring-quakus](https://github.com/ooteniya1/resource-estimation) application which was originally setup by [Eric Deandrea](https://github.com/edeandrea) but customized to fit the purpose of this workshop.
 
 The Architecture diagram below highlights the key compoenents of the estimation process.
 
