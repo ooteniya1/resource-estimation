@@ -145,7 +145,7 @@ Generally, a certain threshold is set above and below the request to determine h
 Now that we have a very good understanding of some concepts that Openshift/Kunbernetes uses to determine an application resources and how they are scheduled, let's discuss the approach to use to proeprly estimate an application's resource requirments.
 
 ![](images/approach.png)
-*Resource Estimation Approach*
+*Computer Resource Estimation Approach*
 
 ### Performance Tuning Good Practice
 
