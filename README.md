@@ -1,5 +1,5 @@
-# Cloud-Native Application Resource Estimation
-As a developer or an Architect, one of the very first decisions you need to make when deploying an application to the cloud (whether public, private or on-prem) is to determine how much resources the application needs. Teams get their applications to production before they realize the resources are either under or over estimated which often leads to fire fighting in Production environment. Most the operational challenges faced in production are as a result of the fact that this process is often overlooked. 
+# Cloud-Native Application Resource Estimation - Part 1
+As a developer or an Architect, one of the very first decisions you need to make when deploying an application to the cloud (whether public, private or on-prem) is to determine how much resources the application needs. Teams get their applications to production before they realize the resources are either under or over estimated, which often leads to fire fighting in production environment. Most the operational challenges faced in production are as a result of the fact that this process is often overlooked. 
 
 The benefits of properly estimating the resources an application needs before getting to production among others are:
 
@@ -185,9 +185,12 @@ In summary, it is important to follow the recommendation below to arrive at a ve
 
 3. Start with manual scaling until you understand your application profile on Openshift.
 
-4.Use VPA in Development to determine your application resource usage.
+4. Use VPA in Development to determine your application resource usage.
  
 5. Use the HPA for workloads that are variable and that have unexpected spikes in their usage.
+
+# Cloud-Native Application Resource Estimation - Part 2
+In the first first part of this article, we touched on the concepts and approach of Application resource estimation. In this secoind part, we will be walking you through a pratical example of Application resource estimation.
 
 ## Resource Estimation Setup
 In this workshop, we will be determining the resource requirement of a [Todo-spring-quakus](https://github.com/ooteniya1/resource-estimation) application which was originally setup by [Eric Deandrea](https://github.com/edeandrea) but customized to fit the purpose of this workshop.
