@@ -127,7 +127,15 @@ spec:
 > When Request and Limit are not set for a container, whatever is defined by the administrator for the namespace is used as the default. It is strongly recommended that application Architects and developers should always specify resource request and limits for their pods.
 
 ### Quality of Service (QoS)
-X
+In an overcommitted environment, i.e a situation where scheduled pod has no request, or the sum of limits across all pods on that node exceeds available machine capacity, the node must give priority to one pod over another. The mechanism that is used to determine which pod to prioritize is known as [Quality of Service (QoS)](https://docs.openshift.com/container-platform/4.7/nodes/clusters/nodes-cluster-overcommit.html#nodes-cluster-overcommit-qos-about_nodes-cluster-overcommit) Class.
+
+There are three classes:
+1. A **BestEffort** quality of service is provided when a request and limit are not specified.
+2. A **Burstable** quality of service is provided when a request is specified that is less than an optionally specified limit
+3. A **Guaranteed** quality of service is provided when a limit is specified that is equal to an optionally specified request.
+
+In terms of priority, the Guaranteed, Burstable and BestEffort have priority 1 (highest), priority 2 and priority 3 (lowest) respectively.
+
 ### Application Estimation: Well-estimation, Over-estimation and Under-estimation
 X
 
