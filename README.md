@@ -94,7 +94,7 @@ containers:
             cpu: "30m"
 ...
 ```
-> Requests are evaluated at Scheduling Time and it's counted towards the quota. Limits in turn are evaluated at Run Time and it's not counted towards the quata.
+> Requests are evaluated at Scheduling Time and it's counted towards the quota. Limits in turn are evaluated at Run Time and it's not counted towards the quota.
 
 ### Limit Range
 A [limit range](https://docs.openshift.com/container-platform/4.7/nodes/clusters/nodes-cluster-limit-ranges.html) restricts resource consumption in a project. In the project you can set specific resource limits for a pod, container, image, image stream, or persistent volume claim (PVC). It is defined by a `LimitRange` object.
@@ -136,8 +136,10 @@ There are three classes:
 
 In terms of priority, the Guaranteed, Burstable and BestEffort have priority 1 (highest), priority 2 and priority 3 (lowest) respectively.
 
-### Application Estimation: Well-estimation, Over-estimation and Under-estimation
-X
+### Resource Estimation: Well-estimation, Over-estimation and Under-estimation
+As mentioned, the request set on a pod is counted towards the quota. To determine whether an application is well estimated, under estimated or over estimated depends on the comparison between the resource requests and the actual resource consumption.
+
+Generally, a certain threshold is set above and below the request to determine how an application is performing resource-wise. Let's assume a threshold of certain percentage, say 20% of the request is set above and below the request. A well estimated application resource usage stays above the overestimated threshold and below the underestimated threshold. If the actual usage of the resource is below the overestimated threshold, the application is considered Overestimated. If the actual usage is above the underestimated threshold, it is considered underestimated. [Raffaele Spazzoli](https://www.openshift.com/blog/full-cluster-part-3-capacity-management) wrote a very nice article about this.
 
 ### Resource Estimation Approach
 
