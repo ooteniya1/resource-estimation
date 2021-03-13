@@ -141,10 +141,15 @@ As mentioned, the request set on a pod is counted towards the quota. To determin
 
 Generally, a certain threshold is set above and below the request to determine how an application is performing resource-wise. Let's assume a threshold of certain percentage, say 20% of the request is set above and below the request. A well estimated application resource usage stays above the overestimated threshold and below the underestimated threshold. If the actual usage of the resource is below the overestimated threshold, the application is considered Overestimated. If the actual usage is above the underestimated threshold, it is considered underestimated. [Raffaele Spazzoli](https://www.openshift.com/blog/full-cluster-part-3-capacity-management) wrote a very nice article about this.
 
-### Resource Estimation Approach
+## Resource Estimation Approach
+Now that we have a very good understanding of some concepts that Openshift/Kunbernetes uses to determine an application resources and how they are scheduled, let's discuss the approach to use to proeprly estimate an application's resource requirments.
 
-#### Performance Tuning Good Practice
-#### Load Testing
+![](images/approach.png)
+*Resource Estimation Approach*
+
+### Performance Tuning Good Practice
+
+### Load Testing
 
 ### Scaling
 
