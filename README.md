@@ -256,11 +256,14 @@ Create `resource-estimation` namespace.
 
 `$ oc new-project resource-estimation`
 
-Run the setup scripts to install the Openshift-pipeline and Postgresql operators.
-`$ cd helm`
+Run the setup scripts to install the Openshift-pipeline, Postgresql and VerticalPodAutoscaler operators.
 
-`$ ./setup-prereq.sh`
- 
+```
+$ cd helm
+$ ./setup-prereq.sh
+
+ ```
+  
  You should see output similar to below:
 
 ``` text
@@ -292,24 +295,24 @@ REVISION: 1
 TEST SUITE: None
 ```
 
-Now that we have Openshift-pipeline, postresql and vertical pod autoscaler operators installed, let's setup github and quay registry secrets and add it to Openshift-pipeline service account.
+Now that we have Openshift-pipeline, postresql and vertical pod autoscaler operators installed, let's setup github and quay.io secrets and add it to Openshift-pipeline service account.
 
-`$ ./add-github-credentials.sh`
-
-`$ ./add-quay-credentials.sh`
-
+```
+$ ./add-github-credentials.sh
+$ ./add-quay-credentials.sh
+```
 ## Resource Estimation Process
 
-In order to determine the resource quota to use for the Todo-application namespace, we will going going through the following steps:
+In order to estimate the resource requirements and determine the resource quota to use for the Todo-spring-quarkus namespace, we will going going through the following steps:
 
-1. Define performance goals
-2. Check the start-up time. This is important for scaling in peak periods
+1. Define performance goals.
+2. Check the start-up time. This is important for scaling in peak periods.
 3. Adjust to have a fast start-up time initially. 
-- What is the best resource requirement for the startup time I need? 
-- Not applicable to every use case
+  - What is the best resource requirement for the startup time I need? 
+  - Not applicable to every use case
 4. What’s my breakpoint with one pod - Note the resource usage. 
-- Does the breakpoint lower than my desired metrics? 
-- How many replicas do I need to start with for the desired metrics/performance goals?
+  - Does the breakpoint lower than my desired metrics? 
+  - How many replicas do I need to start with for the desired metrics/performance goals?
 5. What’s the resource required to achieve the desired throughput with a normal workload? (You need to run this for a period of time say 1 day to 1 week)
 6. What’s the resource requirement to cope with spikes and "Black Friday" requests?
 7. Estimate the resource usage per pod/container
