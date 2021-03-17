@@ -414,10 +414,10 @@ spec:
     updateMode: "Off" 
 ```
 
-The VPA recommendations are stored in the `status`. As you can see in `vpa.yaml`, the `updateMode: "Off" `. This means no changes to the selected resources are performed based on the recommended values in the status. There are two other types: `updateMode: "Initial" ` and `updateMode: "Auto" `.
+The VPA recommendations are stored in the `status`. As you can see in `vpa.yaml`, the `updateMode: "Off" ` means no changes to the selected resources are performed based on the recommended values in the status. There are two other types: `updateMode: "Initial" ` and `updateMode: "Auto" `.
 
-**Initial**: with `Initial` recommendations are applied during creation of a Pod and it influences scheduling decision.
-**Auto**: this automatically restarts Pods with updated resources based on recommendation.
+**Initial**: means recommendations are applied during creation of a Pod and it influences scheduling decision.
+**Auto**: means pods are automatically restarted with the updated resources based on recommendation.
 
 VPA is not currently reccomended for Production deployment but for resources usage estimation, it's a good tool to deploy in the development environment.
 
