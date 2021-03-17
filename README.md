@@ -289,10 +289,35 @@ Setup github and quay registry secrets
 `$ ./helm/add-quay-credentials.sh`
 
 ## Resource Estimation Process
-1. Install and deploy Todo-spring Application
-2. Perform Load Testing on the application
-3. Install Vertical Pod Autoscaling
-4. Apply the  a VPA to monitor the application
+
+In order to determine the resource quota to use for the Todo-application namespace, we will going going through the following steps:
+
+1. Define performance goals
+2. Check the start-up time. This is important for scaling in peak periods
+3. Adjust to have a fast start-up time initially. 
+- What is the best resource requirement for the startup time I need? 
+- Not applicable to every use case
+4. What’s my breakpoint with one pod - Note the resource usage. 
+- Does the breakpoint lower than my desired metrics? 
+- How many replicas do I need to start with for the desired metrics/performance goals?
+5. What’s the resource required to achieve the desired throughput with a normal workload? (You need to run this for a period of time say 1 day to 1 week)
+6. What’s the resource requirement to cope with spikes and "Black Friday" requests?
+7. Estimate the resource usage per pod/container
+8. Use that to determine your quota
+
+To begin, let's do the following:
+
+1. **Install and deploy Todo-spring Application**
+
+xxx
+2. **Record the test plans using Apache JMeter**
+
+xxx
+3. **Install Vertical Pod Autoscaling**
+xxx
+
+4. **Apply the  a VPA to monitor the application**
+xxx
 ### Designing the Load Testing Plan using Apache JMeter
 We will be using Apache JMeter for the Performance Test.
 
