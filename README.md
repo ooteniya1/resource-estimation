@@ -228,11 +228,12 @@ For this workshop, you will need the following:
 1. Access to Openshift Cluster
 2. Install Openshift Pipeline Operator
 3. Install a Postgressql database for the To-do application
-4. Access to an external image registry (we use https://quay.io for this workshop)
-5. Create a secret for pulling images from the image registry
-5. Create a secret for github
-6. Add the registry and github secret to Openshift pipeline serviceaccount
-7. Download Apache JMeter for Performance testing
+4. Install Vertical Pod Autoscaler Operator
+5. Access to an external image registry (we use https://quay.io for this workshop)
+6. Create a secret for pulling images from the image registry
+7. Create a secret for github
+8. Add the registry and github secret to Openshift pipeline serviceaccount
+9. Download Apache JMeter for Performance testing
 ### Environment Setup
 We will use a script to setup the environment. You will nee dthe following tools pre-installed when you run the script.
 
