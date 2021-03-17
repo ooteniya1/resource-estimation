@@ -252,6 +252,7 @@ Once you have all the enviroment set up, login to your Openshift cluster.
 `$ oc login --token=TOKEN --server=https://api.YOUR_CLUSTER_DOMAIN:6443`
 
 Create `resource-estimation` namespace.
+
 `$ oc new-project resource-estimation`
 
 Run the setup scripts to install the Openshift-pipeline and Postgresql operators.
