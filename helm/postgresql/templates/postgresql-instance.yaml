@@ -1,0 +1,20 @@
+apiVersion: postgresql.dev4devs.com/v1alpha1
+kind: Database
+metadata:
+  name: postgresql
+spec:
+  containerName: {{ .Values.containerName }}
+  databaseCpu: {{ .Values.databaseCpu }}
+  databaseCpuLimit: {{ .Values.databaseCpuLimit }}
+  databaseMemoryLimit: {{ .Values.databaseMemoryLimit }}
+  databaseMemoryRequest: {{ .Values.databaseMemoryRequest }}
+  databaseName: {{ .Values.databaseName }}
+  databaseNameKeyEnvVar: POSTGRESQL_DATABASE
+  databasePassword: {{ .Values.databasePassword }}
+  databasePasswordKeyEnvVar: POSTGRESQL_PASSWORD
+  databasePort: {{ .Values.databasePort }}
+  databaseStorageRequest: {{ .Values.databaseStorageRequest }}
+  databaseUser: {{ .Values.databaseUser }}
+  databaseUserKeyEnvVar: POSTGRESQL_USER
+  image: centos/postgresql-96-centos7
+  size: {{ .Values.size }}

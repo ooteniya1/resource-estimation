@@ -219,20 +219,72 @@ In the first first part of this article, we touched on the concepts and approach
 ## Resource Estimation Setup
 In this workshop, we will be determining the resource requirement of a [Todo-spring-quakus](https://github.com/ooteniya1/resource-estimation) application which was originally setup by [Eric Deandrea](https://github.com/edeandrea) but customized to fit the purpose of this workshop.
 
-The Architecture diagram below highlights the key compoenents of the estimation process.
+The Architecture diagram below highlights the key components we will be using for the estimation process.
 
 ![](images/estimation_setup.png)
+### Prerequisites
+For this workshop, you will need the following:
 
-*Resource Estimation Setup*
-
-## Prerequisites
-1. Access to Openshiuft Cluster
+1. Access to Openshift Cluster
 2. Install Openshift Pipeline Operator
 3. Install a Postgressql database for the To-do application
 4. Access to an external image registry (we use https://quay.io for this workshop)
 5. Create a secret for pulling images from the image registry
-6. Add the secret to Openshift pipeline serviceaccount
+5. Create a secret for github
+6. Add the registry and github secret to Openshift pipeline serviceaccount
 7. Download Apache JMeter for Performance testing
+### Setup
+We will use a script to setup the environment. You will nee dthe following tools pre-installed when you run the script.
+
+- [Helm](https://helm.sh/docs/intro/install/) : `helm` version
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) : `git` version
+- [oc](https://docs.openshift.com/container-platform/4.5/cli_reference/openshift_cli/getting-started-cli.html) : `oc` version
+- [kustomize](https://kubernetes-sigs.github.io/kustomize/installation/) v3.1.0 or higher: `customize` version
+- [tkn](https://github.com/tektoncd/cli) (optional Tekton CLI): `tkn` version
+- envsubst (gettext): `envsubst` --help
+
+To get started, clone or fork the source code repository:
+
+`$ git clone https://github.com/ooteniya1/resource-estimation.git`
+
+Once you have all the enviroment set up, login to your Openshift cluster.
+
+`$ oc login --token=TOKEN --server=https://api.YOUR_CLUSTER_DOMAIN:6443`
+
+Create `resource-estimation` namespace.
+`$ oc new-project resource-estimation`
+
+Run the setup scripts to install the Openshift-pipeline and Postgresql operators.
+
+`$ ./helm/setup-prereq.sh`
+ 
+ You should see output similar to below:
+
+``` text
+Installing openshift-pipelines operator
+Release "openshift-pipelines" has been upgraded. Happy Helming!
+NAME: openshift-pipelines
+LAST DEPLOYED: Tue Mar 16 20:59:36 2021
+NAMESPACE: resource-estimation
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+
+Installing postgresql Operator
+Release "postgresql" does not exist. Installing it now.
+NAME: postgresql
+LAST DEPLOYED: Tue Mar 16 20:59:42 2021
+NAMESPACE: resource-estimation
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+```
+
+Setup github and quay registry secrets
+
+`$ ./helm/add-github-credentials.sh`
+`$ ./helm/add-quay-credentials.sh`
+
 
 ## Objective of the test
 1. Check the response times of a web application, according to the number of virtual users
