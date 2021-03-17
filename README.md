@@ -311,8 +311,8 @@ In order to estimate the resource requirements and determine the resource quota 
    - What is the best resource requirement for the startup time I need? 
    - Not applicable to every use case
 4. What’s my breakpoint with one pod - Note the resource usage. 
-   - Does the breakpoint lower than my desired metrics? 
-   - How many replicas do I need to start with for the desired metrics/performance goals?
+   - Is the breakpoint lower than my desired metrics? 
+   - How many replicas do I need to start with to achieve the desired metrics/performance goals?
 5. What’s the resource required to achieve the desired throughput with a normal workload? (You need to run this for a period of time say 1 day to 1 week)
 6. What’s the resource requirement to cope with spikes and "Black Friday" requests?
 7. Estimate the resource usage per pod/container
@@ -326,11 +326,55 @@ xxx
 2. **Record the test plans using Apache JMeter**
 xxx
 
-3. **Install Vertical Pod Autoscaling**
-xxx
+4. **Apply a VPA custome resource to monitor the application's resource usage**
 
-4. **Apply the  a VPA to monitor the application**
-xxx
+[Vertical Pod Autoscaler Operator (VPA)](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) automatically reviews the historic and current CPU and memory resources for containers in pods and can update the resource limits and requests based on the usage values it learns. 
+
+>The [VPA](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) uses individual custom resources (CR) to update all of the pods associated with a workload object, such as a Deployment, Deployment Config, StatefulSet, Job, DaemonSet, ReplicaSet, or ReplicationController.
+
+>The VPA helps you to understand the optimal CPU and memory usage for your pods and can automatically maintain pod resources through the pod lifecycle.
+
+VPA has three main components:
+
+
+1. Recommender - Monitors the current and past resource consumption, and provides recommended values for the container’s CPU and memory requests.
+
+2. Updater - Checks which of the pods have the correct resources set, and if they don’t, kills them so that they can be re-created by their controllers with the updated requests.
+ 
+3. Admission Plugin - Sets the correct resource requests on new pods.
+
+`vpa.yaml`
+
+``` yaml
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: todo-recommender-vpa
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment 
+    name: todo-spring 
+  updatePolicy:
+    updateMode: "Off" 
+```
+
+The VPA recommendations are stored in the `status`. As you can see in `vpa.yaml`, the `updateMode: "Off" `. This means no changes to the selected resources are performed based on the recommended values in the status. There are two other types: `updateMode: "Initial" ` and `updateMode: "Auto" `.
+
+**Initial**: with `Initial` recommendations are applied during creation of a Pod and it influences scheduling decision.
+**Auto**: this automatically restarts Pods with updated resources based on recommendation.
+
+VPA is not currently reccomended for Production deployment but for resources usage estimation, it's a good tool to deploy in the development environment.
+
+Let's create the CR.
+
+```
+$ oc apply -f ..//todo-spring-quarkus/k8s/vpa.yaml
+
+verticalpodautoscaler.autoscaling.k8s.io/todo-recommender-vpa created
+
+```
+
 ### Designing the Load Testing Plan using Apache JMeter
 We will be using Apache JMeter for the Performance Test.
 

@@ -5,7 +5,7 @@ metadata:
 spec:
   targetRef:
     apiVersion: "apps/v1"
-    kind:       Deployment 
-    name:       todo-spring 
+    kind: Deployment 
+    name: todo-spring 
   updatePolicy:
     updateMode: "Off" 
