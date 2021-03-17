@@ -295,8 +295,8 @@ In order to determine the resource quota to use for the Todo-application namespa
 1. Define performance goals
 2. Check the start-up time. This is important for scaling in peak periods
 3. Adjust to have a fast start-up time initially. 
-- What is the best resource requirement for the startup time I need? 
-- Not applicable to every use case
+-- What is the best resource requirement for the startup time I need? 
+-- Not applicable to every use case
 4. What’s my breakpoint with one pod - Note the resource usage. 
 - Does the breakpoint lower than my desired metrics? 
 - How many replicas do I need to start with for the desired metrics/performance goals?
