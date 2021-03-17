@@ -360,7 +360,6 @@ Your appication may be failing readiness probe test. That's because the applicat
 
 ``` yaml
 ...
-
   spec:
       containers:
         - resources:
@@ -373,7 +372,6 @@ Your appication may be failing readiness probe test. That's because the applicat
 
 ...
 ```
-
 The startup time should be fast enough now. 
 
 ![Todo Application Page](images/todo-app2.png)
