@@ -318,7 +318,7 @@ In order to estimate the resource requirements and determine the resource quota 
 7. Estimate the resource usage per pod/container
 8. Use that to determine your quota
 
-### Todo Application deployment and Tools Setup
+### Todo Application Deployment and Tools Setup
 Before we go through the proesses outlined above, let's prepare the application and the tools.
 #### Install and deploy the Todo-spring Application 
 
@@ -341,13 +341,13 @@ $ ./build-deploy-todo-spring v1.3.8
 ```
 This will build the application, tag the created image as `v1.3.8` , push to https://quay.io and from there deploy to Openshift.
 
-![](images/pipeline.png =250x250)
+![](images/pipeline.png)
 
-![](images/pipeline2.png =250x250)
+![](images/pipeline2.png)
 
-![](images/quay.png =250x250)
+![](images/quay.png)
 
-![](images/topology.png =250x250)
+![](images/topology.png)
 #### Record the test plans using Apache JMeter 
 
 #### Apply a VPA custome resource to monitor the application's resource usage
