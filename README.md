@@ -308,19 +308,15 @@ In order to determine the resource quota to use for the Todo-application namespa
 To begin, let's do the following:
 
 1. **Install and deploy Todo-spring Application**
-
 xxx
 
 2. **Record the test plans using Apache JMeter**
-
 xxx
 
 3. **Install Vertical Pod Autoscaling**
-
 xxx
 
 4. **Apply the  a VPA to monitor the application**
-
 xxx
 ### Designing the Load Testing Plan using Apache JMeter
 We will be using Apache JMeter for the Performance Test.
