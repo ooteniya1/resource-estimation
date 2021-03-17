@@ -222,7 +222,7 @@ In this workshop, we will be determining the resource requirement of a [Todo-spr
 The Architecture diagram below highlights the key components we will be using for the estimation process.
 
 ![](images/estimation_setup.png)
-### Prerequisites
+### Pre-requisites
 For this workshop, you will need the following:
 
 1. Access to Openshift Cluster
@@ -233,7 +233,7 @@ For this workshop, you will need the following:
 5. Create a secret for github
 6. Add the registry and github secret to Openshift pipeline serviceaccount
 7. Download Apache JMeter for Performance testing
-### Setup
+### Environment Setup
 We will use a script to setup the environment. You will nee dthe following tools pre-installed when you run the script.
 
 - [Helm](https://helm.sh/docs/intro/install/) : `helm` version
@@ -283,9 +283,22 @@ TEST SUITE: None
 Setup github and quay registry secrets
 
 `$ ./helm/add-github-credentials.sh`
+
 `$ ./helm/add-quay-credentials.sh`
 
+## Resource Estimation Process
+1. Install and deploy Todo-spring Application
+2. Perform Load Testing on the application
+3. Install Vertical Pod Autoscaling
+4. Apply the  a VPA to monitor the application
+### Designing the Performance Tets Plan
+We will be using Apache JMeter for the Performance Test.
 
+Download [Apache JMeter](https://jmeter.apache.org/) and extract in a directory.
+
+`$ unzip apache-jmeter-5.4.1.zip`
+
+#### 
 ## Objective of the test
 1. Check the response times of a web application, according to the number of virtual users
 2. Test the limits of an application (the number of users the application can accommodate before it crashes)
