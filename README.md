@@ -356,6 +356,22 @@ This will build the application, tag the created image as `v1.3.8` , push to htt
 ![Todo Application Topology](images/topology.png)
 *Todo Application Topology*
 
+Your appication may be failing readiness probe test. That's because the application does not have enough processing unit to complete startup. We will talk more about this later. In order to meet up ith the required startup time for the readiness probe, update the `Deployment` as follows:
+
+``` yaml
+spec:
+      containers:
+        - resources:
+            limits:
+              cpu: 600m
+              memory: 512Mi
+            requests:
+              cpu: 300m
+              memory: 128Mi
+```
+
+The startup time should be fast enough now.
+
 ![Todo Application Page](images/todo-app2.png)
 *Todo Application Page*
 
