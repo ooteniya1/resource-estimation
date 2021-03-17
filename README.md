@@ -343,11 +343,23 @@ This will build the application, tag the created image as `v1.3.8` , push to htt
 
 ![](images/pipeline.png)
 
+*Openshift pipeline*
+
 ![](images/pipeline2.png)
+
+*Openshift pipeline - Build Step*
+
+![](images/pipeline3.png)
+
+*Openshift pipeline - Deploy Step*
 
 ![](images/quay.png)
 
+*to-spring in image registry*
+
 ![](images/topology.png)
+
+*Todo Application*
 #### Record the test plans using Apache JMeter 
 
 #### Apply a VPA custome resource to monitor the application's resource usage
