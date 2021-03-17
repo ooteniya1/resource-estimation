@@ -356,7 +356,7 @@ This will build the application, tag the created image as `v1.3.8` , push to htt
 ![Todo Application Topology](images/topology.png)
 *Todo Application Topology*
 
-If the application is failing readiness check that's because the application does not have enough processing unit to complete the initialization process. We will talk more about this later. In order to meet up with the required startup time for the readiness probe, update the `Deployment` as follows:
+If the application is failing readiness check, that's because the application does not have enough processing unit to complete the initialization process. We will talk more about this later. In order to meet up with the required startup time for the readiness probe, update the `Deployment` as follows:
 
 ``` yaml
 ...
