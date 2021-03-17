@@ -295,8 +295,8 @@ In order to determine the resource quota to use for the Todo-application namespa
 1. Define performance goals
 2. Check the start-up time. This is important for scaling in peak periods
 3. Adjust to have a fast start-up time initially. 
--- What is the best resource requirement for the startup time I need? 
--- Not applicable to every use case
+- What is the best resource requirement for the startup time I need? 
+- Not applicable to every use case
 4. What’s my breakpoint with one pod - Note the resource usage. 
 - Does the breakpoint lower than my desired metrics? 
 - How many replicas do I need to start with for the desired metrics/performance goals?
@@ -310,13 +310,17 @@ To begin, let's do the following:
 1. **Install and deploy Todo-spring Application**
 
 xxx
+
 2. **Record the test plans using Apache JMeter**
 
 xxx
+
 3. **Install Vertical Pod Autoscaling**
+
 xxx
 
 4. **Apply the  a VPA to monitor the application**
+
 xxx
 ### Designing the Load Testing Plan using Apache JMeter
 We will be using Apache JMeter for the Performance Test.
