@@ -351,11 +351,16 @@ This will build the application, tag the created image as `v1.3.8` , push to htt
 *Openshift pipeline - Deploy Step*
 
 ![to-spring image repository](images/quay.png)
-*to-spring image repository*
+*Todo-spring image repository*
 
 ![Todo Application Topology](images/topology.png)
 *Todo Application Topology*
 
+![Todo Application Page](images/todo-app.png)
+*Todo Application Page*
+
+![Todo Application Swagger UI](images/swagger.png)
+*Todo Application Swagger UI*
 #### Record the test plans using Apache JMeter 
 
 #### Apply a VPA custome resource to monitor the application's resource usage
