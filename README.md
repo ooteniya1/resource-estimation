@@ -257,8 +257,9 @@ Create `resource-estimation` namespace.
 `$ oc new-project resource-estimation`
 
 Run the setup scripts to install the Openshift-pipeline and Postgresql operators.
+`$ cd helm`
 
-`$ ./helm/setup-prereq.sh`
+`$ ./setup-prereq.sh`
  
  You should see output similar to below:
 
@@ -280,13 +281,22 @@ NAMESPACE: resource-estimation
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
+
+Installing vertical pod autoscler
+Release "vertical-pod-autoscaler" does not exist. Installing it now.
+NAME: vertical-pod-autoscaler
+LAST DEPLOYED: Tue Mar 16 20:59:42 2021
+NAMESPACE: resource-estimation
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
 ```
 
-Setup github and quay registry secrets
+Now that we have Openshift-pipeline, postresql and vertical pod autoscaler operators installed, let's setup github and quay registry secrets and add it to Openshift-pipeline service account.
 
-`$ ./helm/add-github-credentials.sh`
+`$ ./add-github-credentials.sh`
 
-`$ ./helm/add-quay-credentials.sh`
+`$ ./add-quay-credentials.sh`
 
 ## Resource Estimation Process
 
@@ -307,7 +317,7 @@ In order to determine the resource quota to use for the Todo-application namespa
 
 To begin, let's do the following:
 
-1. **Install and deploy Todo-spring Application**
+1. **Install and deploy the Todo-spring Application**
 xxx
 
 2. **Record the test plans using Apache JMeter**
