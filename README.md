@@ -322,6 +322,32 @@ In order to estimate the resource requirements and determine the resource quota 
 Before we go through the proesses outlined above, let's prepare the application and the tools.
 #### Install and deploy the Todo-spring Application 
 
+This steps build on the previous setup steps. Make sure the steps below have been successfully completed.
+
+```
+$ cd helm
+$ ./setup-prereq.sh
+$ ./add-github-credentials.sh
+$ ./add-quay-credentials.sh
+
+ ```
+
+The Todo Application uses the `tekton-pipeline/todo-pipeline.yaml` to build and deploy the application Openshift. The application can be deployed as a Quarkus or Spring Boot application. We will be using the Spring Boot version.
+
+``` text
+$ cd todo-pipeline
+$ ./build-deploy-todo-spring v1.3.8
+
+```
+This will build the application, push the image created to https://quay.io and deploy to Openshift.
+
+![](images/pipeline.png=250x250)
+
+![](images/pipeline2.png=250x250)
+
+![](images/quay.png=250x250)
+
+![](images/topology.png=250x250)
 #### Record the test plans using Apache JMeter 
 
 #### Apply a VPA custome resource to monitor the application's resource usage
