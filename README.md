@@ -339,15 +339,15 @@ $ cd todo-pipeline
 $ ./build-deploy-todo-spring v1.3.8
 
 ```
-This will build the application, push the image created to https://quay.io and deploy to Openshift.
+This will build the application, tag the created image as `v1.3.8` , push to https://quay.io and from there deploy to Openshift.
 
-![](images/pipeline.png=250x250)
+![](images/pipeline.png =250x250)
 
-![](images/pipeline2.png=250x250)
+![](images/pipeline2.png =250x250)
 
-![](images/quay.png=250x250)
+![](images/quay.png =250x250)
 
-![](images/topology.png=250x250)
+![](images/topology.png =250x250)
 #### Record the test plans using Apache JMeter 
 
 #### Apply a VPA custome resource to monitor the application's resource usage
