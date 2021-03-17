@@ -356,7 +356,7 @@ This will build the application, tag the created image as `v1.3.8` , push to htt
 ![Todo Application Topology](images/topology.png)
 *Todo Application Topology*
 
-![Todo Application Page](images/todo-app.png)
+![Todo Application Page](images/todo-app2.png)
 *Todo Application Page*
 
 ![Todo Application Swagger UI](images/swagger.png)
