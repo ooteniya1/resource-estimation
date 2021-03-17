@@ -318,15 +318,13 @@ In order to estimate the resource requirements and determine the resource quota 
 7. Estimate the resource usage per pod/container
 8. Use that to determine your quota
 
-To begin, let's do the following:
+### Todo Application deployment and Tools Setup
+Before we go through the proesses outlined above, let's prepare the application and the tools.
+#### Install and deploy the Todo-spring Application 
 
-1. **Install and deploy the Todo-spring Application**
-xxx
+#### Record the test plans using Apache JMeter 
 
-2. **Record the test plans using Apache JMeter**
-xxx
-
-4. **Apply a VPA custome resource to monitor the application's resource usage**
+#### Apply a VPA custome resource to monitor the application's resource usage
 
 [Vertical Pod Autoscaler Operator (VPA)](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) automatically reviews the historic and current CPU and memory resources for containers in pods and can update the resource limits and requests based on the usage values it learns. 
 
