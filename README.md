@@ -293,14 +293,14 @@ Setup github and quay registry secrets
 2. Perform Load Testing on the application
 3. Install Vertical Pod Autoscaling
 4. Apply the  a VPA to monitor the application
-### Designing the Performance Tets Plan
+### Designing the Load Testing Plan using Apache JMeter
 We will be using Apache JMeter for the Performance Test.
 
 Download [Apache JMeter](https://jmeter.apache.org/) and extract in a directory.
 
 `$ unzip apache-jmeter-5.4.1.zip`
 
-#### 
+
 ## Objective of the test
 1. Check the response times of a web application, according to the number of virtual users
 2. Test the limits of an application (the number of users the application can accommodate before it crashes)
