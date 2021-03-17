@@ -461,11 +461,12 @@ Download [Apache JMeter](https://jmeter.apache.org/) and extract in a directory.
 7. Show the endpoints to profile in SwaggerUI
 8. Start test Plan Recording (Firefox browser and JMeter Recording)
 ### Define metrics: 
-Throughput=min 2000 tps
-Error rate=0.04%
-Concurrent users=1000/sec
-Peak Period User=4000/sec within 1 min windows
-Black Friday Peak Period User=5000/sec within 3 min windows
+- Throughput=min 2000 tps
+- Error rate=0.04%
+- Concurrent users=1000/sec
+- Peak Period User=4000/sec within 1 min windows
+- "Black Friday" Peak Period User=5000/sec within 3 min windows
+
 Switch to the Prepared Test cases for Normal and Peak Period and walkthrough
 
 
