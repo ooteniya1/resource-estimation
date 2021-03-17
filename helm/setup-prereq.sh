@@ -11,3 +11,7 @@ echo ""
 
 echo "Installing postgresql Operator" 
 helm upgrade --install postgresql postgresql
+
+echo ""
+echo "Installing vertical pod autoscler"
+helm upgrade --install vertical-pod-autoscaler vertical-pod-autoscaler
