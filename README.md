@@ -413,7 +413,7 @@ spec:
   updatePolicy:
     updateMode: "Off" 
 ```
-
+   
 The VPA recommendations are stored in the `status`. As you can see in `vpa.yaml`, the `updateMode: "Off" ` means no changes to the selected resources are performed based on the recommended values in the status. There are two other types: `updateMode: "Initial" ` and `updateMode: "Auto" `.
 
 **Initial**: means recommendations are applied during creation of a Pod and it influences scheduling decision.

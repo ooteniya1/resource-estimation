@@ -3,3 +3,4 @@
 target/
 .classpath
 .project
+push_to_git.sh 
