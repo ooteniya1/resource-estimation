@@ -499,6 +499,26 @@ We have designed three test scripts to execute on the Todo application:
 ![Abnormal Load Test Script](images/abnormal_load.png)
 *Abnormal Load Test Script*
 
+### Test Script Execution, Performance and Resource Monitoring
+
+To execute the designed Test scripts, we will be using the Apache JMeter CLI. This is a recokmended approach for running a load test as it avoids the overhead of the JMeter GUI. The CLI also generates a bunch of reports we can use to analyze the performance of the application.
+
+Openshift Monitoring and the installed VPA CR will be used to monitor the resource usage.
+
+We will follow the Resource Estimation process below:
+
+1. Check the start-up time. This is important for scaling in peak periods.
+2. Adjust to have a fast start-up time initially. 
+   - What is the best resource requirement for the startup time I need? 
+   - Not applicable to every use case
+3. What’s my breakpoint with one pod - Note the resource usage. 
+   - Is the breakpoint lower than my desired metrics? 
+   - How many replicas do I need to start with to achieve the desired metrics/performance goals?
+4. What’s the resource required to achieve the desired throughput with a normal workload? (You need to run this for a period of time say 1 day to 1 week)
+5. What’s the resource requirement to cope with spikes and "Black Friday" requests?
+6. Estimate the resource usage per pod/container
+7. Use that to determine your quota
+
 <!-- ![Apache JMeter Recorder](images/recorder.png)
 *Apache JMeter Recorder*
 
