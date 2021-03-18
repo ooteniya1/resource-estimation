@@ -347,11 +347,11 @@ This will build the application, tag the created image as `v1.3.8` , push to htt
 ![Openshift pipeline - Build Step](images/pipeline2.png)
 *Openshift pipeline - Build Step*
 
-![Openshift pipeline - Deploy Step](images/pipeline3.png)
-*Openshift pipeline - Deploy Step*
-
 ![to-spring image repository](images/quay.png)
 *Todo-spring image repository*
+
+![Openshift pipeline - Deploy Step](images/pipeline3.png)
+*Openshift pipeline - Deploy Step*
 
 ![Todo Application Topology](images/topology.png)
 *Todo Application Topology*
@@ -431,7 +431,7 @@ verticalpodautoscaler.autoscaling.k8s.io/todo-recommender-vpa created
 ```
 
 #### Record Test Plans using Apache JMeter
-Now that we have the Todo application up and running, the next step is to create our test plans based on the Todo endpoints.
+Now that we have the Todo application up and running, the next step is to create our test plans based on the Todo endpoints. For this workshop, the endpoints we would like to profile are:
 
 ```
 $ curl -X GET "http://todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com/todo/1" -H  "accept: */*"
@@ -465,9 +465,39 @@ Check : https://jmeter.apache.org/usermanual/best-practices.html
 
 
 
-### Designing the Load Testing Plan using Apache JMeter
+### Designing the Load Testing Plan
 
-![Apache JMeter Recorder](images/recorder.png)
+The first step in design a lod testing plan is to understand the performance goal/target opf the system under test from business perspectives.
+
+For our Todo application, we have the following performance requirements that the application must meet.
+
+1. **Throughput**: must be able to process minimum 1000 transactions/sec
+2. **Error rate**: 0.04% error rate, which means the application must perform at minimum of 99.96%
+3. **Boot-up time**: relatively fast boot time <= 40sec. This is neccessary in case there is a need for scaling.
+4. **Concurrent users**: minimum of 1000 users or requests/sec
+5. **Peak Period Users**: minimum of 4000 users or requests/sec within 1 min windows
+6. **Black Friday Peak Period User**: minimum of 5000 users or requests/sec within 3 min windows
+
+One of the ways of setting up your test script is using the Test Script Recorder. See the [step-by-step guide](https://jmeter.apache.org/usermanual/jmeter_proxy_step_by_step.html) for more information.
+
+Once you have the test scripts that mimiks the type of user interaction you would like to perform, next is to configure the [Thread Group](https://jmeter.apache.org/usermanual/component_reference.html#Thread_Group) which defines a pool of virtual users that will execute the test case against the system. See the [Elements of a Test Plan]( https://jmeter.apache.org/usermanual/test_plan.html) for more information.
+
+We have designed three test scripts to execute on the Todo application:
+
+1. Normal Load - at any give point in time, there will be 1000 concurrent users on the system per sec.
+
+![Normal Load Test Script](images/normal_load.png)
+*Normal Load Test Script*
+
+2. Peak Load - 
+![Peak Load Test Script](images/peak_load.png)
+*Peak Load Test Script*
+
+3. Abnormal Load.
+![Abnormal Load Test Script](images/abnormal_load.png)
+*Abnormal Load Test Script*
+
+<!-- ![Apache JMeter Recorder](images/recorder.png)
 *Apache JMeter Recorder*
 
 ![Apache JMeter Cert](images/recorder_cert.png)
@@ -480,7 +510,7 @@ Check : https://jmeter.apache.org/usermanual/best-practices.html
 *Apache JMeter Recorder Control*
 
 ![Apache JMeter Recorder Result](images/recording_result.png)
-*Apache JMeter Recorder Result*
+*Apache JMeter Recorder Result* -->
 ## Objective of the test
 1. Check the response times of a web application, according to the number of virtual users
 2. Test the limits of an application (the number of users the application can accommodate before it crashes)
