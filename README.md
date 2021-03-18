@@ -503,7 +503,7 @@ We have designed three test scripts to execute on the Todo application:
 
 To execute the designed Test scripts, we will be using the Apache JMeter CLI. This is a recokmended approach for running a load test as it avoids the overhead of the JMeter GUI. The CLI also generates a bunch of reports we can use to analyze the performance of the application.
 
-[Openshift Monitoring](https://docs.openshift.com/container-platform/4.7/monitoring/understanding-the-monitoring-stack.html)] and the installed [VPA](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) CR will be used to monitor the resource usage.
+[Openshift Monitoring](https://docs.openshift.com/container-platform/4.7/monitoring/understanding-the-monitoring-stack.html) and the installed [VPA](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) CR will be used to monitor the resource usage.
 
 We will follow the Resource Estimation process below:
 
