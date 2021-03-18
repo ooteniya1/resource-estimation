@@ -7,6 +7,7 @@
 while :; 
   do 
   clear
-  $1
+  $1 > log.txt
+  tail -n 15 log.txt
   sleep $2
 done

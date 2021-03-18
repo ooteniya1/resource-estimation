@@ -356,7 +356,7 @@ This will build the application, tag the created image as `v1.3.8` , push to htt
 ![Todo Application Topology](images/topology.png)
 *Todo Application Topology*
 
-If the application is failing readiness check, that's because the application does not have enough processing unit to complete the initialization process. We will talk more about this later. In order to meet up with the required startup time for the readiness probe, update the `Deployment` as follows:
+If the application is failing readiness check, that's because the application does not have enough processing unit to complete the initialization process. We will talk more about this later. In order to meet the required startup time for the readiness probe, update the `Deployment` as follows:
 
 ``` yaml
 ...
@@ -379,7 +379,7 @@ The startup time should be fast enough now.
 
 ![Todo Application Swagger UI](images/swagger.png)
 *Todo Application Swagger UI*
-#### Record the test plans using Apache JMeter 
+
 
 #### Apply a VPA custome resource to monitor the application's resource usage
 
@@ -430,12 +430,33 @@ verticalpodautoscaler.autoscaling.k8s.io/todo-recommender-vpa created
 
 ```
 
+#### Record Test Plans using Apache JMeter
+Now that we have the Todo application up and running, the next step is to create our test plans based on the Todo endpoints.
+
+```
+$ curl -X GET "http://todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com/todo/1" -H  "accept: */*"
+
+$ curl -X PUT "http://todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com/todo" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"id\":0,\"title\":\"Test Resource Estimation\",\"completed\":true}" 
+
+$ curl -X POST "http://todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com/todo" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"id\":0,\"title\":\"string\",\"completed\":true}"
+```
+
+Let's first download and install JMeter.
+
+Download [Apache JMeter](https://jmeter.apache.org/) and extract in a directory. Start the application.
+
+```
+$ unzip apache-jmeter-5.4.1.zip
+$ cd apache-jmeter-5.4.1
+$ ./bin/jmeter.sh
+
+```
+
+
+
+
 ### Designing the Load Testing Plan using Apache JMeter
-We will be using Apache JMeter for the Performance Test.
 
-Download [Apache JMeter](https://jmeter.apache.org/) and extract in a directory.
-
-`$ unzip apache-jmeter-5.4.1.zip`
 
 
 ## Objective of the test
@@ -492,3 +513,5 @@ Run JMeter from Command line
 ## Peak load CLI command
 ./apache-jmeter-5.4.1/bin/jmeter.sh -n -t Todo-ThreadGroup_OCP_PEAK.jmx -l result.txt -e -o ./report
 
+$JMETER_HOME/bin/jmeter.sh -n -t Todo-ThreadGroup_OCP_NORMAL.jmx -l result.txt -e -o ./report  
+open -a "Google Chrome" file:///Users/ooteniya/dev-tools/projects/bell/load_test/report/index.html
