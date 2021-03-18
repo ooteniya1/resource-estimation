@@ -2,7 +2,7 @@ Table of Contents
 =================
 
    * [Table of Contents](#table-of-contents)
-   * [Cloud-Native Application Resource Estimation - Part 1](#cloud-native-application-resource-estimation---part-1)
+   * [Cloud-Native Application Resource Estimation - Part 1: Concepts](#cloud-native-application-resource-estimation---part-1-concepts)
       * [Definitions](#definitions)
          * [Compute Resource Types](#compute-resource-types)
          * [Resource Units](#resource-units)
@@ -18,7 +18,7 @@ Table of Contents
       * [Conclusion](#conclusion)
       * [References](#references)
       * [Credits](#credits)
-   * [Cloud-Native Application Resource Estimation - Part 2](#cloud-native-application-resource-estimation---part-2)
+   * [Cloud-Native Application Resource Estimation - Part 2: Process](#cloud-native-application-resource-estimation---part-2-process)
       * [Resource Estimation Setup](#resource-estimation-setup)
          * [Pre-requisites](#pre-requisites)
          * [Environment Setup](#environment-setup)
@@ -36,7 +36,7 @@ Table of Contents
       * [Normal load CLI command](#normal-load-cli-command)
       * [Peak load CLI command](#peak-load-cli-command)
 
-# Cloud-Native Application Resource Estimation - Part 1
+# Cloud-Native Application Resource Estimation - Part 1: Concepts
 As a developer or an Architect, one of the very first decisions you need to make when deploying an application to the cloud (whether public, private or on-prem) is to determine how much resources the application needs. Teams get their applications to production before they realize the resources are either under or over estimated, which often leads to fire fighting in production environment. Most the operational challenges faced in production are as a result of the fact that this process is often overlooked. 
 
 The benefits of properly estimating the resources an application needs before getting to production among others are:
@@ -251,7 +251,7 @@ In summary, it is important to follow the recommendation below to arrive at a ve
 1. [Eric Deandrea](https://github.com/edeandrea)  for the original [Todo-spring-quarkus](https://github.com/edeandrea/todo-spring-quarkus) application.
 2. Ed Seymour for the QoS and Limit Range diagrams 
 
-# Cloud-Native Application Resource Estimation - Part 2
+# Cloud-Native Application Resource Estimation - Part 2: Process
 In the first first part of this article, we touched on the concepts and approach of Application resource estimation. In this secoind part, we will be walking you through a pratical example of Application resource estimation.
 
 ## Resource Estimation Setup
