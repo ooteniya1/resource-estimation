@@ -451,14 +451,27 @@ $ cd apache-jmeter-5.4.1
 $ ./bin/jmeter.sh
 
 ```
-
+![Apache JMeter GUI](images/jmeter_home.png)
+*Apache JMeter GUI*
 
 
 
 ### Designing the Load Testing Plan using Apache JMeter
 
+![Apache JMeter Recorder](images/recorder.png)
+*Apache JMeter Recorder*
 
+![Apache JMeter Cert](images/recorder_cert.png)
+*Apache JMeter Cert*
 
+![Firefox Proxy Setting](images/firefox_proxy.png)
+*Firefox Proxy Setting*
+
+![Apache JMeter Recorder Control](images/recorder_control.png)
+*Apache JMeter Recorder Control*
+
+![Apache JMeter Recorder Result](images/recording_result.png)
+*Apache JMeter Recorder Result*
 ## Objective of the test
 1. Check the response times of a web application, according to the number of virtual users
 2. Test the limits of an application (the number of users the application can accommodate before it crashes)
