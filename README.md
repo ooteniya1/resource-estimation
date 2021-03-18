@@ -1,3 +1,40 @@
+Table of Contents
+=================
+
+   * [Cloud-Native Application Resource Estimation - Part 1](#cloud-native-application-resource-estimation---part-1)
+      * [Definitions](#definitions)
+         * [Compute Resource Types](#compute-resource-types)
+         * [Resource Units](#resource-units)
+         * [Resource Quotas](#resource-quotas)
+         * [Request and Limits](#request-and-limits)
+         * [Limit Range](#limit-range)
+         * [Quality of Service (QoS)](#quality-of-service-qos)
+         * [Resource Estimation: Well-estimation, Over-estimation and Under-estimation](#resource-estimation-well-estimation-over-estimation-and-under-estimation)
+      * [Resource Estimation Approach](#resource-estimation-approach)
+         * [Performance Tuning Good Practice](#performance-tuning-good-practice)
+         * [Load Testing](#load-testing)
+         * [Scaling](#scaling)
+      * [Conclusion](#conclusion)
+      * [References](#references)
+      * [Credits](#credits)
+   * [Cloud-Native Application Resource Estimation - Part 2](#cloud-native-application-resource-estimation---part-2)
+      * [Resource Estimation Setup](#resource-estimation-setup)
+         * [Pre-requisites](#pre-requisites)
+         * [Environment Setup](#environment-setup)
+      * [Resource Estimation Process](#resource-estimation-process)
+         * [Todo Application Deployment and Tools Setup](#todo-application-deployment-and-tools-setup)
+            * [Install and deploy the Todo-spring Application](#install-and-deploy-the-todo-spring-application)
+            * [Apply a VPA custome resource to monitor the application's resource usage](#apply-a-vpa-custome-resource-to-monitor-the-applications-resource-usage)
+            * [Record Test Plans using Apache JMeter](#record-test-plans-using-apache-jmeter)
+         * [Designing the Load Testing Plan](#designing-the-load-testing-plan)
+         * [Test Script Execution, Performance and Resource Monitoring](#test-script-execution-performance-and-resource-monitoring)
+      * [Objective of the test](#objective-of-the-test)
+      * [Preparation:](#preparation)
+         * [Define metrics:](#define-metrics)
+      * [Resource Estimation](#resource-estimation)
+      * [Normal load CLI command](#normal-load-cli-command)
+      * [Peak load CLI command](#peak-load-cli-command)
+
 # Cloud-Native Application Resource Estimation - Part 1
 As a developer or an Architect, one of the very first decisions you need to make when deploying an application to the cloud (whether public, private or on-prem) is to determine how much resources the application needs. Teams get their applications to production before they realize the resources are either under or over estimated, which often leads to fire fighting in production environment. Most the operational challenges faced in production are as a result of the fact that this process is often overlooked. 
 
@@ -516,8 +553,8 @@ We will follow the Resource Estimation process below:
    - How many replicas do I need to start with to achieve the desired metrics/performance goals?
 4. What’s the resource required to achieve the desired throughput with a normal workload? (You need to run this for a period of time say 1 day to 1 week)
 5. What’s the resource requirement to cope with spikes and "Black Friday" requests?
-6. Estimate the resource usage per pod/container
-7. Use that to determine your quota
+6. Estimate the resource usage per pod/container.
+7. Use that to determine the quota.
 
 <!-- ![Apache JMeter Recorder](images/recorder.png)
 *Apache JMeter Recorder*
