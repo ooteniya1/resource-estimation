@@ -1,6 +1,7 @@
 Table of Contents
 =================
 
+   * [Table of Contents](#table-of-contents)
    * [Cloud-Native Application Resource Estimation - Part 1](#cloud-native-application-resource-estimation---part-1)
       * [Definitions](#definitions)
          * [Compute Resource Types](#compute-resource-types)
