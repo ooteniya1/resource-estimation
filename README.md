@@ -484,16 +484,18 @@ Once you have the test scripts that mimiks the type of user interaction you woul
 
 We have designed three test scripts to execute on the Todo application:
 
-1. Normal Load - at any give point in time, there will be 1000 concurrent users on the system per sec.
+1. Normal Load - at any give point in time, there will be 1000 concurrent users on the system per sec. For the pupose of this workshop, the normal load will be run for 1 hour and then we monitor the performance and the ability of our configuration to handle such requests.
 
 ![Normal Load Test Script](images/normal_load.png)
 *Normal Load Test Script*
 
-2. Peak Load - 
+2. Peak Load - For a peak load, we expect 4000 concurrent users to be on the system for several cycles within a second for a total during of 1 minute. This is in addition to the 1000 concurrent users on the system per sec in a normal load, making a total of 5000 concurrent users/sec.
+
 ![Peak Load Test Script](images/peak_load.png)
 *Peak Load Test Script*
 
-3. Abnormal Load.
+3. Abnormal Load - For an abnormal load, we expect 5000 concurrent users to be on the system for several cycles within a second for a total during of 3 minutes. This is in addition to the 1000 concurrent users on the system per sec in a normal load, making a total of 6000 concurrent users/sec.
+
 ![Abnormal Load Test Script](images/abnormal_load.png)
 *Abnormal Load Test Script*
 
