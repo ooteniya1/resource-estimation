@@ -546,13 +546,15 @@ We will follow the Resource Estimation process below:
 
 1. Check the start-up time. This is important for scaling in peak periods.
 2. Adjust to have a fast start-up time initially. 
-   - What is the best resource requirement for the startup time I need? 
-   - Not applicable to every use case
+   * What is the best resource requirement for the startup time I need? 
+   * Not applicable to every use case
 3. What’s my breakpoint with one pod - Note the resource usage. 
-   - Is the breakpoint lower than my desired metrics? 
-   - How many replicas do I need to start with to achieve the desired metrics/performance goals?
+   * Is the breakpoint lower than my desired metrics? 
+   * How many replicas do I need to start with to achieve the desired metrics/performance goals?
 4. What’s the resource required to achieve the desired throughput with a normal workload? (You need to run this for a period of time say 1 day to 1 week)
 5. What’s the resource requirement to cope with spikes and "Black Friday" requests?
+   * How many pods do I need to cope effectively?
+   * What's the required memory or CPU utilization to scale up?
 6. Estimate the resource usage per pod/container.
 7. Use that to determine the quota.
 
