@@ -539,7 +539,7 @@ To execute the designed Test scripts, we will be using the Apache JMeter CLI. Th
 
 [Openshift Monitoring](https://docs.openshift.com/container-platform/4.7/monitoring/understanding-the-monitoring-stack.html) and the installed [VPA](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) CR will be used to monitor the resource usage.
 
-We will follow the Resource Estimation process below:
+We will follow the steps below to estimate resources to fulfil our performance requirements.
 
 1. Check the start-up time. This is important for scaling in peak periods.
 2. Adjust to have a fast start-up time initially. 
@@ -555,6 +555,39 @@ We will follow the Resource Estimation process below:
 6. Estimate the resource usage per pod/container.
 7. Use that to determine the quota.
 
+#### Step 1: 
+We have a start up time requirement of <= 40sec. This is important because during an peak periods like "Black Friday", we want to be able to possibly scale by adding more pod replicas to cater for the workload. Our current configuration will fail readiness check because the application will take a long time to initialize based on the readiness check configuration. The CPU is throttled based on the currently configured CPU request and limit.
+
+```yaml
+...
+spec:
+      containers:
+        - image: PIPELINE_REPLACE:latest
+          imagePullPolicy: Always
+          name: todo-spring
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "60m"  
+            requests:
+              memory: "128Mi"
+              cpu: "30m"
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 2
+            timeoutSeconds: 50
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 3
+...            
+
+```
 <!-- ![Apache JMeter Recorder](images/recorder.png)
 *Apache JMeter Recorder*
 
