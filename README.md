@@ -585,7 +585,7 @@ spec:
 ...            
 ```
 
-The Pod will be killed and restarted based on the `restartPolicy`
+The Pod will be killed and restarted based on its `restartPolicy`
 
 ![CrashLoopBackOff](images/crash_loop.png)
 *CrashLoopBackOff*
@@ -593,7 +593,10 @@ The Pod will be killed and restarted based on the `restartPolicy`
 ![Failed Startup Probe](images/failed_startup_probe.png)
 *Failed Startup Probe*
 
-The solution to this is to bump up the CPU resources required to give it enough processing power to startup at the required less than 40 secs target.
+![Failed Startup Probe](images/failed_pod.png)
+*Failed Pod*
+
+The solution to this is to bump up the CPU resources required to give it enough processing power to startup at the required less than 40 secs startup target. Below is the new configuration.
 
 ```yaml
 ...
@@ -623,7 +626,6 @@ resources:
 ![Apache JMeter Recorder Result](images/recording_result.png)
 *Apache JMeter Recorder Result* -->
 
-Run JMeter from Command line
 ## Normal load CLI command
 ./apache-jmeter-5.4.1/bin/jmeter.sh -n -t Todo-ThreadGroup_OCP_NORMAL.jmx -l result.txt -e -o ./report
 
