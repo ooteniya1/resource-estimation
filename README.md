@@ -594,6 +594,7 @@ The Pod will be killed and restarted based on its `restartPolicy`
 *Failed Startup Probe*
 
 ![Failed Startup Probe](images/failed_pod.png)
+
 *Failed Pod*
 
 The solution to this is to bump up the CPU resources required to give it enough processing power to startup at the required less than 40 secs startup target. Below is the new configuration.
