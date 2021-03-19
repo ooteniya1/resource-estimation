@@ -640,7 +640,7 @@ With this new configuration, we are able to meet the startup target of less than
 > At times, you may need to tune some runtime paramaters such as [JVM parameters](https://learning.oreilly.com/library/view/java-performance-2nd/9781492056102/) etc, to achieve the desired performance.
 
 
-#### Step 2: Determine the application breakpoint
+#### Step 2: Determine the application breakpoint with a single pod with respect to the target throughput.
 
 <!-- ![Apache JMeter Recorder](images/recorder.png)
 *Apache JMeter Recorder*
