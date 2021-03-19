@@ -29,6 +29,8 @@ Table of Contents
             * [Record Test Plans using Apache JMeter](#record-test-plans-using-apache-jmeter)
          * [Designing the Load Testing Plan](#designing-the-load-testing-plan)
          * [Test Script Execution, Performance and Resource Monitoring](#test-script-execution-performance-and-resource-monitoring)
+            * [Step 1: Determine the right resources to achieve the required startup time](#step-1-determine-the-right-resources-to-achieve-the-required-startup-time)
+            * [Step 2: Determine the application breakpoint](#step-2-determine-the-application-breakpoint)
       * [Normal load CLI command](#normal-load-cli-command)
       * [Peak load CLI command](#peak-load-cli-command)
 
@@ -555,14 +557,15 @@ We will follow the steps below to estimate resources to fulfil our performance r
 6. Estimate the resource usage per pod/container.
 7. Use that to determine the quota.
 
-#### Step 1: Get the right resources to achieve the startup target
+#### Step 1: Determine the right resources to achieve the required startup time
+
 We have a start up time requirement of <= 40sec. This is important because during an peak periods like "Black Friday", we want to be able to possibly scale by adding more pod replicas to cater for the load. Our current configuration will fail [`Startup probe`](https://docs.openshift.com/container-platform/4.7/applications/application-health.html) because the application will take a long time to initialize. The CPU is throttled based on the current CPU request and limit configurations. 
 
 ```yaml
 ...
 spec:
       containers:
-        - image: PIPELINE_REPLACE:latest
+        - image: 'quay.io/ooteniya/todo-spring:v1.3.8'
           imagePullPolicy: Always
           name: todo-spring
           resources:
@@ -604,13 +607,40 @@ The solution to this is to bump up the CPU resources required to give it enough 
 resources:
   limits:
     memory: "512Mi"
-    cpu: "400m"  
+    cpu: "240m"  
   requests:
     memory: "128Mi"
-    cpu: "100m"
+    cpu: "200m"
 ...
 ```
 
+With a CPU resource request of 200m and 240m (20% of request value) limit, the startup time of 73.902seconds does not meet the startup performance target. The pod will be restarted because it's lower than the startup probe of `
+
+![Failed Startup Probe](images/startup_notokay.png)
+*Startup not up to Target*
+
+ We need to play around with the request and limit (20% of request) to ahieve that target.  
+
+ ```yaml
+...
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "480m"  
+  requests:
+    memory: "128Mi"
+    cpu: "400m"
+...
+```
+
+With this new configuration, we are able to meet the startup target of less than 40sec. 
+![Startup Target Met](images/startup_success.png)
+*Startup Target Met*
+
+> At times, you may need to tune some runtime paramaters such as [JVM parameters](https://learning.oreilly.com/library/view/java-performance-2nd/9781492056102/) etc, to achieve the desired performance.
+
+
+#### Step 2: Determine the application breakpoint
 
 <!-- ![Apache JMeter Recorder](images/recorder.png)
 *Apache JMeter Recorder*

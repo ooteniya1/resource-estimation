@@ -56,5 +56,5 @@ spec:
               path: /health
               port: 8080 
             failureThreshold: 3
-            periodSeconds: 10 
+            periodSeconds: 40
 
