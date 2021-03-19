@@ -556,7 +556,7 @@ We will follow the steps below to estimate resources to fulfil our performance r
 7. Use that to determine the quota.
 
 #### Step 1: 
-We have a start up time requirement of <= 40sec. This is important because during an peak periods like "Black Friday", we want to be able to possibly scale by adding more pod replicas to cater for the workload. Our current configuration will fail readiness check because the application will take a long time to initialize based on the readiness check configuration. The CPU is throttled based on the currently configured CPU request and limit.
+We have a start up time requirement of <= 40sec. This is important because during an peak periods like "Black Friday", we want to be able to possibly scale by adding more pod replicas to cater for the load. Our current configuration will fail [`Startup probe`](https://docs.openshift.com/container-platform/4.7/applications/application-health.html) because the application will take a long time to initialize. The CPU is throttled based on the current CPU request and limit configurations. 
 
 ```yaml
 ...
@@ -575,19 +575,39 @@ spec:
           ports:
             - containerPort: 8080
               protocol: TCP
-          readinessProbe:
-            httpGet:
+          ...
+          startupProbe: 
+            httpGet: 
               path: /health
-              port: 8080
-              scheme: HTTP
-            initialDelaySeconds: 2
-            timeoutSeconds: 50
-            periodSeconds: 30
-            successThreshold: 1
+              port: 8080 
             failureThreshold: 3
+            periodSeconds: 40 
 ...            
-
 ```
+
+The Pod will be killed and restarted based on the `restartPolicy`
+
+![CrashLoopBackOff](images/crash_loop.png)
+*CrashLoopBackOff*
+
+![Failed Startup Probe](images/failed_startup_probe.png)
+*Failed Startup Probe*
+
+The solution to this is to bump up the CPU resources required to give it enough processing power to startup at the required less than 40 secs target.
+
+```yaml
+...
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "400m"  
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+...
+```
+
+
 <!-- ![Apache JMeter Recorder](images/recorder.png)
 *Apache JMeter Recorder*
 
