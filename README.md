@@ -637,7 +637,7 @@ With this new configuration, we are able to meet the startup target of less than
 ![Startup Target Met](images/startup_success.png)
 *Startup Target Met*
 
-> Do not forget to tune some runtime paramaters such as [JVM parameters](https://learning.oreilly.com/library/view/java-performance-2nd/9781492056102/) etc, to achieve the optimal performance.
+> Do not forget to tune the runtime paramaters such as [JVM parameters for Java](https://learning.oreilly.com/library/view/java-performance-2nd/9781492056102/) etc, to achieve the optimal performance.
 
 
 #### Step 2: Determine the application breakpoint.
