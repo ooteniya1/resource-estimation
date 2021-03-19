@@ -30,7 +30,7 @@ Table of Contents
          * [Designing the Load Testing Plan](#designing-the-load-testing-plan)
          * [Test Script Execution, Performance and Resource Monitoring](#test-script-execution-performance-and-resource-monitoring)
             * [Step 1: Determine the right resources to achieve the required startup time](#step-1-determine-the-right-resources-to-achieve-the-required-startup-time)
-            * [Step 2: Determine the application breakpoint](#step-2-determine-the-application-breakpoint)
+            * [Step 2: Determine the application breakpoint with a single pod with respect to the target throughput.](#step-2-determine-the-application-breakpoint-with-a-single-pod-with-respect-to-the-target-throughput)
       * [Normal load CLI command](#normal-load-cli-command)
       * [Peak load CLI command](#peak-load-cli-command)
 
