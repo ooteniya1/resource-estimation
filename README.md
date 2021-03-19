@@ -550,7 +550,7 @@ We will follow the Resource Estimation process below:
    * How many replicas do I need to start with to achieve the desired metrics/performance goals?
 4. What’s the resource required to achieve the desired throughput with a normal workload? (You need to run this for a period of time say 1 day to 1 week)
 5. What’s the resource requirement to cope with spikes and "Black Friday" requests?
-   * How many pods do I need to cope effectively?
+   * How many pods does the application need to cope effectively?
    * What's the required memory or CPU utilization to scale up?
 6. Estimate the resource usage per pod/container.
 7. Use that to determine the quota.
