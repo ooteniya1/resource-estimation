@@ -555,7 +555,7 @@ We will follow the steps below to estimate resources to fulfil our performance r
 6. Estimate the resource usage per pod/container.
 7. Use that to determine the quota.
 
-#### Step 1: 
+#### Step 1: Get the right resources to achieve the startup target
 We have a start up time requirement of <= 40sec. This is important because during an peak periods like "Black Friday", we want to be able to possibly scale by adding more pod replicas to cater for the load. Our current configuration will fail [`Startup probe`](https://docs.openshift.com/container-platform/4.7/applications/application-health.html) because the application will take a long time to initialize. The CPU is throttled based on the current CPU request and limit configurations. 
 
 ```yaml
