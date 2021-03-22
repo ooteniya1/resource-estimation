@@ -537,7 +537,7 @@ We have designed three test scripts to execute on the Todo application:
 
 ### Test Script Execution, Performance and Resource Monitoring
 
-To execute the designed Test scripts, we will be using the Apache JMeter CLI. This is a recokmended approach for running a load test as it avoids the overhead of the JMeter GUI. The CLI also generates a bunch of reports we can use to analyze the performance of the application.
+To execute the designed Test scripts, we will be using the Apache JMeter CLI. This is a recommended approach for running a load test as it avoids the overhead of the JMeter GUI. The CLI also generates a bunch of reports we can use to analyze the performance of the application. JMeter GUI to should be used mainly to create, maintain, and validate our scripts.  The CLI consumes fewer resources and gives more reliable results than lad testing with GUI.
 
 [Openshift Monitoring](https://docs.openshift.com/container-platform/4.7/monitoring/understanding-the-monitoring-stack.html) and the installed [VPA](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) CR will be used to monitor the resource usage.
 
@@ -548,8 +548,8 @@ We will follow the steps below to estimate resources to fulfil our performance r
    * What is the best resource requirement for the startup time I need? 
    * Not applicable to every use case
 3. What’s my breakpoint with one pod - Note the resource usage. 
-   * Is the breakpoint lower than my desired metrics? 
-   * How many replicas do I need to start with to achieve the desired metrics/performance goals?
+   * Is the breakpoint lower than my desired performance goal? 
+   * How many replicas do I need to start with to achieve the desired performance goals?
 4. What’s the resource required to achieve the desired throughput with a normal workload? (You need to run this for a period of time say 1 day to 1 week)
 5. What’s the resource requirement to cope with spikes and "Black Friday" requests?
    * How many pods does the application need to cope effectively?
@@ -559,7 +559,7 @@ We will follow the steps below to estimate resources to fulfil our performance r
 
 #### Step 1: Determine the right resources to achieve the required startup time
 
-We have a start up time requirement of <= 40sec. This is important because during an peak periods like "Black Friday", we want to be able to possibly scale by adding more pod replicas to cater for the load. Our current configuration will fail [`Startup probe`](https://docs.openshift.com/container-platform/4.7/applications/application-health.html) because the application will take a long time to initialize. The CPU is throttled based on the current CPU request and limit configurations. 
+We have a start up time requirement of <= 40sec. This is important because during peak periods like "Black Friday", we want to be able to possibly scale by adding more pod replicas to cater for the load. Our current configuration will fail [`Startup probe`](https://docs.openshift.com/container-platform/4.7/applications/application-health.html) because the application will take a long time to initialize. The CPU is throttled based on the current CPU request and limit configurations. 
 
 ```yaml
 ...
@@ -642,7 +642,11 @@ With this new configuration, we are able to meet the startup target of less than
 
 #### Step 2: Determine the application breakpoint.
 
-Now that we have achieved the required startup time, next is to determine the application's breakpoint with a single pod with respect to the target throughput.
+Now that we have achieved the required startup time, next is to determine the application's breakpoint with a single pod, with respect to the target throughput.
+
+The purpose of this step is to determine if the application is able to handle a normal load with the current startup configuration. 
+
+To determine the breakpoint, we need to start from to put a normal load on 
 
 <!-- ![Apache JMeter Recorder](images/recorder.png)
 *Apache JMeter Recorder*
