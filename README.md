@@ -537,7 +537,9 @@ We have designed three test scripts to execute on the Todo application:
 
 ### Test Script Execution, Performance and Resource Monitoring
 
-To execute the designed Test scripts, we will be using the Apache JMeter CLI. This is a recommended approach for running a load test as it avoids the overhead of the JMeter GUI. The CLI also generates a bunch of reports we can use to analyze the performance of the application. JMeter GUI to should be used mainly to create, maintain, and validate our scripts.  The CLI consumes fewer resources and gives more reliable results than lad testing with GUI.
+To execute the designed Test scripts, we will be using the Apache JMeter CLI. This is a recommended approach for running a load test as it avoids the overhead of the JMeter GUI. The CLI also generates a bunch of reports we can use to analyze the performance of the application. The main benefot of CLI over the GUI for performaning load testing is that it consumes fewer resources and gives more reliable results than the GUI. 
+
+>JMeter GUI should only be used to create, maintain, and validate our scripts.  Once the script is validated, use the CLI to run the load test.
 
 [Openshift Monitoring](https://docs.openshift.com/container-platform/4.7/monitoring/understanding-the-monitoring-stack.html) and the installed [VPA](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) CR will be used to monitor the resource usage.
 
