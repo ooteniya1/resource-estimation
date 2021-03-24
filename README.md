@@ -517,11 +517,11 @@ The first step in design a lod testing plan is to understand the performance goa
 For our Todo application, we have the following performance requirements that the application must meet.
 
 1. **Throughput**: must be able to process minimum 1000 transactions/sec
-2. **Error rate**: 0.04% error rate, which means the application must perform at minimum of 99.96%
+2. **Error rate**: 0.04% error rate, which means the application must perform at a minimum of 99.96%
 3. **Boot-up time**: relatively fast boot time <= 40sec. This is neccessary in case there is a need for scaling.
-4. **Concurrent users**: minimum of 1000 users or requests/sec
-5. **Peak Period Users**: minimum of 4000 users or requests/sec within 1 min windows
-6. **Black Friday Peak Period User**: minimum of 5000 users or requests/sec within 3 min windows
+4. **Concurrent users**: handle up to 2000 users or requests/sec
+5. **Peak Period Users**: handle up to 4000 users or requests/sec within 1 min windows
+6. **Black Friday Peak Period User**: handle up to 6000 users or requests/sec within 3 min windows
 
 One of the ways of setting up your test script is using the Test Script Recorder. See the [step-by-step guide](https://jmeter.apache.org/usermanual/jmeter_proxy_step_by_step.html) for more information.
 
@@ -529,17 +529,17 @@ Once you have the test scripts that mimiks the type of user interaction you woul
 
 We have designed three test scripts to execute on the Todo application:
 
-1. **Normal Load** - at any give point in time, there will be 1000 concurrent users on the system per sec. For the pupose of this workshop, the normal load will be run for 1 hour and then we monitor the performance and the ability of our configuration to handle such requests.
+1. **Normal Load** - at any give point in time, there will be 2000 concurrent users on the system per sec. For the pupose of this workshop, the normal load will be run for 1 hour and then we monitor the performance and the ability of our configuration to handle such requests.
 
 ![Normal Load Test Script](images/normal_load.png)
 *Normal Load Test Script*
 
-2. **Peak Load** - For a peak load, we expect 4000 concurrent users to be on the system for several cycles within a second for a total during of 1 minute. This is in addition to the 1000 concurrent users on the system per sec in a normal load, making a total of 5000 concurrent users/sec.
+2. **Peak Load** - For a peak load, we expect 4000 additional concurrent users to be on the system for several cycles within a second for a total during of 1 minute. This is in addition to the 2000 concurrent users on the system per sec in a normal load, making a total of 6000 concurrent users/sec.
 
 ![Peak Load Test Script](images/peak_load.png)
 *Peak Load Test Script*
 
-3. **Abnormal Load** - For an abnormal load, we expect 5000 concurrent users to be on the system for several cycles within a second for a total during of 3 minutes. This is in addition to the 1000 concurrent users on the system per sec in a normal load, making a total of 6000 concurrent users/sec.
+3. **Abnormal Load** - For an abnormal load, we expect 5000 additional concurrent users to be on the system for several cycles within a second for a total during of 3 minutes. This is in addition to the 2000 concurrent users on the system per sec in a normal load, making a total of 7000 concurrent users/sec.
 
 ![Abnormal Load Test Script](images/abnormal_load.png)
 *Abnormal Load Test Script*
