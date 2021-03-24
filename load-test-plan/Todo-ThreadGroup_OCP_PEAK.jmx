@@ -215,7 +215,7 @@
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com</stringProp>
+          <stringProp name="HTTPSampler.domain">todo-spring-resource-estimation.apps.cluster-5b05.sandbox167.opentlc.com</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -267,7 +267,7 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com</stringProp>
+          <stringProp name="HTTPSampler.domain">todo-spring-resource-estimation.apps.cluster-5b05.sandbox167.opentlc.com</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -327,7 +327,7 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com</stringProp>
+          <stringProp name="HTTPSampler.domain">todo-spring-resource-estimation.apps.cluster-5b05.sandbox167.opentlc.com</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
