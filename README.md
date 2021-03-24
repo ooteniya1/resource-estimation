@@ -662,6 +662,7 @@ To determine the breakpoint, we need to start from to put a normal load on
 | # Virtual Users |  Throughput    | % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
 | :-------------: | :------------: | :--------: | :------------: | :-------------: | :-------: | :----------------: | :-------------------: |
 |       2000      |     962        |     0      |   480m         |   512Mi         |     1     |         480m       |         512Mi         |
+|       2000      |     962        |     0      |   576m         |   512Mi         |     1     |         576m       |         512Mi         |
 
 
 <!-- ![Apache JMeter Recorder](images/recorder.png)
