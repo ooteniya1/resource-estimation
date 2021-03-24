@@ -3,4 +3,4 @@
 # Declare variables to be passed into your templates.
 
 channel: 4.7
-startingCSV: verticalpodautoscaler.4.7.0-202102110027.p0
+startingCSV: verticalpodautoscaler.4.7.0-202103060100.p0

@@ -4,7 +4,6 @@ metadata:
   labels:
     operators.coreos.com/vertical-pod-autoscaler.openshift-vertical-pod-autoscaler: ""
   name: vertical-pod-autoscaler
-  namespace: openshift-vertical-pod-autoscaler
 spec:
   channel: {{ .Values.channel | quote }}
   installPlanApproval: Automatic

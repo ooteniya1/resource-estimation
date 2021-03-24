@@ -371,7 +371,7 @@ $ ./add-quay-credentials.sh
 The Todo Application uses the `tekton-pipeline/todo-pipeline.yaml` to build and deploy the application Openshift. The application can be deployed as a Quarkus or Spring Boot application. We will be using the Spring Boot version.
 
 ``` text
-$ cd todo-pipeline
+$ cd tekton-pipeline
 $ ./build-deploy-todo-spring v1.3.8
 
 ```
@@ -537,7 +537,7 @@ We have designed three test scripts to execute on the Todo application:
 
 ### Test Script Execution, Performance and Resource Monitoring
 
-To execute the designed Test scripts, we will be using the Apache JMeter CLI. This is a recommended approach for running a load test as it avoids the overhead of the JMeter GUI. The CLI also generates a bunch of reports we can use to analyze the performance of the application. The main benefot of CLI over the GUI for performaning load testing is that it consumes fewer resources and gives more reliable results than the GUI. 
+To execute the designed Test scripts, we will be using the Apache JMeter CLI. This is a recommended approach for running a load test as it avoids the overhead of the JMeter GUI. The CLI also generates a bunch of reports we can use to analyze the performance of the application. The main benefit of the CLI over the GUI for load testing is that it consumes fewer resources and gives more reliable results than the GUI. 
 
 >JMeter GUI should only be used to create, maintain, and validate our scripts.  Once the script is validated, use the CLI to run the load test.
 

@@ -2,8 +2,8 @@
 
 set -e
 
-USERNAME=$2
-PASSWORD=$3
+USERNAME=$1
+PASSWORD=$2
 
 echo " "
 

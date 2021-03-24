@@ -5,13 +5,13 @@
 channel: alpha
 startingCSV: postgresql-operator.v0.1.1
 containerName: todo
-databaseCpu: 30m
-databaseCpuLimit: 1500m
-databaseMemoryLimit: 1028Mi
-databaseMemoryRequest: 128Mi
-databaseName: tododb
-databasePassword: todo
-databasePort: 5432
-databaseStorageRequest: 1Gi
-databaseUser: todo
-size: 1
+# databaseCpu: 30m
+# databaseCpuLimit: 1500m
+# databaseMemoryLimit: 1028Mi
+# databaseMemoryRequest: 128Mi
+# databaseName: tododb
+# databasePassword: todo
+# databasePort: 5432
+# databaseStorageRequest: 1Gi
+# databaseUser: todo
+# size: 1

@@ -11,7 +11,8 @@ echo ""
 
 echo "Installing postgresql Operator" 
 helm upgrade --install postgresql postgresql
+oc apply -f ../todo-spring-quarkus/k8s/postgresql-instance.yaml
 
 echo ""
 echo "Installing vertical pod autoscler"
-helm upgrade --install vertical-pod-autoscaler vertical-pod-autoscaler
+# helm upgrade --install vertical-pod-autoscaler vertical-pod-autoscaler

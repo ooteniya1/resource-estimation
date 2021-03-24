@@ -1,0 +1,20 @@
+apiVersion: postgresql.dev4devs.com/v1alpha1
+kind: Database
+metadata:
+  name: postgresql
+spec:
+  containerName: todo-db
+  databaseCpu: 30m
+  databaseCpuLimit: 1500m
+  databaseMemoryLimit: 1028Mi
+  databaseMemoryRequest: 128Mi
+  databaseName: tododb
+  databaseNameKeyEnvVar: POSTGRESQL_DATABASE
+  databasePassword: todo
+  databasePasswordKeyEnvVar: POSTGRESQL_PASSWORD
+  databasePort: 5432
+  databaseStorageRequest: 1Gi
+  databaseUser: todo
+  databaseUserKeyEnvVar: POSTGRESQL_USER
+  image: centos/postgresql-96-centos7
+  size: 1
