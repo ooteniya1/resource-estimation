@@ -660,7 +660,7 @@ The purpose of this step is to determine if the application is able to handle a 
 To determine the breakpoint, we need to start from to put a normal load on 
 
 | # Virtual Users |  Throughput    | % in error | Max CPU    | Max Memory  | # of Pods |
-| --------------- | -------------- | ---------- | ---------- | ----------- | --------- |
+| :-------------: | :------------: | :--------: | :--------: | :---------: | :-------: |
 |       2000      |     962        |     0      |   480m     |     512Mi   |     1     |
 
 
