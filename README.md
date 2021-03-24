@@ -370,6 +370,12 @@ $ ./add-quay-credentials.sh
 
 The Todo Application uses the `tekton-pipeline/todo-pipeline.yaml` to build and deploy the application Openshift. The application can be deployed as a Quarkus or Spring Boot application. We will be using the Spring Boot version.
 
+Before then, let's install the postgresql database the application uses.
+
+`oc apply -f ../todo-spring-quarkus/k8s/postgresql-instance.yaml`
+
+Deploy the application 
+
 ``` text
 $ cd tekton-pipeline
 $ ./build-deploy-todo-spring v1.3.8
