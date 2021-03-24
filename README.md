@@ -372,7 +372,10 @@ The Todo Application uses the `tekton-pipeline/todo-pipeline.yaml` to build and 
 
 Before then, let's install the postgresql database the application uses.
 
-`oc apply -f ../todo-spring-quarkus/k8s/postgresql-instance.yaml`
+```text
+$ oc apply -f ../todo-spring-quarkus/k8s/postgresql-instance.yaml
+database.postgresql.dev4devs.com/postgresql created
+```
 
 Deploy the application 
 
