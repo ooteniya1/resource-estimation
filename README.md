@@ -659,12 +659,13 @@ The purpose of this step is to determine if the application is able to handle a 
 
 To determine the breakpoint, we need to start from to put a normal load on 
 
-| # Virtual Users |  Throughput    | % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
+| # Virtual Users | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
 | :-------------: | :------------: | :--------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
-|       2000      |     962        |     0      |   480m         |   512Mi         |     1     |         480m       |         512Mi         |
-|       2000      |     418.19     |   43.43    |   576m         |   512Mi         |     1     |         576m       |         512Mi         |
-|       2000      |     864.66     |     0      |   576m         |   512Mi         |     2     |       1,152m       |         1024Mi        |
+|       2000      |     971.06     |     0      |   480m         |   512Mi         |     1     |         480m       |         512Mi         |
+|       2000      |     638.57     |   12.72    |   576m         |   512Mi         |     1     |         576m       |         512Mi         |
 |       2000      |     982.24     |     0      |   480m         |   512Mi         |     2     |         960m       |         1024Mi        |
+|       2000      |     864.66     |     0      |   576m         |   512Mi         |     2     |       1,152m       |         1024Mi        |
+
 
 
 <!-- ![Apache JMeter Recorder](images/recorder.png)
