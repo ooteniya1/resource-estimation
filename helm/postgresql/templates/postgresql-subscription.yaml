@@ -2,6 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: postgresql-operator-dev4devs-com
+  namespace:  {{ .Values.rsNs }}
 spec:
   channel: {{ .Values.channel | quote }}
   installPlanApproval: Automatic

@@ -13,7 +13,22 @@
 #
 # docker run -i --rm -p 8080:8080 quarkus/openshift-quickstart
 #
-###
+### you must have the mvnw executable located in your project root.
+
+# FROM registry.redhat.io/quarkus/mandrel-20-rhel8 AS builder
+# WORKDIR /build/
+# COPY . /build/
+# RUN ./mvnw clean package -Pnative
+
+# FROM registry.redhat.io/ubi8/ubi-minimal
+# WORKDIR /deployments/
+# COPY --from=builder /build/target/*-runner /deployments/application
+# RUN chmod 110 /deployments/application
+# EXPOSE 8080
+# USER 1001
+# CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
+
+
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.3
 WORKDIR /work/
 RUN chown 1001 /work \
