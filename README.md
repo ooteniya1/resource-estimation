@@ -651,13 +651,9 @@ With this new configuration, we are able to meet the startup target of less than
 > Do not forget to tune the runtime paramaters such as [JVM parameters for Java](https://learning.oreilly.com/library/view/java-performance-2nd/9781492056102/) etc, to achieve the optimal performance.
 
 
-#### Step 2: Determine the application breakpoint.
+#### Step 2: Determine the resource requirement for a normal load.
 
-Now that we have achieved the required startup time, next is to determine the application's breakpoint with a single pod, with respect to the target throughput.
-
-The purpose of this step is to determine if the application is able to handle a normal load with the current startup configuration. 
-
-To determine the breakpoint, we need to start from to put a normal load on 
+Now that we have achieved the required startup time, next is to determine the amount of resources required to achieve the target throughput under a normal workload. It is also important to note that the Todo application is more CPU intensive than memory. It does not require any data transformation etc. 
 
 The table below hughlights the resource estimation for a normal load of 2000 virtual user per sec over a period of 2 minutes.
 
@@ -668,11 +664,25 @@ The table below hughlights the resource estimation for a normal load of 2000 vir
 | 3  |     748.42     |     0      |   480m         |   512Mi         |     3     |       1,440m       |         1,536Mi       |
 | 4  |     954.90     |  0.01      |   480m         |   512Mi         |     4     |       1,920m       |         2,048Mi       |
 | 5  |   1,084.22     |  0.03      |   480m         |   512Mi         |     5     |       2,400m       |         2,560Mi       |
-| 6  |     216.06     |     0      |   576m         |   512Mi         |     1     |         576m       |         512Mi         |
-| 7  |     716.65     |     0      |   576m         |   512Mi         |     2     |       1,152m       |         1,024Mi       |
-| 8  |    1,123.60    |     0      |   576m         |   512Mi         |     3     |       1,728m       |         1,536Mi       |
-| 9  |      759.26    | 67.49      |   576m         |   410Mi         |     3     |       1,728m       |         1,230Mi       |
 
+
+| #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
+|:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
+| 1  |     216.06     |     0      |   576m         |   512Mi         |     1     |         576m       |           512Mi       |
+| 2  |     716.65     |     0      |   576m         |   512Mi         |     2     |       1,152m       |         1,024Mi       |
+| 3  |    1,123.60    |     0      |   576m         |   512Mi         |     3     |       1,728m       |         1,536Mi       |
+| 4  |      759.26    | 67.49      |   576m         |   410Mi         |     3     |       1,728m       |         1,230Mi       |
+
+
+| #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
+|:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
+| 1 |     462.56     |     0      |   692m         |   512Mi         |     1     |         692m       |           512Mi       |
+| 2 |    1009.97     |     0      |   692m         |   512Mi         |     2     |       1,384m       |         1,024Mi       |
+| 3 |     759.26     | 71.98      |   692m         |   410Mi         |     2     |       1,384m       |           820Mi       |
+
+
+![Reduced Memory failure](images/reduce_memory.png)
+*Reduced Memory failure*
 
 
 
