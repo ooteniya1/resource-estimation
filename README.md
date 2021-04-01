@@ -696,6 +696,12 @@ Starting with the optimal resource requirement for a normal workload, let's put 
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1  |   692m         |   512Mi         |     2     |   1,009.97     |     0      |       1,384m       |         1,024Mi       |
 
+![CPU at Peak](images/cpu_peak.png)
+*CPU at Peak*
+
+![Memory at Peak](images/memory_peak.png)
+*Memory at Peak*
+
 #### Step 4: Calculate the Resource Quota for the application namespace.
 
 ### Conclusion
