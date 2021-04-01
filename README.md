@@ -30,7 +30,10 @@ Table of Contents
          * [Designing the Load Testing Plan](#designing-the-load-testing-plan)
          * [Test Script Execution, Performance and Resource Monitoring](#test-script-execution-performance-and-resource-monitoring)
             * [Step 1: Determine the right resources to achieve the required startup time](#step-1-determine-the-right-resources-to-achieve-the-required-startup-time)
-            * [Step 2: Determine the application breakpoint.](#step-2-determine-the-application-breakpoint)
+            * [Step 2: Determine the resource requirement for a normal load.](#step-2-determine-the-resource-requirement-for-a-normal-load)
+               * [With CPU request of 400m and limit of 480m.](#with-cpu-request-of-400m-and-limit-of-480m)
+               * [With CPU request of 480m and limit of 576m i.e 20% increase.](#with-cpu-request-of-480m-and-limit-of-576m-ie-20-increase)
+               * [With CPU request of 576m and limit of 692m i.e 20% increase.](#with-cpu-request-of-576m-and-limit-of-692m-ie-20-increase)
       * [Normal load CLI command](#normal-load-cli-command)
       * [Peak load CLI command](#peak-load-cli-command)
 
@@ -656,6 +659,7 @@ With this new configuration, we are able to meet the startup target of less than
 Now that we have achieved the required startup time, next is to determine the amount of resources required to achieve the target throughput under a normal workload. It is also important to note that the Todo application is more CPU intensive than memory. It does not require any data transformation etc. 
 
 The table below hughlights the resource estimation for a normal load of 2000 virtual user per sec over a period of 2 minutes.
+##### With CPU request of 400m and limit of 480m. 
 
 | #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
@@ -665,7 +669,7 @@ The table below hughlights the resource estimation for a normal load of 2000 vir
 | 4  |     954.90     |  0.01      |   480m         |   512Mi         |     4     |       1,920m       |         2,048Mi       |
 | 5  |   1,084.22     |  0.03      |   480m         |   512Mi         |     5     |       2,400m       |         2,560Mi       |
 
-
+##### With CPU request of 480m and limit of 576m i.e 20% increase. 
 | #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
 | 1  |     216.06     |     0      |   576m         |   512Mi         |     1     |         576m       |           512Mi       |
@@ -673,7 +677,7 @@ The table below hughlights the resource estimation for a normal load of 2000 vir
 | 3  |    1,123.60    |     0      |   576m         |   512Mi         |     3     |       1,728m       |         1,536Mi       |
 | 4  |      759.26    | 67.49      |   576m         |   410Mi         |     3     |       1,728m       |         1,230Mi       |
 
-
+##### With CPU request of 576m and limit of 692m i.e 20% increase.
 | #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
 | 1 |     462.56     |     0      |   692m         |   512Mi         |     1     |         692m       |           512Mi       |
