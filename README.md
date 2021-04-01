@@ -542,10 +542,10 @@ We have designed three test scripts to execute on the Todo application:
 ![Peak Load Test Script](images/peak_load.png)
 *Peak Load Test Script*
 
-3. **Abnormal Load** - For an abnormal load, we expect 5000 additional concurrent users to be on the system for several cycles within a second for a total during of 3 minutes. This is in addition to the 2000 concurrent users on the system per sec in a normal load, making a total of 7000 concurrent users/sec.
+<!-- 3. **Abnormal Load** - For an abnormal load, we expect 5000 additional concurrent users to be on the system for several cycles within a second for a total during of 3 minutes. This is in addition to the 2000 concurrent users on the system per sec in a normal load, making a total of 7000 concurrent users/sec.
 
 ![Abnormal Load Test Script](images/abnormal_load.png)
-*Abnormal Load Test Script*
+*Abnormal Load Test Script* -->
 
 ### Test Script Execution, Performance and Resource Monitoring
 
@@ -688,28 +688,14 @@ The table below hughlights the resource estimation for a normal load of 2000 vir
 ![Reduced Memory failure](images/reduce_memory.png)
 *Reduced Memory failure*
 
+#### Step 3: Determine the resource requirement for a Peak load.
 
+Starting with the optimal resource requirement for a normal workload, let's put a peak workload on the system and determine how many replicas we need need to handle the load and still able to achieve our traget througput.
 
-<!-- ![Apache JMeter Recorder](images/recorder.png)
-*Apache JMeter Recorder*
+| #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
+|:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
+| 1  |   1,009.97     |     0      |   692m         |   512Mi         |     2     |       1,384m       |         1,024Mi       |
 
-![Apache JMeter Cert](images/recorder_cert.png)
-*Apache JMeter Cert*
+#### Step 4: Calculate the Resource Quota for the application namespace.
 
-![Firefox Proxy Setting](images/firefox_proxy.png)
-*Firefox Proxy Setting*
-
-![Apache JMeter Recorder Control](images/recorder_control.png)
-*Apache JMeter Recorder Control*
-
-![Apache JMeter Recorder Result](images/recording_result.png)
-*Apache JMeter Recorder Result* -->
-
-## Normal load CLI command
-./apache-jmeter-5.4.1/bin/jmeter.sh -n -t Todo-ThreadGroup_OCP_NORMAL.jmx -l result.txt -e -o ./report
-
-## Peak load CLI command
-./apache-jmeter-5.4.1/bin/jmeter.sh -n -t Todo-ThreadGroup_OCP_PEAK.jmx -l result.txt -e -o ./report
-
-$JMETER_HOME/bin/jmeter.sh -n -t Todo-ThreadGroup_OCP_NORMAL.jmx -l result.txt -e -o ./report  
-open -a "Google Chrome" file:///Users/ooteniya/dev-tools/projects/bell/load_test/report/index.html
+### Conclusion
