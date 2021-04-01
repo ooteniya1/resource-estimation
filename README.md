@@ -661,28 +661,28 @@ Now that we have achieved the required startup time, next is to determine the am
 The table below hughlights the resource estimation for a normal load of 2000 virtual user per sec over a period of 2 minutes.
 ##### With CPU request of 400m and limit of 480m. 
 
-| #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
-|:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
-| 1  |     171.75     |     0      |   480m         |   512Mi         |     1     |         480m       |         512Mi         |
-| 2  |     475.55     |     0      |   480m         |   512Mi         |     2     |         960m       |         1,024Mi       |
-| 3  |     748.42     |     0      |   480m         |   512Mi         |     3     |       1,440m       |         1,536Mi       |
-| 4  |     954.90     |  0.01      |   480m         |   512Mi         |     4     |       1,920m       |         2,048Mi       |
-| 5  |   1,084.22     |  0.03      |   480m         |   512Mi         |     5     |       2,400m       |         2,560Mi       |
+| #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
+|:-: |  ------------: |  -------------: | :-------: | -------------: | ---------: |  ----------------: |  -------------------: |
+| 1  |   480m         |   512Mi         |     1     |     171.75     |     0      |         480m       |         512Mi         |
+| 2  |   480m         |   512Mi         |     2     |     475.55     |     0      |         960m       |         1,024Mi       |
+| 3  |   480m         |   512Mi         |     3     |     748.42     |     0      |       1,440m       |         1,536Mi       |
+| 4  |   480m         |   512Mi         |     4     |     954.90     |  0.01      |       1,920m       |         2,048Mi       |
+| 5  |   480m         |   512Mi         |     5     |   1,084.22     |  0.03      |       2,400m       |         2,560Mi       |
 
 ##### With CPU request of 480m and limit of 576m i.e 20% increase. 
-| #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
-|:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
-| 1  |     216.06     |     0      |   576m         |   512Mi         |     1     |         576m       |           512Mi       |
-| 2  |     716.65     |     0      |   576m         |   512Mi         |     2     |       1,152m       |         1,024Mi       |
-| 3  |    1,123.60    |     0      |   576m         |   512Mi         |     3     |       1,728m       |         1,536Mi       |
-| 4  |      759.26    | 67.49      |   576m         |   410Mi         |     3     |       1,728m       |         1,230Mi       |
+| #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
+|:-: |  ------------: |  -------------: | :-------: | -------------: | ---------: |  ----------------: |  -------------------: |
+| 1  |   576m         |   512Mi         |     1     |     216.06     |     0      |         576m       |           512Mi       |
+| 2  |   576m         |   512Mi         |     2     |     716.65     |     0      |       1,152m       |         1,024Mi       |
+| 3  |   576m         |   512Mi         |     3     |    1,123.60    |     0      |       1,728m       |         1,536Mi       |
+| 4  |   576m         |   410Mi         |     3     |      759.26    | 67.49      |       1,728m       |         1,230Mi       |
 
 ##### With CPU request of 576m and limit of 692m i.e 20% increase.
-| #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
-|:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
-| 1 |     462.56     |     0      |   692m         |   512Mi         |     1     |         692m       |           512Mi       |
-| 2 |   1,009.97     |     0      |   692m         |   512Mi         |     2     |       1,384m       |         1,024Mi       |
-| 3 |     759.26     | 71.98      |   692m         |   410Mi         |     2     |       1,384m       |           820Mi       |
+| # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
+|:-:|  ------------: |  -------------: | :-------: | -------------: | ---------: |  ----------------: |  -------------------: |
+| 1 |   692m         |   512Mi         |     1     |     462.56     |     0      |         692m       |           512Mi       |
+| 2 |   692m         |   512Mi         |     2     |   1,009.97     |     0      |       1,384m       |         1,024Mi       |
+| 3 |   692m         |   410Mi         |     2     |     759.26     | 71.98      |       1,384m       |           820Mi       |
 
 
 ![Reduced Memory failure](images/reduce_memory.png)
@@ -692,9 +692,9 @@ The table below hughlights the resource estimation for a normal load of 2000 vir
 
 Starting with the optimal resource requirement for a normal workload, let's put a peak workload on the system and determine how many replicas we need need to handle the load and still able to achieve our traget througput.
 
-| #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
-|:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
-| 1  |   1,009.97     |     0      |   692m         |   512Mi         |     2     |       1,384m       |         1,024Mi       |
+| #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
+|:-: |  ------------: |  -------------: | :-------: | -------------: | ---------: |  ----------------: |  -------------------: |
+| 1  |   692m         |   512Mi         |     2     |   1,009.97     |     0      |       1,384m       |         1,024Mi       |
 
 #### Step 4: Calculate the Resource Quota for the application namespace.
 
