@@ -677,7 +677,7 @@ The table below hughlights the resource estimation for a normal load of 2000 vir
 | #  | Throughput(tps)| % in error | max CPU/Pod    | max Memory/Pod  | # of Pods |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | -------------: | ---------: |  ------------: |  -------------: | :-------: |  ----------------: |  -------------------: |
 | 1 |     462.56     |     0      |   692m         |   512Mi         |     1     |         692m       |           512Mi       |
-| 2 |    1009.97     |     0      |   692m         |   512Mi         |     2     |       1,384m       |         1,024Mi       |
+| 2 |   1,009.97     |     0      |   692m         |   512Mi         |     2     |       1,384m       |         1,024Mi       |
 | 3 |     759.26     | 71.98      |   692m         |   410Mi         |     2     |       1,384m       |           820Mi       |
 
 
