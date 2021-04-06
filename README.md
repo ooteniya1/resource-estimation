@@ -658,7 +658,9 @@ With this new configuration, we are able to meet the startup target of less than
 
 Now that we have achieved the required startup time, next is to determine the amount of resources required to achieve the target throughput under a normal workload. It is also important to note that the Todo application is more CPU intensive than memory. It does not require any data transformation etc. 
 
-The table below hughlights the resource estimation for a normal load of 2000 virtual user per sec over a period of 2 minutes.
+The table below highlights the resource estimation for a normal load of 2000 virtual user per sec over a period of 2 minutes.
+
+> For a more accurate result, you need to run the workload over a period of at least 5hours to 2 weeks.
 ##### With CPU request of 400m and limit of 480m. 
 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
@@ -666,27 +668,31 @@ The table below hughlights the resource estimation for a normal load of 2000 vir
 | 1  |   480m         |   512Mi         |     1     |     171.75     |     0      |         480m       |         512Mi         |
 | 2  |   480m         |   512Mi         |     2     |     475.55     |     0      |         960m       |         1,024Mi       |
 | 3  |   480m         |   512Mi         |     3     |     748.42     |     0      |       1,440m       |         1,536Mi       |
-| 4  |   480m         |   512Mi         |     4     |     954.90     |  0.01      |       1,920m       |         2,048Mi       |
-| 5  |   480m         |   512Mi         |     5     |   1,084.22     |  0.03      |       2,400m       |         2,560Mi       |
+| 4  |   480m         |   512Mi         |     4     |   1,169.61     |     0      |       1,920m       |         2,048Mi       |
 
 ##### With CPU request of 480m and limit of 576m i.e 20% increase. 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1  |   576m         |   512Mi         |     1     |     216.06     |     0      |         576m       |           512Mi       |
 | 2  |   576m         |   512Mi         |     2     |     716.65     |     0      |       1,152m       |         1,024Mi       |
-| 3  |   576m         |   512Mi         |     3     |    1,123.60    |     0      |       1,728m       |         1,536Mi       |
-| 4  |   576m         |   410Mi         |     3     |      759.26    | 67.49      |       1,728m       |         1,230Mi       |
+| 3  |   576m         |   512Mi         |     3     |   1,066.61     |     0      |       1,728m       |         1,536Mi       |
 
 ##### With CPU request of 576m and limit of 692m i.e 20% increase.
 | # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-:| :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
-| 1 |   692m         |   512Mi         |     1     |     462.56     |     0      |         692m       |           512Mi       |
-| 2 |   692m         |   512Mi         |     2     |   1,009.97     |     0      |       1,384m       |         1,024Mi       |
-| 3 |   692m         |   410Mi         |     2     |     759.26     | 71.98      |       1,384m       |           820Mi       |
-
+| 1 |   692m         |   512Mi         |     1     |     587.20     |     0      |         692m       |           512Mi       |
+|*2*|   *692m*       |   *512Mi*       |   *2*     | *1,059.88*     |   *0*      |       *1,384m*     |         *1,024Mi*     |
 
 ![Reduced Memory failure](images/reduce_memory.png)
 *Reduced Memory failure*
+##### With CPU request of 692m and limit of 830m i.e 20% increase.
+| # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
+|:-:| :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
+| 1 |   830m         |   512Mi         |     1     |     858.01     |     0      |         830m       |           512Mi       |
+| 2 |   830m         |   512Mi         |     2     |   1,356.94     |  0.06      |       1,660m       |         1,024Mi       |
+
+
+
 
 #### Step 3: Determine the resource requirement for a Peak load.
 
@@ -694,7 +700,8 @@ Starting with the optimal resource requirement for a normal workload, let's put 
 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
-| 1  |   692m         |   512Mi         |     2     |   1,009.97     |     0      |       1,384m       |         1,024Mi       |
+| 1  |   692m         |   512Mi         |     2     |   1,059.88     |     0      |       1,384m       |         1,024Mi       |
+| 2  |   692m         |   512Mi         |     3     |   1,059.88     |     0      |       1,384m       |         1,024Mi       |
 
 ![CPU at Peak](images/cpu_peak.png)
 *CPU at Peak*

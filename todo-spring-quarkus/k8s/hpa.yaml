@@ -14,5 +14,23 @@ spec:
       resource:
         name: cpu
         target:
-          averageUtilization: 60
+          averageUtilization: 40
           type: Utilization
+    # - type: Pods
+    #   pods:
+    #     metric:
+    #       name: packets-per-second
+    #     target:
+    #       type: AverageValue
+    #       averageValue: 1k
+    # - type: Object
+    #   object:
+    #     metric:
+    #       name: requests-per-second
+    #     describedObject:
+    #       apiVersion: networking.k8s.io/v1beta1
+    #       kind: Ingress
+    #       name: main-route
+    #     target:
+    #       type: Value
+    #       value: 10k
