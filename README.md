@@ -520,7 +520,7 @@ The first step in design a lod testing plan is to understand the performance goa
 For our Todo application, we have the following performance requirements that the application must meet.
 
 1. **Throughput**: must be able to process minimum 1000 transactions/sec
-2. **Error rate**: 0.04% error rate, which means the application must perform at a minimum of 99.96%
+2. **Error rate**: 0.06% error rate, which means the application must perform at a minimum of 99.96%
 3. **Boot-up time**: relatively fast boot time <= 40sec. This is neccessary in case there is a need for scaling.
 4. **Concurrent users**: handle up to 2000 users or requests/sec
 5. **Peak Period Users**: handle up to 4000 users or requests/sec within 1 min windows
@@ -700,8 +700,8 @@ Starting with the optimal resource requirement for a normal workload, let's put 
 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
-| 1  |   692m         |   512Mi         |     2     |   1,059.88     |     0      |       1,384m       |         1,024Mi       |
-| 2  |   692m         |   512Mi         |     3     |   1,059.88     |     0      |       1,384m       |         1,024Mi       |
+| 1  |   692m         |   512Mi         |     2     |     571.30     |     0      |       1,384m       |         1,024Mi       |
+| 2  |   692m         |   512Mi         |     3     |   1,064.50     |     0.05   |       2,076m       |         1,536Mi       |
 
 ![CPU at Peak](images/cpu_peak.png)
 *CPU at Peak*
