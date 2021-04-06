@@ -681,7 +681,7 @@ The table below highlights the resource estimation for a normal load of 2000 vir
 | # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-:| :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1 |   692m         |   512Mi         |     1     |     587.20     |     0      |         692m       |           512Mi       |
-|*2*|   **692m**     |   *512Mi*       |   *2*     | *1,059.88*     |   *0*      |       *1,384m*     |         *1,024Mi*     |
+|*2*|   **692m**     |   **512Mi**     |   **2**   | **1,059.88**   |   **0**    |       **1,384m*    |         **1,024Mi**   |
 
 ![Reduced Memory failure](images/reduce_memory.png)
 *Reduced Memory failure*
