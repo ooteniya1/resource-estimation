@@ -38,219 +38,219 @@ Table of Contents
       * [Peak load CLI command](#peak-load-cli-command)
 
 # Cloud-Native Application Resource Estimation - Part 1: Concepts
-As a developer or an Architect, one of the very first decisions you need to make when deploying an application to the cloud (whether public, private or on-prem) is to determine how much resources the application needs. Teams get their applications to production before they realize the resources are either under or over estimated, which often leads to fire fighting in production environment. Most the operational challenges faced in production are as a result of the fact that this process is often overlooked. 
-
-The benefits of properly estimating the resources an application needs before getting to production among others are:
-
+As a developer or an Architect, one of the first decisions you need to make when deploying an application to the cloud (whether public, private or on-prem) is to determine how much memory and CPU resources the application needs. More often, teams get their applications to production before realizing the resources the application needs are either under or over estimated, which often leads to fire fighting in the production environment. Most of the operational challenges faced in production are because this process is often overlooked.
+ 
+The benefits of properly estimating the resources an application needs before getting to production, among others are:
+ 
 1. It helps in understanding application requirements in terms of how much memory and CPU the application needs
-2. It help to understand wehther an application is more memory intensive or CPU intesive.
-3. It simplifies carving of resources on Openshift/Kubernetes which in turn simplifies the creation of qotas and limits for the application namespace.
-4. It allows capacity planning from oeprations perpective, for instance, a cluster administrator can easily determine how many worker nodes in the cluster.
-5. It leads to huge cost savings especially if your kubernetes cluster is in the public cloud infrastructure.
-
-Estimating the resources an application need is very challenging to be honest because it involves some trial and error. Identifying accurately how many resources a container for instance will require, and how many replicas a service will need at a given time to meet service-level agreements takes time and effort, hence the process is more of an art than science. You’ll first want to identify what a good starting point is for the application; aiming for a good balance of CPU and memory. After you’ve decided on a sensible resource size for the application you will also need to setup a process where you can constantly monitor the application's resource actual usage over a period of time. 
-
-In this workshop, we'll be walking you through the process of properly estimating your application resources, in terms of memory and CPU. At the end, we will come up with figure 1, which can be used to create the resource quota for the appplication namespace.
-
+2. It helps to understand whether an application is more memory intensive or CPU intensive.
+3. It simplifies the carving of resources on Openshift/Kubernetes, which in turn simplifies the creation of quotas and limits for the application namespace.
+4. It allows capacity planning from operations perspective; for instance, a cluster administrator can easily determine how many worker nodes is required to run workloads in the cluster.
+5. It leads to substantial cost savings, especially if your the kubernetes cluster is in the public cloud infrastructure.
+ 
+Estimating the resources an application needs is very challenging to be honest, it involves some trial and error. Identifying accurately how many resources a container, for instance, will require, and how many replicas a service will need at a given time to meet service-level agreements takes time and effort; hence the process is more of an art than science. You’ll first want to identify a good starting point for the application; aiming for a good balance of CPU and memory. After you’ve decided on a suitable resource size for the application, you will also need to set up a process where you can constantly monitor the application's resource actual usage over a period of time.
+ 
+In this workshop, we'll be walking you through how to properly estimate your application resources in terms of memory and CPU. At the end, we will come up with figure 1, which can be used to create the resource quota for the application namespace.
+ 
 ![](images/estimate.png)
 *Figure 1*
-
+ 
 ## Definitions
 Before we dive into codes, let's define some concepts.
-
+ 
 ### Compute Resource Types
-Compute resources are measurable quantities that can be requested, allocated, and consumed. These are diffirent from API resources such as Pods, Services, Routes etc that are accessible and modified through the Kubernetes/Openshift API server. 
-
+Compute resources are measurable quantities that can be requested, allocated, and consumed. These are different from API resources such as Pods, Services, Routes, etc that are accessible and modified through the Kubernetes/Openshift API server.
+ 
 There are two types of Compute resources:
-1. **Compressible resources**: these are resources that are technically available in limited quality in a given time slice, however, there is an unlimited amount of them if you can wait. Examples of this type of resource are CPU, block i/o, and network i/o. With respect to application resource estimation, we will focus on CPU. Once an application hits the CPU limits allocated, the application start throttling, which adversely leads to performance degradation. Openshift/Kubernetes will not terminate those applications.
-
-2. **Incompressible resources**: these are resources that aare technically limited, once you run out of them, you application will not get any more. Examples of such is are memory and disk space. Unlike CPU, memory can't be made to run slower. Instead, Openshif/Kubernetes automatically restarts or terminates the applications once it reaches the memory limit.
-
-An Architect therefore needs to put these behaviours into consideration during application resource planning to avoid any issues in production.
-
+1. **Compressible resources**: these are resources that are technically available in limited quality in a given time slice; however, there is an unlimited amount of them if you can wait. Examples of this type of resource are CPU, block i/o, and network i/o. With respect to application resource estimation, we will focus on CPU. Once an application hits the CPU limits allocated, the application starts throttling, which adversely leads to performance degradation. Openshift/Kubernetes will not terminate those applications.
+ 
+2. **Incompressible resources**: these are technically limited resources; once you run out of them, your application will not get any more. Examples of such are memory and disk space. Unlike CPU, memory can't be made to run slower. Instead, Openshif/Kubernetes automatically restarts or terminates the applications once it reaches the memory limit.
+ 
+Therefore, an Architect needs to put these behaviours into consideration during application resource planning to avoid any issues in production.
+ 
 ### Resource Units
-1. **CPU:** - CPU resources are measured in millicore. If a node has 2 cores, the node’s CPU capacity would be represented as 2000m. The unit suffix m stands for “thousandth of a core.”
-
-2. **Memory**: Memory on the other hand is measured in bytes. However, you can express memory with various suffixes (E,P,T,G,M,K and Ei, Pi, Ti, Gi, Mi, Ki) to express mebibytes (Mi) to petabytes (Pi). Most simply use Mi.
-
+1. **CPU:** - CPU resources are measured in millicore. If a node has two cores, the node’s CPU capacity would be represented as 2000m. The unit suffix m stands for “thousandth of a core.”
+ 
+2. **Memory**: Memory, on the other hand, is measured in bytes. However, you can express memory with various suffixes (E,P,T,G,M,K and Ei, Pi, Ti, Gi, Mi, Ki) to express mebibytes (Mi) to petabytes (Pi). Most simply use Mi.
+ 
 ``` yaml
 ...
 spec:
-    containers:
-    - image: quay.io/ooteniya/todo-spring:v1.3.6
-        imagePullPolicy: Always
-        name: todo-spring
-        resources:
-        limits:
-            memory: "512Mi"
-            cpu: "60m"  
-        requests:
-            memory: "128Mi"
-            cpu: "30m"
+   containers:
+   - image: quay.io/ooteniya/todo-spring:v1.3.6
+       imagePullPolicy: Always
+       name: todo-spring
+       resources:
+       limits:
+           memory: "512Mi"
+           cpu: "60m" 
+       requests:
+           memory: "128Mi"
+           cpu: "30m"
 ...
 ```
-
->Here's an example of a Container that has a request of 30m cpu and 128MiB of memory. The Container has a limit of 60m cpu and 512MiB of memory.
-
+ 
+>Here's an example of a Container with a request of 30m cpu and 128MiB of memory. The Container has a limit of 60m cpu and 512MiB of memory.
+ 
 ### Resource Quotas
-
-A [resource quota](https://docs.openshift.com/container-platform/4.7/applications/quotas/quotas-setting-per-project.html#quotas-resources-managed_quotas-setting-per-project), provides constraints that limit aggregate resource consumption per project. It can limit the quantity of objects that can be created in a project by type, as well as the total amount of compute resources and storage that might be consumed by resources in that project. It is defined by a `ResourceQuota` object.
-
+ 
+A [resource quota](https://docs.openshift.com/container-platform/4.7/applications/quotas/quotas-setting-per-project.html#quotas-resources-managed_quotas-setting-per-project), provides constraints that limit aggregate resource consumption per project. It can limit the quantity of objects that can be created in a project by type, as well as the total amount of compute resources and storage that resources might consume in that project. It is defined by a `ResourceQuota` object.
+ 
 Below snippet defines a resource quota object on cpu and memory.
-
+ 
 ```yaml
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: compute-resources
+ name: compute-resources
 spec:
-  hard:
-    pods: "4" 
-    requests.cpu: "1" 
-    requests.memory: 1Gi 
-    requests.ephemeral-storage: 2Gi 
-    limits.cpu: "2" 
-    limits.memory: 2Gi 
-    limits.ephemeral-storage: 4Gi 
+ hard:
+   pods: "4"
+   requests.cpu: "1"
+   requests.memory: 1Gi
+   requests.ephemeral-storage: 2Gi
+   limits.cpu: "2"
+   limits.memory: 2Gi
+   limits.ephemeral-storage: 4Gi
 ```
 > This is usually defined to limit how many resources a single tenant in a multitenant environment can request so that they don't take over the cluster. This is evaluated at Request Time.
-
+ 
 ### Request and Limits
-
-
+ 
+ 
 ```yaml
 ...
 containers:
-    - image: quay.io/ooteniya/todo-spring:v1.3.6
-        imagePullPolicy: Always
-        name: todo-spring
-        resources:
-        limits:
-            memory: "512Mi"
-            cpu: "60m"  
-        requests:
-            memory: "128Mi"
-            cpu: "30m"
+   - image: quay.io/ooteniya/todo-spring:v1.3.6
+       imagePullPolicy: Always
+       name: todo-spring
+       resources:
+       limits:
+           memory: "512Mi"
+           cpu: "60m" 
+       requests:
+           memory: "128Mi"
+           cpu: "30m"
 ...
 ```
 > Requests are evaluated at Scheduling Time and it's counted towards the quota. Limits in turn are evaluated at Run Time and it's not counted towards the quota.
-
+ 
 ### Limit Range
-A [limit range](https://docs.openshift.com/container-platform/4.7/nodes/clusters/nodes-cluster-limit-ranges.html) restricts resource consumption in a project. In the project you can set specific resource limits for a pod, container, image, image stream, or persistent volume claim (PVC). It is defined by a `LimitRange` object.
-
+A [limit range](https://docs.openshift.com/container-platform/4.7/nodes/clusters/nodes-cluster-limit-ranges.html) restricts resource consumption in a project. You can set specific resource limits for a pod, container, image, image stream, or persistent volume claim (PVC) in the project. It is defined by a `LimitRange` object.
+ 
 ```yaml
 apiVersion: "v1"
 kind: "LimitRange"
 metadata:
-  name: "resource-limits"
+ name: "resource-limits"
 spec:
-  limits:
-    - type: "Container"
-      max:
-        cpu: "2"
-        memory: "1Gi"
-      min:
-        cpu: "100m"
-        memory: "4Mi"
-      default:
-        cpu: "300m"
-        memory: "200Mi"
-      defaultRequest:
-        cpu: "200m"
-        memory: "100Mi"
-      maxLimitRequestRatio:
-        cpu: "10"
+ limits:
+   - type: "Container"
+     max:
+       cpu: "2"
+       memory: "1Gi"
+     min:
+       cpu: "100m"
+       memory: "4Mi"
+     default:
+       cpu: "300m"
+       memory: "200Mi"
+     defaultRequest:
+       cpu: "200m"
+       memory: "100Mi"
+     maxLimitRequestRatio:
+       cpu: "10"
 ```
 ![](images/limitrange.png)
-
-> When Request and Limit are not set for a container, whatever is defined by the administrator for the namespace is used as the default. It is strongly recommended that application Architects and developers should always specify resource request and limits for their pods.
-
+ 
+> When Request and Limit are not set for a container, whatever the administrator for the namespace defines is used as the default. It is strongly recommended that application Architects and developers always specify resource requests and limits for their pods.
+ 
 ### Quality of Service (QoS)
-In an overcommitted environment, i.e a situation where scheduled pod has no request, or the sum of limits across all pods on that node exceeds available machine capacity, the node must give priority to one pod over another. The mechanism that is used to determine which pod to prioritize is known as [Quality of Service (QoS)](https://docs.openshift.com/container-platform/4.7/nodes/clusters/nodes-cluster-overcommit.html#nodes-cluster-overcommit-qos-about_nodes-cluster-overcommit) Class.
-
+In an overcommitted environment, i.e. a situation where the scheduled pod has no request, or the sum of limits across all pods on that node exceeds available machine capacity, the node must give priority to one pod over another. The mechanism that is used to determine which pod to prioritize is known as [Quality of Service (QoS)](https://docs.openshift.com/container-platform/4.7/nodes/clusters/nodes-cluster-overcommit.html#nodes-cluster-overcommit-qos-about_nodes-cluster-overcommit) Class.
+ 
 There are three classes:
 1. A **BestEffort** quality of service is provided when a request and limit are not specified.
 2. A **Burstable** quality of service is provided when a request is specified that is less than an optionally specified limit
 3. A **Guaranteed** quality of service is provided when a limit is specified that is equal to an optionally specified request.
-
+ 
 ![](images/qos-cpu.png)
-
+ 
 *QoS behavior with respect to CPU*
-
-In terms of priority, the Guaranteed, Burstable and BestEffort have priority 1 (highest), priority 2 and priority 3 (lowest) respectively.
-
+ 
+In terms of priority, the Guaranteed, Burstable, and BestEffort have priority 1 (highest), priority 2, and priority 3 (lowest), respectively.
+ 
 ![](images/qos-memory.png)
-
+ 
 *QoS behavior with respect to Memory*
-
+ 
 ### Resource Estimation: Well-estimation, Over-estimation and Under-estimation
-As mentioned, the request set on a pod is counted towards the quota. To determine whether an application is well estimated, under estimated or over estimated depends on the comparison between the resource requests and the actual resource consumption.
-
-Generally, a certain threshold is set above and below the request to determine how an application is performing resource-wise. Let's assume a threshold of certain percentage, say 20% of the request is set above and below the request. A well estimated application resource usage stays above the overestimated threshold and below the underestimated threshold. If the actual usage of the resource is below the overestimated threshold, the application is considered Overestimated. If the actual usage is above the underestimated threshold, it is considered underestimated. [Raffaele Spazzoli](https://www.openshift.com/blog/full-cluster-part-3-capacity-management) wrote a very nice article about this.
-
+As mentioned, the request set on a pod is counted towards the quota. To determine whether an application is well estimated, underestimated or overestimated depends on comparing resource requests and the actual resource consumption.
+ 
+Generally, a certain threshold is set above and below the request to determine how an application performs resource-wise. Let's assume a certain percentage threshold, say 20% of the request, is set above and below the request. A well-estimated application resource usage stays above the overestimated threshold and below the underestimated threshold. If the actual usage of the resource is below the overestimated threshold, the application is considered Overestimated. If the actual usage is above the underestimated threshold, it is considered underestimated. [Raffaele Spazzoli](https://www.openshift.com/blog/full-cluster-part-3-capacity-management) wrote a very nice article about this.
+ 
 ## Resource Estimation Approach
-Now that we have a very good understanding of some concepts that Openshift/Kunbernetes uses to determine an application resources and how they are scheduled, let's discuss the approach to use to proeprly estimate an application's resource requirments.
-
+Now that we have a very good understanding of some concepts that Openshift/Kunbernetes uses to determine an application resources and how they are scheduled, let's discuss the approach to use in order to estimate an application’s resource requirments properly.
+ 
 ![](images/approach.png)
-
+ 
 *Compute Resource Estimation Approach*
-
+ 
 ### Performance Tuning Good Practice
-
-1. Don’t optimize before you know it’s necessary - You need to define how fast your application code has to be, for example, by specifying a maximum response time for all API calls or the number of records that you want to import within a specified time frame. Measure which parts of your application are too slow and need to be improved.
-
-2. Use a profiler to find the real bottleneck - There are two ways of doing this. It's either you can take a look at your code and start with the part that looks suspicious or where you feel that it might create problems or you use a profiler and get detailed information about the behavior and performance of each part of your code.
-The profiler-based method gives you a better understanding of the performance implications of your code and allows you to focus on the most critical parts.
-
-3. Use lightweight frameworks and avoid the overhead of heavy application servers - Use lightweight frameworks and avoid the overhead of heavy application servers if possible. Use frameworks that are based for instance, on microprofiles instead of a heavy JEE Compliant application servers.
-
-4. Create a performance test suite for the whole application - It's important to work on the perform performance or load test on an application to determine the breaking point of the application etc. Based on the result of the test, work on the most significant performance problem first.
-
-
-5. Work on the biggest bottleneck first - It might be tempting to start with the quick wins because you will be able to show first results soon. Sometimes, that might be necessary to convince other team members or your management that the performance analysis was worth the effort. But in general, I recommend starting at the top and begin work on the most significant performance problem first.
-
-6. Use Efficient Serialization Techniques - Use efficient serialization formats like protocol buffers, commonly used in gRPC. Another areas to consider for example is, if you have a request with a large message payload and operates on only a handful of fields in a large message payload, before passing it to a downstream service, put those fields into headers so the service does not need to deserialize or reserialize the payload. 
-
+ 
+1. Don’t optimize before you know it’s necessary - You need to define how fast your application code has to be, for example, by specifying a maximum response time for all API calls or the number of records that you want to import within a specified time frame—measure which parts of your application are too slow and need to be improved.
+ 
+2. Use a profiler to find the real bottleneck - There are two ways of doing this. It's either you can take a look at your code and start with the part that looks suspicious or where you feel that it might create problems or use a profiler and get detailed information about each part of your code’s behavior and performance.
+The profiler-based method gives you a better understanding of the performance implications of your code. It allows you to focus on the most critical parts.
+ 
+3. Use lightweight frameworks and avoid heavy application servers overhead - Use lightweight frameworks and avoid the overhead of heavy application servers if possible. Use frameworks that are based, for instance, on microprofiles instead of heavy JEE Compliant application servers.
+ 
+4. Create a performance test suite for the whole application. It’s essential to do a performance or load tests on an application to determine the application’s breaking point etc. Based on the result of the test, work on the most significant performance problem first.
+ 
+ 
+5. Work on the most significant bottleneck first - It might be tempting to start with the quick wins because you will be able to show the first results soon. Sometimes, that might be necessary to convince other team members or your management that the performance analysis was worth the effort. But in general, I recommend starting at the top and begin work on the most significant performance problem first.
+ 
+6. Use Efficient Serialization Techniques - Use efficient serialization formats like protocol buffers, commonly used in gRPC. Another areas to consider for example is, if you have a request with a large message payload and operates on only a handful of fields in a large message payload, before passing it to a downstream service, put those fields into headers so the service does not need to deserialize or reserialize the payload.
+ 
 ### Load Testing
 Load testing will identify the following:
 1. maximum operating capacity
 2. the ability of an application to run in the actual environment
 3. sustainability of the application during peak user load
 4. maximum concurrent users the application can support
-
-Perform application load testing to determine the right amount of memory and CPU for an application to function properly at all times. There are several tools such as [WedLoad](https://www.radview.com/webload-download?utm_campaign=top-15-tools&utm_medium=top-15-tools&utm_source=softwaretestinghelp), [Apache JMeter](https://jmeter.apache.org/), [LoadNinja](https://loadninja.com/), [Smart Meter](https://www.smartmeter.io/), [k6](https://k6.io/), [Locust](https://locust.io/) etc. available to aid this process.
-
-
-### Scaling
-Openshift/Kubernetes scaling capabilities provide a mechanism to dynamically adjust to user worloads. Scaling can be manual or automatic. For workloads that are static or when you have insight into when an application experience spikes, manual scaling can be used to provide optimal configuration to match the workload. Also it's provides an avenue to discover and apply the optimal configuration to handle the workload. This can be done imperatively using the `oc` or `kubectl` commands. Alternatively, it could aldo be done declaratively on the deployment or deploymentConfig objects of the application.
-
-For worloads that experience sudden spikes, automatic scaling is the most ideal as you can not readily predict the spike periods.
-
-Scaling can be [Horizontal](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-autoscaling.html) i.e changing the replica of a pod, or [Veritcal](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html), changing the resource constraints of he containers in the pod.
-
-## Conclusion
-In summary, it is important to follow the recommendation below to arrive at a very good application resource estimate:
-
-1. Perform load testing
-
-2. Ensure that you set memory and CPU for all pods.
-
-3. Start with manual scaling until you understand your application profile on Openshift.
-
-4. Use VPA in Development to determine your application resource usage.
  
+Perform application load testing to determine the right amount of memory and CPU for an application to function properly at all times. There are several tools such as [WedLoad](https://www.radview.com/webload-download?utm_campaign=top-15-tools&utm_medium=top-15-tools&utm_source=softwaretestinghelp), [Apache JMeter](https://jmeter.apache.org/), [LoadNinja](https://loadninja.com/), [Smart Meter](https://www.smartmeter.io/), [k6](https://k6.io/), [Locust](https://locust.io/) etc. available to aid this process.
+ 
+ 
+### Scaling
+Openshift/Kubernetes scaling capabilities provide a mechanism to adjust to user workloads dynamically. Scaling can be manual or automatic. For workloads that are static or when you have insight into when an application experience spikes, manual scaling can be used to provide optimal configuration to match the workload. Also, it provides an avenue to discover and apply the optimal configuration to handle the workload. This can be done imperatively using the `oc` or `kubectl` commands. Alternatively, it could also be done declaratively on the deployment or deploymentConfig objects of the application.
+ 
+For workloads that experience sudden spikes, automatic scaling is the most ideal as you can not readily predict the spike periods.
+ 
+Scaling can be [Horizontal](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-autoscaling.html) i.e. changing the replica of a pod, or [Veritcal](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html), changing the resource constraints of the containers in the pod.
+ 
+## Conclusion
+In summary, it is crucial to follow the recommendation below to arrive at a very good application resource estimate:
+ 
+1. Perform load testing
+ 
+2. Ensure that you set memory and CPU for all pods.
+ 
+3. Start with manual scaling until you understand your application profile on Openshift.
+ 
+4. Use VPA in Development to determine your application resource usage.
 5. Use the HPA for workloads that are variable and that have unexpected spikes in their usage.
-
+ 
 ## References
-
+ 
 1. [11 Simple Java Performance Tuning Tips – Stackify](https://stackify.com/java-performance-tuning/)
 2. [Best Website Performance Testing Tools – Stackify](https://stackify.com/best-website-performance-testing-tools/)
 3. [How Full is My Cluster - Part 3: Capacity Management](https://www.openshift.com/blog/full-cluster-part-3-capacity-management)
 4. [O'reilly Kubernetes Best Practices](https://learning.oreilly.com/library/view/kubernetes-best-practices/9781492056461/ch08.html)
-
+ 
 ## Credits
 1. [Eric Deandrea](https://github.com/edeandrea)  for the original [Todo-spring-quarkus](https://github.com/edeandrea/todo-spring-quarkus) application.
-2. Ed Seymour for the QoS and Limit Range diagrams 
+2. Ed Seymour for the QoS and Limit Range diagrams
+
 
 # Cloud-Native Application Resource Estimation - Part 2: Process
 In the first first part of this article, we touched on the concepts and approach of Application resource estimation. In this secoind part, we will be walking you through a pratical example of Application resource estimation.
