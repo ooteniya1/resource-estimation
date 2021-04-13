@@ -669,7 +669,8 @@ The table below highlights the resource estimation for a normal load of 2000 vir
 | 2  |   480m         |   512Mi         |     2     |     475.55     |     0      |         960m       |         1,024Mi       |
 | 3  |   480m         |   512Mi         |     3     |     748.42     |     0      |       1,440m       |         1,536Mi       |
 | 4  |   480m         |   512Mi         |     4     |   1,169.61     |     0      |       1,920m       |         2,048Mi       |
-**Table 1***
+
+**Table 1**
 
 From table 1 above, to achieve our performance target of minimum of 1000tps and maximum 0.06% allowed error rate, we need 4 pods with memory limits of 512mi and 480m of cpu. if we are to request a quota based on this, we would require 2 cores of cpu and 2Gi of memory in the namespace. Below is the configuration used for the above table.
 
