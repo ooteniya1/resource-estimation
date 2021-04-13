@@ -758,7 +758,7 @@ For the To-do application, based on the normal and peak "Black Friday" workloads
 |      Application   | # of Pods   | max Memory/Pod | max CPU/Pod | Total CPU          | Total Memory |
 | :----------------: | :---------: | :------------: | :---------: |:-----------------: |:-----------: |
 | To-do Application  |      2      |   512Mi        |    692m     |     1,384m         |    1,024Mi   |
-|                    |             |                |             |                    |              |
+|         .          |             |                |             |                    |              |
 | Margin to Deploy   |             |     0Mi        |      8m     |        16m         |      0Mi     |
 | Total              |      2      |   512Mi        |    700m     |     1,400m         |      1Gi     |
 | Resource Quota     |      2      |                |             |     1.4core        |      1Gi     |
