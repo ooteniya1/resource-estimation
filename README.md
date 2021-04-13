@@ -274,7 +274,7 @@ For this workshop, you will need the following:
 8. Add the registry and github secret to Openshift pipeline serviceaccount
 9. Download Apache JMeter for Performance testing
 ### Environment Setup
-We will use a script to setup the environment. You will nee dthe following tools pre-installed when you run the script.
+We will use a script to setup the environment. You will need the following tools pre-installed when you run the script.
 
 - [Helm](https://helm.sh/docs/intro/install/) : `helm` version
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) : `git` version
@@ -669,7 +669,38 @@ The table below highlights the resource estimation for a normal load of 2000 vir
 | 2  |   480m         |   512Mi         |     2     |     475.55     |     0      |         960m       |         1,024Mi       |
 | 3  |   480m         |   512Mi         |     3     |     748.42     |     0      |       1,440m       |         1,536Mi       |
 | 4  |   480m         |   512Mi         |     4     |   1,169.61     |     0      |       1,920m       |         2,048Mi       |
+**Table 1***
 
+From table 1 above, to achieve our performance target of minimum of 1000tps and maximum 0.06% allowed error rate, we need 4 pods with memory limits of 512mi and 480m of cpu. if we are to request a quota based on this, we would require 2 cores of cpu and 2Gi of memory in the namespace. Below is the configuration used for the above table.
+
+For a Bustable configuration:
+```yaml
+...
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "480m"  
+  requests:
+    memory: "128Mi"
+    cpu: "400m"
+...
+```
+
+For a Guranteed configuration:
+```yaml
+...
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "480m"  
+  requests:
+    memory: "512Mi"
+    cpu: "480m"
+...
+```
+
+
+> Please note that the values set for a resource limit is not used to determine where the pod will be scheduled, it is used at runtime. In calculating the respurce quota, always use the resource limit value.
 ##### With CPU request of 480m and limit of 576m i.e 20% increase. 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
