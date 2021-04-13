@@ -672,7 +672,7 @@ The table below highlights the resource estimation for a normal load of 2000 vir
 
 *Table 1*
 
-From table 1 above, to achieve our performance target of minimum of 1000tps and maximum 0.06% allowed error rate, we need 4 pods with memory limits of 512mi and 480m of cpu. if we are to request a quota based on this, we would require 2 cores of cpu and 2Gi of memory in the namespace. Below is the configuration used for the above table.
+From table 1 above, to achieve our performance target of minimum of 1000tps and maximum 0.06% allowed error rate, we need 4 pods with memory limits of 512mi and 480m of cpu. If we are to request a quota based on this, we would require 2 cores of cpu and 2Gi of memory in the namespace. Below is the configuration used for the above table.
 
 For a Bustable configuration:
 ```yaml
@@ -709,11 +709,21 @@ resources:
 | 2  |   576m         |   512Mi         |     2     |     716.65     |     0      |       1,152m       |         1,024Mi       |
 | 3  |   576m         |   512Mi         |     3     |   1,066.61     |     0      |       1,728m       |         1,536Mi       |
 
+*Table 2*
+
+Table 2 above show that 3 pod replicas are required to meet our performance target with memory limits of 512Mi and 576m of cpu limit, which is 20% cpu resource increase over the configuration we have in table 1. If we are to request a quota based on this, we would require 1.7 cores of cpu and 1.5Gi of memory in the namespace.
+
 ##### With CPU request of 576m and limit of 692m i.e 20% increase.
 | # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-:| :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1 |   692m         |   512Mi         |     1     |     587.20     |     0      |         692m       |           512Mi       |
 |*2*|   **692m**     |   **512Mi**     |   **2**   | **1,059.88**   |   **0**    |       **1,384m**   |         **1,024Mi**   |
+
+*Table 3*
+
+With Table 3 above, we see that 2 pod replicas are required to meet our performance target with memory limits of 512Mi and 692m of cpu limit, which is 20% cpu resource increase over the configuration we have in table 2. The picture below also indicates that the memory requirements for the application is 512Mi, an attempt to reduce kills the pod.
+
+If we are to request a quota based on this, we would require 1.3 cores of cpu and 1Gi of memory in the namespace.
 
 ![Reduced Memory failure](images/reduce_memory.png)
 *Reduced Memory failure*
@@ -723,6 +733,7 @@ resources:
 | 1 |   830m         |   512Mi         |     1     |     858.01     |     0      |         830m       |           512Mi       |
 | 2 |   830m         |   512Mi         |     2     |   1,356.94     |  0.06      |       1,660m       |         1,024Mi       |
 
+*Table 4*
 
 
 
