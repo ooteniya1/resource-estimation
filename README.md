@@ -721,9 +721,9 @@ Table 2 above show that 3 pod replicas are required to meet our performance targ
 
 *Table 3*
 
-With Table 3 above, we see that 2 pod replicas are required to meet our performance target with memory limits of 512Mi and 692m of cpu limit, which is 20% cpu resource increase over the configuration we have in table 2. The picture below also indicates that the memory requirements for the application is 512Mi, an attempt to reduce kills the pod.
+With Table 3 above, we see that 2 pod replicas are required to meet our performance target with memory limits of 512Mi and 692m of cpu limit, which is 20% cpu resource increase over the configuration we have in table 2. If we are to request a quota based on this, we would require 1.3 cores of cpu and 1Gi of memory in the namespace.
 
-If we are to request a quota based on this, we would require 1.3 cores of cpu and 1Gi of memory in the namespace.
+The picture below also indicates that the memory requirements for the application is 512Mi, an attempt to reduce kills the pod.
 
 ![Reduced Memory failure](images/reduce_memory.png)
 *Reduced Memory failure*
