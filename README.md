@@ -699,9 +699,6 @@ resources:
     cpu: "480m"
 ...
 ```
-
-
-> Please note that the values set for a resource limit is not used to determine where the pod will be scheduled, it is used at runtime. In calculating the respurce quota, always use the resource limit value.
 ##### With CPU request of 480m and limit of 576m i.e 20% increase. 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
@@ -723,7 +720,7 @@ Table 2 above show that 3 pod replicas are required to meet our performance targ
 
 With Table 3 above, we see that 2 pod replicas are required to meet our performance target with memory limits of 512Mi and 692m of cpu limit, which is 20% cpu resource increase over the configuration we have in table 2. If we are to request a quota based on this, we would require 1.3 cores of cpu and 1Gi of memory in the namespace.
 
-If we reduce the memory by 20% to optimize the resources, the application gets killed. This indicates that the memory requirement set for the application is the optimal since it can sustain the normal load but the pods gets killed once reduced by 20% of the currect value.
+If we reduce the memory by 20% to optimize the resources, the application gets killed. This indicates that the memory requirement set for the application is the optimal since it can sustain the normal load but the pods gets killed once reduced by 20% of the current value.
 
 ##### With CPU request of 692m and limit of 830m i.e 20% increase.
 | # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
@@ -733,16 +730,20 @@ If we reduce the memory by 20% to optimize the resources, the application gets k
 
 *Table 4*
 
+Lastly, Table 4 indicates further increase of the cpu by 20% improved the throughput but our error rate increase above the allowed threshold. 
 
+>> So, the optimal configuration for the performance target is the values we have in table 3 which is memory limits of 512Mi and 692m of cpu limit with 2 pod replicas. 
 
 #### Step 3: Determine the resource requirement for a Peak load.
 
-Starting with the optimal resource requirement for a normal workload, let's put a peak workload on the system and determine how many replicas we need need to handle the load and still able to achieve our traget througput.
+Starting with the optimal resource requirement for a normal workload, let's put a peak workload on the system and determine how many replicas we need need to handle the load and still able to achieve the performance target.
 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1  |   692m         |   512Mi         |     2     |     571.30     |     0      |       1,384m       |         1,024Mi       |
 | 2  |   692m         |   512Mi         |     3     |   1,064.50     |     0.05   |       2,076m       |         1,536Mi       |
+
+*Table 5*
 
 ![CPU at Peak](images/cpu_peak.png)
 *CPU at Peak*
@@ -751,5 +752,21 @@ Starting with the optimal resource requirement for a normal workload, let's put 
 *Memory at Peak*
 
 #### Step 4: Calculate the Resource Quota for the application namespace.
+
+For the To-do application, based on the normal and peak "Black Friday" workloads, Table 5 indicates the amount of resources required to successfully run the applications. 
+
+|      Application   | # of Pods   | max Memory/Pod | max CPU/Pod | Total CPU          | Total Memory |
+| :----------------: | :---------: | :------------: | :---------: |:-----------------: |:-----------: |
+| To-do Application  |      2      |   512Mi        |    692m     |     1,384m         |    1,024Mi   |
+|                    |             |                |             |                    |              |
+| Margin to Deploy   |             |     0Mi        |      8m     |        16m         |      0Mi     |
+| Total              |      2      |   512Mi        |    700m     |     1,400m         |      1Gi     |
+| Resource Quota     |      2      |                |             |     1.4core        |      1Gi     |
+
+
+
+*Table 6*
+
+> Please note that the values set for a resource limit is not used to determine where the pod will be scheduled, it is used at runtime. In calculating the respurce quota, always use the resource limit value.
 
 ### Conclusion
