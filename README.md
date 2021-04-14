@@ -639,10 +639,10 @@ With a CPU resource request of 200m and 240m (20% of request value) limit, the s
 ...
 resources:
   limits:
-    memory: "512Mi"
+    memory: "768Mi"
     cpu: "480m"  
   requests:
-    memory: "128Mi"
+    memory: "512Mi"
     cpu: "400m"
 ...
 ```
@@ -665,10 +665,10 @@ The table below highlights the resource estimation for a normal load of 2000 vir
 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
-| 1  |   480m         |   512Mi         |     1     |     171.75     |     0      |         480m       |         512Mi         |
-| 2  |   480m         |   512Mi         |     2     |     475.55     |     0      |         960m       |         1,024Mi       |
-| 3  |   480m         |   512Mi         |     3     |     748.42     |     0      |       1,440m       |         1,536Mi       |
-| 4  |   480m         |   512Mi         |     4     |   1,169.61     |     0      |       1,920m       |         2,048Mi       |
+| 1  |   480m         |   768Mi         |     1     |     171.75     |     0      |        480m        |         768Mi         |
+| 2  |   480m         |   768Mi         |     2     |     475.55     |     0      |        960m        |         1536Mi        |
+| 3  |   480m         |   768Mi         |     3     |     748.42     |     0      |       1440m        |         2304Mi        |
+| 4  |   480m         |   768Mi         |     4     |   1,169.61     |     0      |       1920m        |         3072Mi        |
 
 *Table 1*
 
@@ -702,9 +702,9 @@ resources:
 ##### With CPU request of 480m and limit of 576m i.e 20% increase. 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
-| 1  |   576m         |   512Mi         |     1     |     216.06     |     0      |         576m       |           512Mi       |
-| 2  |   576m         |   512Mi         |     2     |     716.65     |     0      |       1,152m       |         1,024Mi       |
-| 3  |   576m         |   512Mi         |     3     |   1,066.61     |     0      |       1,728m       |         1,536Mi       |
+| 1  |   576m         |   768Mi         |     1     |     216.06     |     0      |         576m       |           768Mi       |
+| 2  |   576m         |   768Mi         |     2     |     716.65     |     0      |       1,152m       |          1536Mi       |
+| 3  |   576m         |   768Mi         |     3     |   1,066.61     |     0      |       1,728m       |          2304Mi       |
 
 *Table 2*
 
@@ -713,8 +713,8 @@ Table 2 above show that 3 pod replicas are required to meet our performance targ
 ##### With CPU request of 576m and limit of 692m i.e 20% increase.
 | # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-:| :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
-| 1 |   692m         |   512Mi         |     1     |     587.20     |     0      |         692m       |           512Mi       |
-|*2*|   **692m**     |   **512Mi**     |   **2**   | **1,059.88**   |   **0**    |       **1,384m**   |         **1,024Mi**   |
+| 1 |   692m         |   768Mi         |     1     |     587.20     |     0      |         692m       |           768Mi       |
+|*2*|   **692m**     |   **768Mi**     |   **2**   | **1,059.88**   |   **0**    |       **1,384m**   |         **1536Mi**   |
 
 *Table 3*
 
@@ -725,8 +725,8 @@ If we reduce the memory by 20% to optimize the resources, the application gets k
 ##### With CPU request of 692m and limit of 830m i.e 20% increase.
 | # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-:| :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
-| 1 |   830m         |   512Mi         |     1     |     858.01     |     0      |         830m       |           512Mi       |
-| 2 |   830m         |   512Mi         |     2     |   1,356.94     |  0.06      |       1,660m       |         1,024Mi       |
+| 1 |   830m         |   768Mi         |     1     |     858.01     |     0      |         830m       |           768Mi       |
+| 2 |   830m         |   768Mi         |     2     |   1,356.94     |  0.06      |       1,660m       |          1536Mi       |
 
 *Table 4*
 
@@ -740,8 +740,8 @@ Starting with the optimal resource requirement for a normal workload, let's put 
 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
-| 1  |   692m         |   512Mi         |     2     |     571.30     |     0      |       1,384m       |         1,024Mi       |
-| 2  |   692m         |   512Mi         |     3     |   1,064.50     |     0.05   |       2,076m       |         1,536Mi       |
+| 1  |   692m         |   768Mi         |     2     |     571.30     |     0      |        1384m       |          768Mi        |
+| 2  |   692m         |   768Mi         |     3     |   1,064.50     |     0.05   |        2076m       |         1536Mi        |
 
 *Table 5*
 
@@ -757,17 +757,30 @@ For the To-do application, based on the normal and peak "Black Friday" workloads
 
 |    Application   |# of Pods|mem. req/pod|mem. lim/Pod|Total mem req|Total mem lim|CPU req/Pod|CPU lim/Pod|Total CPU req |Total CPU lim |
 | :--------------  |:-------:|:----------:|:----------:|:-----------:|:-----------:|:--------: |:--------: |:-----------: |:-----------: |
-| Todo Application |    2    |  512Mi     |   512Mi    |    1,024Mi  |    1,024Mi  |    576m   |    692m   |     1,384m   |     1,384m   |
+| Todo Application |    2    |  512Mi     |   768Mi    |     1024Mi  |     1536Mi  |    576m   |    692m   |      1152m   |      1384m   |
 | Postgesql        |    1    |  512Mi     |   512Mi    |      512Mi  |      512Mi  |    200m   |    200m   |       200m   |       200m   |
 |         .        |         |            |            |             |             |           |           |              |              |
 | Margin to Deploy |         |  256Mi     |   256Mi    |      256Mi  |      256Mi  |    100m   |    100m   |       100m   |       100m   |
-| **Total**        |    3    |1,280Mi     | 1,280Mi    |    1,792Gi  |    1,792Gi  |  1 Core   |  1 Core   |     1,684m   |     1,684m   |
-|**Resource Quota**|  **3**  |            |            |   **2Gi**   |   **2Gi**   |           |           |   **2core**  |   **2core**  |
-
-
+| **Total**        |    3    |1,280Mi     | 1,536Mi    |     1792Mi  |     2304Mi  |    876m   |    992m   |      1452m   |      1684m   |
+|**Resource Quota**|  **3**  |            |            | **1792Mi**  |  **2304Mi** |           |           |   **1452m**  |   **1684m**  |
 
 *Table 6*
 
-> Please note that the values set for a resource limit is not used to determine where the pod will be scheduled, it is used at runtime. In calculating the respurce quota, always use the resource limit value.
+```yaml
+kind: ResourceQuota
+apiVersion: v1
+metadata:
+  name: resource-estimation-rq
+  namespace: resource-estimation
+spec:
+  hard:
+    limits.cpu: 1684m
+    limits.memory: 2304Mi
+    pods: '3'
+    requests.cpu: 1452m
+    requests.memory: 1792Mi
+  scopes:
+    - NotTerminating
+```
 
 ### Conclusion
