@@ -755,14 +755,14 @@ Starting with the optimal resource requirement for a normal workload, let's put 
 
 For the To-do application, based on the normal and peak "Black Friday" workloads, Table 5 indicates the amount of resources required to successfully run the application. 
 
-|      Application   | # of Pods   | max Memory/Pod | Total Memory | max CPU/Pod |    Total CPU       |
-| :----------------  | :---------: | :------------: |:-----------: | :---------: |:-----------------: |
-| To-do Application  |      2      |   512Mi        |    1,024Mi   |    692m     |     1,384m         |
-| Postgesql          |      1      |   512Mi        |      512Mi   |    200m     |       200m         |
-|         .          |             |                |              |             |                    |
-| Margin to Deploy   |             |   256Mi        |      256Mi   |    100m     |       100m         |
-| **Total**          |      3      | 1,280Mi        |    1,792Gi   |  1 Core     |     1,684m         |
-| **Resource Quota** |    **3**    |                |   **2Gi**    |             |     **2core**      |
+|    Application   |# of Pods|mem. req/pod|mem. lim/Pod|Total mem req|Total mem lim|CPU req/Pod|CPU lim/Pod|Total CPU req |Total CPU lim |
+| :--------------  |:-------:|:----------:|:----------:|:-----------:|:-----------:|:--------: |:--------: |:-----------: |:-----------: |
+| Todo Application |    2    |  512Mi     |   512Mi    |    1,024Mi  |    1,024Mi  |    576m   |    692m   |     1,384m   |     1,384m   |
+| Postgesql        |    1    |  512Mi     |   512Mi    |      512Mi  |      512Mi  |    200m   |    200m   |       200m   |       200m   |
+|         .        |         |            |            |             |             |           |           |              |              |
+| Margin to Deploy |         |  256Mi     |   256Mi    |      256Mi  |      256Mi  |    100m   |    100m   |       100m   |       100m   |
+| **Total**        |    3    |1,280Mi     | 1,280Mi    |    1,792Gi  |    1,792Gi  |  1 Core   |  1 Core   |     1,684m   |     1,684m   |
+|**Resource Quota**|  **3**  |            |            |   **2Gi**   |   **2Gi**   |           |           |   **2core**  |   **2core**  |
 
 
 
