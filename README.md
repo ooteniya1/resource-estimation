@@ -756,7 +756,7 @@ Starting with the optimal resource requirement for a normal workload, let's put 
 For the To-do application, based on the normal and peak "Black Friday" workloads, Table 5 indicates the amount of resources required to successfully run the application. 
 
 |      Application   | # of Pods   | max Memory/Pod | Total Memory | max CPU/Pod |    Total CPU       |
-| :----------------: | :---------: | :------------: |:-----------: | :---------: |:-----------------: |
+| :----------------  | :---------: | :------------: |:-----------: | :---------: |:-----------------: |
 | To-do Application  |      2      |   512Mi        |    1,024Mi   |    692m     |     1,384m         |
 | Postgesql          |      1      |   512Mi        |      512Mi   |    200m     |       200m         |
 |         .          |             |                |              |             |                    |
