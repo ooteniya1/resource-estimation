@@ -263,7 +263,7 @@ In summary, it is crucial to follow the recommendation below to arrive at a very
 
 
 # Cloud-Native Application Resource Estimation - Part 2: Process
-In the first part of this article, we touched on application resource estimation concepts and approaches. In this second part, we will be walking you through a practical example of Application resource estimation.
+In the first part of this article, we touched on application resource estimation concepts and approaches. In this second part, we will be walking you through a practical example of estimating the resources an application needs.
  
 ## Resource Estimation Setup
 In this workshop, we will be determining the resource requirement of a [Todo-spring-quakus](https://github.com/ooteniya1/resource-estimation) application which was initially set up by [Eric Deandrea](https://github.com/edeandrea) but customized to fit the purpose of this workshop.
