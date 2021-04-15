@@ -50,10 +50,20 @@ The benefits of properly estimating the resources an application needs before ge
  
 Estimating the resources an application needs is very challenging to be honest, it involves some trial and error. Identifying accurately how many resources a container, for instance, will require, and how many replicas a service will need at a given time to meet service-level agreements takes time and effort; hence the process is more of an art than science. You’ll first want to identify a good starting point for the application; aiming for a good balance of CPU and memory. After you’ve decided on a suitable resource size for the application, you will also need to set up a process where you can constantly monitor the application's resource actual usage over a period of time.
  
-In this workshop, we'll be walking you through how to properly estimate your application resources in terms of memory and CPU. At the end, we will come up with figure 1, which can be used to create the resource quota for the application namespace.
- 
-![](images/estimate.png)
-*Figure 1*
+In this workshop, we'll be walking you through how to properly estimate your application resources in terms of memory and CPU. At the end of this 2 part article, we will come up with Table 1, which can be used to create the resource quota for the application namespace.
+
+|    Application   |# of Pods|mem. req/pod|mem. lim/Pod|Total mem req|Total mem lim|CPU req/Pod|CPU lim/Pod|Total CPU req |Total CPU lim |
+| :--------------  |:-------:|:----------:|:----------:|:-----------:|:-----------:|:--------: |:--------: |:-----------: |:-----------: |
+| Todo Application |    2    |  512Mi     |   768Mi    |     1024Mi  |     1536Mi  |    576m   |    692m   |      1152m   |      1384m   |
+| Postgesql        |    1    |  512Mi     |   512Mi    |      512Mi  |      512Mi  |    200m   |    200m   |       200m   |       200m   |
+|         .        |         |            |            |             |             |           |           |              |              |
+| Margin to Deploy |         |  256Mi     |   256Mi    |      256Mi  |      256Mi  |    100m   |    100m   |       100m   |       100m   |
+| **Total**        |    3    |1,280Mi     | 1,536Mi    |     1792Mi  |     2304Mi  |    876m   |    992m   |      1452m   |      1684m   |
+|**Resource Quota**|  **3**  |            |            | **1792Mi**  |  **2304Mi** |           |           |   **1452m**  |   **1684m**  |
+
+Table 1
+<!-- ![](images/estimate.png)
+*Figure 1* -->
  
 ## Definitions
 Before we dive into codes, let's define some concepts.
@@ -252,59 +262,58 @@ In summary, it is crucial to follow the recommendation below to arrive at a very
 2. Ed Seymour for the QoS and Limit Range diagrams
 
 
-# Cloud-Native Application Resource Estimation - Part 2: Process
-In the first first part of this article, we touched on the concepts and approach of Application resource estimation. In this secoind part, we will be walking you through a pratical example of Application resource estimation.
-
+Cloud-Native Application Resource Estimation - Part 2: Process
+In the first part of this article, we touched on application resource estimation concepts and approaches. In this second part, we will be walking you through a practical example of Application resource estimation.
+ 
 ## Resource Estimation Setup
-In this workshop, we will be determining the resource requirement of a [Todo-spring-quakus](https://github.com/ooteniya1/resource-estimation) application which was originally setup by [Eric Deandrea](https://github.com/edeandrea) but customized to fit the purpose of this workshop.
-
+In this workshop, we will be determining the resource requirement of a [Todo-spring-quakus](https://github.com/ooteniya1/resource-estimation) application which was initially set up by [Eric Deandrea](https://github.com/edeandrea) but customized to fit the purpose of this workshop.
+ 
 The Architecture diagram below highlights the key components we will be using for the estimation process.
-
+ 
 ![](images/estimation_setup.png)
 ### Pre-requisites
 For this workshop, you will need the following:
-
+ 
 1. Access to Openshift Cluster
 2. Install Openshift Pipeline Operator
-3. Install a Postgressql database for the To-do application
+3. Install a Postgresql database for the To-do application
 4. Install Vertical Pod Autoscaler Operator
 5. Access to an external image registry (we use https://quay.io for this workshop)
 6. Create a secret for pulling images from the image registry
-7. Create a secret for github
-8. Add the registry and github secret to Openshift pipeline serviceaccount
+7. Create a secret for Github
+8. Add the registry and Github secret to Openshift pipeline service account
 9. Download Apache JMeter for Performance testing
 ### Environment Setup
-We will use a script to setup the environment. You will need the following tools pre-installed when you run the script.
-
+We will use a script to set up the environment. You will need the following tools pre-installed when you run the script.
+ 
 - [Helm](https://helm.sh/docs/intro/install/) : `helm` version
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) : `git` version
 - [oc](https://docs.openshift.com/container-platform/4.5/cli_reference/openshift_cli/getting-started-cli.html) : `oc` version
 - [kustomize](https://kubernetes-sigs.github.io/kustomize/installation/) v3.1.0 or higher: `customize` version
 - [tkn](https://github.com/tektoncd/cli) (optional Tekton CLI): `tkn` version
 - envsubst (gettext): `envsubst` --help
-
+ 
 To get started, clone or fork the source code repository:
-
+ 
 `$ git clone https://github.com/ooteniya1/resource-estimation.git`
-
+ 
 Once you have all the enviroment set up, login to your Openshift cluster.
-
+ 
 `$ oc login --token=TOKEN --server=https://api.YOUR_CLUSTER_DOMAIN:6443`
-
+ 
 Create `resource-estimation` namespace.
-
+ 
 `$ oc new-project resource-estimation`
-
+ 
 Run the setup scripts to install the Openshift-pipeline, Postgresql and VerticalPodAutoscaler operators.
-
+ 
 ```
 $ cd helm
 $ ./setup-prereq.sh
-
- ```
-  
+ 
+```
  You should see output similar to below:
-
+ 
 ``` text
 Installing openshift-pipelines operator
 Release "openshift-pipelines" has been upgraded. Happy Helming!
@@ -314,7 +323,7 @@ NAMESPACE: resource-estimation
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-
+ 
 Installing postgresql Operator
 Release "postgresql" does not exist. Installing it now.
 NAME: postgresql
@@ -323,7 +332,7 @@ NAMESPACE: resource-estimation
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
-
+ 
 Installing vertical pod autoscler
 Release "vertical-pod-autoscaler" does not exist. Installing it now.
 NAME: vertical-pod-autoscaler
@@ -333,428 +342,427 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 ```
-
-Now that we have Openshift-pipeline, postresql and vertical pod autoscaler operators installed, let's setup github and quay.io secrets and add it to Openshift-pipeline service account.
-
+ 
+Now that we have Openshift-pipeline, postresql and vertical pod autoscaler operators installed, let's set up Github and quay.io secrets and add them to Openshift-pipeline service account.
+ 
 ```
 $ ./add-github-credentials.sh
 $ ./add-quay-credentials.sh
 ```
 ## Resource Estimation Process
-
-In order to estimate the resource requirements and determine the resource quota to use for the Todo-spring-quarkus namespace, we will going going through the following steps:
-
+ 
+To estimate the resource requirements and determine the resource quota to use for the Todo-spring-quarkus namespace, we will go through the following steps:
+ 
 1. Define performance goals.
 2. Check the start-up time. This is important for scaling in peak periods.
-3. Adjust to have a fast start-up time initially. 
-   - What is the best resource requirement for the startup time I need? 
-   - Not applicable to every use case
-4. What’s my breakpoint with one pod - Note the resource usage. 
-   - Is the breakpoint lower than my desired metrics? 
-   - How many replicas do I need to start with to achieve the desired metrics/performance goals?
-5. What’s the resource required to achieve the desired throughput with a normal workload? (You need to run this for a period of time say 1 day to 1 week)
+3. Adjust to have a fast start-up time initially.
+  - What is the best resource requirement for the startup time I need?
+  - Not applicable to every use case
+4. What’s my breakpoint with one pod - Note the resource usage.
+  - Is the breakpoint lower than my desired metrics?
+  - How many replicas do I need to start with to achieve the desired metrics/performance goals?
+5. What’s the resource required to achieve the desired throughput with a typical workload? (You need to run this for a period of time say one day to one week)
 6. What’s the resource requirement to cope with spikes and "Black Friday" requests?
 7. Estimate the resource usage per pod/container
 8. Use that to determine your quota
-
+ 
 ### Todo Application Deployment and Tools Setup
-Before we go through the proesses outlined above, let's prepare the application and the tools.
-#### Install and deploy the Todo-spring Application 
-
-This steps build on the previous setup steps. Make sure the steps below have been successfully completed.
-
+Before we go through the processes outlined above, let's prepare the application and the tools.
+#### Install and deploy the Todo-spring Application
+ 
+These steps build on the previous setup steps. Make sure the steps below have been successfully completed.
+ 
 ```
 $ cd helm
 $ ./setup-prereq.sh
 $ ./add-github-credentials.sh
 $ ./add-quay-credentials.sh
-
- ```
-
-The Todo Application uses the `tekton-pipeline/todo-pipeline.yaml` to build and deploy the application Openshift. The application can be deployed as a Quarkus or Spring Boot application. We will be using the Spring Boot version.
-
-Before then, let's install the postgresql database the application uses.
-
+ 
+```
+ 
+The Todo application uses the `tekton-pipeline/todo-pipeline.yaml` to build and deploy to Openshift. The application can be deployed as a Quarkus or Spring Boot application. We will be using the Spring Boot version.
+ 
+Before then, let's install the PostgreSQL database the application uses.
+ 
 ```text
 $ oc apply -f ../todo-spring-quarkus/k8s/postgresql-instance.yaml
 database.postgresql.dev4devs.com/postgresql created
 ```
-
-Deploy the application 
-
+ 
+Deploy the application
+ 
 ``` text
 $ cd tekton-pipeline
 $ ./build-deploy-todo-spring v1.3.8
-
+ 
 ```
 This will build the application, tag the created image as `v1.3.8` , push to https://quay.io and from there deploy to Openshift.
-
+ 
 ![Openshift pipeline](images/pipeline.png)
 *Openshift pipeline*
-
+ 
 ![Openshift pipeline - Build Step](images/pipeline2.png)
 *Openshift pipeline - Build Step*
-
+ 
 ![to-spring image repository](images/quay.png)
 *Todo-spring image repository*
-
+ 
 ![Openshift pipeline - Deploy Step](images/pipeline3.png)
 *Openshift pipeline - Deploy Step*
-
+ 
 ![Todo Application Topology](images/topology.png)
 *Todo Application Topology*
-
-If the application is failing readiness check, that's because the application does not have enough processing unit to complete the initialization process. We will talk more about this later. In order to meet the required startup time for the readiness probe, update the `Deployment` as follows:
-
+ 
+If the application is failing readiness check, that's because the application does not have enough processing unit to complete the initialization process. We will talk more about this later. To meet the required startup time for the readiness probe, update the `Deployment` as follows:
+ 
 ``` yaml
 ...
-  spec:
-      containers:
-        - resources:
-            limits:
-              cpu: 600m
-              memory: 512Mi
-            requests:
-              cpu: 300m
-              memory: 128Mi
-
+ spec:
+     containers:
+       - resources:
+           limits:
+             cpu: 600m
+             memory: 512Mi
+           requests:
+             cpu: 300m
+             memory: 128Mi
+ 
 ...
 ```
-The startup time should be fast enough now. 
-
+The startup time should be fast enough now.
+ 
 ![Todo Application Page](images/todo-app2.png)
 *Todo Application Page*
-
+ 
 ![Todo Application Swagger UI](images/swagger.png)
 *Todo Application Swagger UI*
-
-
-#### Apply a VPA custome resource to monitor the application's resource usage
-
-[Vertical Pod Autoscaler Operator (VPA)](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) automatically reviews the historic and current CPU and memory resources for containers in pods and can update the resource limits and requests based on the usage values it learns. 
-
->The [VPA](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) uses individual custom resources (CR) to update all of the pods associated with a workload object, such as a Deployment, Deployment Config, StatefulSet, Job, DaemonSet, ReplicaSet, or ReplicationController.
-
->The VPA helps you to understand the optimal CPU and memory usage for your pods and can automatically maintain pod resources through the pod lifecycle.
-
-VPA has three main components:
-
-
-1. Recommender - Monitors the current and past resource consumption, and provides recommended values for the container’s CPU and memory requests.
-
-2. Updater - Checks which of the pods have the correct resources set, and if they don’t, kills them so that they can be re-created by their controllers with the updated requests.
  
+ 
+#### Apply a VPA custome resource to monitor the application's resource usage
+ 
+[Vertical Pod Autoscaler Operator (VPA)](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) automatically reviews the historical and current CPU and memory resources for containers in pods and can update the resource limits and requests based on the usage values it learns.
+ 
+>The [VPA](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) uses individual custom resources (CR) to update all of the pods associated with a workload object, such as a Deployment, Deployment Config, StatefulSet, Job, DaemonSet, ReplicaSet, or ReplicationController.
+ 
+>The VPA helps you to understand the optimal CPU and memory usage for your pods and can automatically maintain pod resources through the pod lifecycle.
+ 
+VPA has three main components:
+ 
+ 
+1. Recommender - Monitors the current and past resource consumption, and provides recommended values for the container’s CPU and memory requests.
+ 
+2. Updater - Checks which of the pods have the correct resources set, and if they don’t, kills them so that their controllers with the updated requests can re-create them.
 3. Admission Plugin - Sets the correct resource requests on new pods.
-
+ 
 `vpa.yaml`
-
+ 
 ``` yaml
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
 metadata:
-  name: todo-recommender-vpa
+ name: todo-recommender-vpa
 spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment 
-    name: todo-spring 
-  updatePolicy:
-    updateMode: "Off" 
+ targetRef:
+   apiVersion: "apps/v1"
+   kind: Deployment
+   name: todo-spring
+ updatePolicy:
+   updateMode: "Off"
 ```
-   
+ 
 The VPA recommendations are stored in the `status`. As you can see in `vpa.yaml`, the `updateMode: "Off" ` means no changes to the selected resources are performed based on the recommended values in the status. There are two other types: `updateMode: "Initial" ` and `updateMode: "Auto" `.
-
-**Initial**: means recommendations are applied during creation of a Pod and it influences scheduling decision.
+ 
+**Initial**: means recommendations are applied during the creation of a Pod and it influences scheduling decisions.
 **Auto**: means pods are automatically restarted with the updated resources based on recommendation.
-
-VPA is not currently reccomended for Production deployment but for resources usage estimation, it's a good tool to deploy in the development environment.
-
+ 
+VPA is not currently recommended for Production deployment but for resource usage estimation; it’s an excellent tool to deploy in the development environment.
+ 
 Let's create the CR.
-
+ 
 ```
 $ oc apply -f ..//todo-spring-quarkus/k8s/vpa.yaml
-
+ 
 verticalpodautoscaler.autoscaling.k8s.io/todo-recommender-vpa created
-
+ 
 ```
-
+ 
 #### Record Test Plans using Apache JMeter
 Now that we have the Todo application up and running, the next step is to create our test plans based on the Todo endpoints. For this workshop, the endpoints we would like to profile are:
-
+ 
 ```
 $ curl -X GET "http://todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com/todo/1" -H  "accept: */*"
-
-$ curl -X PUT "http://todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com/todo" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"id\":0,\"title\":\"Test Resource Estimation\",\"completed\":true}" 
-
+ 
+$ curl -X PUT "http://todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com/todo" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"id\":0,\"title\":\"Test Resource Estimation\",\"completed\":true}"
+ 
 $ curl -X POST "http://todo-spring-resource-estimation.apps.cluster-5a89.sandbox1752.opentlc.com/todo" -H  "accept: */*" -H  "Content-Type: application/json" -d "{\"id\":0,\"title\":\"string\",\"completed\":true}"
 ```
-
+ 
 Let's first download and install JMeter.
-
+ 
 Download [Apache JMeter](https://jmeter.apache.org/) and extract in a directory. Start the application.
-
+ 
 ```
 $ unzip apache-jmeter-5.4.1.zip
 $ cd apache-jmeter-5.4.1
 $ ./bin/jmeter.sh
-
+ 
 ================================================================================
 Don't use GUI mode for load testing !, only for Test creation and Test debugging.
 For load testing, use CLI Mode (was NON GUI):
-   jmeter -n -t [jmx file] -l [results file] -e -o [Path to web report folder]
+  jmeter -n -t [jmx file] -l [results file] -e -o [Path to web report folder]
 & increase Java Heap to meet your test requirements:
-   Modify current env variable HEAP="-Xms1g -Xmx1g -XX:MaxMetaspaceSize=256m" in the jmeter batch file
+  Modify current env variable HEAP="-Xms1g -Xmx1g -XX:MaxMetaspaceSize=256m" in the jmeter batch file
 Check : https://jmeter.apache.org/usermanual/best-practices.html
 ================================================================================
-
+ 
 ```
 ![Apache JMeter GUI](images/jmeter_home.png)
 *Apache JMeter GUI*
-
-
-
+ 
+ 
+ 
 ### Designing the Load Testing Plan
-
+ 
 The first step in design a lod testing plan is to understand the performance goal/target opf the system under test from business perspectives.
-
+ 
 For our Todo application, we have the following performance requirements that the application must meet.
-
+ 
 1. **Throughput**: must be able to process minimum 1000 transactions/sec
 2. **Error rate**: 0.06% error rate, which means the application must perform at a minimum of 99.96%
 3. **Boot-up time**: relatively fast boot time <= 40sec. This is neccessary in case there is a need for scaling.
 4. **Concurrent users**: handle up to 2000 users or requests/sec
 5. **Peak Period Users**: handle up to 4000 users or requests/sec within 1 min windows
 6. **Black Friday Peak Period User**: handle up to 6000 users or requests/sec within 3 min windows
-
+ 
 One of the ways of setting up your test script is using the Test Script Recorder. See the [step-by-step guide](https://jmeter.apache.org/usermanual/jmeter_proxy_step_by_step.html) for more information.
-
-Once you have the test scripts that mimiks the type of user interaction you would like to perform, next is to configure the [Thread Group](https://jmeter.apache.org/usermanual/component_reference.html#Thread_Group) which defines a pool of virtual users that will execute the test case against the system. See the [Elements of a Test Plan]( https://jmeter.apache.org/usermanual/test_plan.html) for more information.
-
+ 
+Once you have the test scripts that mimicks the type of user interaction you would like to perform, next is to configure the [Thread Group](https://jmeter.apache.org/usermanual/component_reference.html#Thread_Group) which defines a pool of virtual users that will execute the test case against the system. See the [Elements of a Test Plan]( https://jmeter.apache.org/usermanual/test_plan.html) for more information.
+ 
 We have designed three test scripts to execute on the Todo application:
-
-1. **Normal Load** - at any give point in time, there will be 2000 concurrent users on the system per sec. For the pupose of this workshop, the normal load will be run for 1 hour and then we monitor the performance and the ability of our configuration to handle such requests.
-
+ 
+1. **Normal Load** - at any given point in time, there will be 2000 concurrent users on the system per sec. For this workshop’s purpose, we will run the normal load for 1 hour and then monitor the performance and our configuration’s ability to handle such requests.
+ 
 ![Normal Load Test Script](images/normal_load.png)
 *Normal Load Test Script*
-
-2. **Peak Load** - For a peak load, we expect 4000 additional concurrent users to be on the system for several cycles within a second for a total during of 1 minute. This is in addition to the 2000 concurrent users on the system per sec in a normal load, making a total of 6000 concurrent users/sec.
-
+ 
+2. **Peak Load** - For a peak load, we expect 4000 additional concurrent users to be on the system for several cycles within a second for a total of 1 minute. This is in addition to the 2000 concurrent users on the system per sec in a normal load, making a total of 6000 concurrent users/sec.
+ 
 ![Peak Load Test Script](images/peak_load.png)
 *Peak Load Test Script*
-
+ 
 <!-- 3. **Abnormal Load** - For an abnormal load, we expect 5000 additional concurrent users to be on the system for several cycles within a second for a total during of 3 minutes. This is in addition to the 2000 concurrent users on the system per sec in a normal load, making a total of 7000 concurrent users/sec.
-
+ 
 ![Abnormal Load Test Script](images/abnormal_load.png)
 *Abnormal Load Test Script* -->
-
-### Test Script Execution, Performance and Resource Monitoring
-
-To execute the designed Test scripts, we will be using the Apache JMeter CLI. This is a recommended approach for running a load test as it avoids the overhead of the JMeter GUI. The CLI also generates a bunch of reports we can use to analyze the performance of the application. The main benefit of the CLI over the GUI for load testing is that it consumes fewer resources and gives more reliable results than the GUI. 
-
+ 
+### Test Script Execution, Performance, and Resource Monitoring
+ 
+To execute the designed Test scripts, we will be using the Apache JMeter CLI. This is a recommended approach for running a load test as it avoids the overhead of the JMeter GUI. The CLI also generates a bunch of reports we can use to analyze the performance of the application. The main benefit of the CLI over the GUI for load testing is that it consumes fewer resources and gives more reliable results than the GUI.
+ 
 >JMeter GUI should only be used to create, maintain, and validate our scripts.  Once the script is validated, use the CLI to run the load test.
-
+ 
 [Openshift Monitoring](https://docs.openshift.com/container-platform/4.7/monitoring/understanding-the-monitoring-stack.html) and the installed [VPA](https://docs.openshift.com/container-platform/4.7/nodes/pods/nodes-pods-vertical-autoscaler.html) CR will be used to monitor the resource usage.
-
+ 
 We will follow the steps below to estimate resources to fulfil our performance requirements.
-
+ 
 1. Check the start-up time. This is important for scaling in peak periods.
-2. Adjust to have a fast start-up time initially. 
-   * What is the best resource requirement for the startup time I need? 
-   * Not applicable to every use case
-3. What’s my breakpoint with one pod - Note the resource usage. 
-   * Is the breakpoint lower than my desired performance goal? 
-   * How many replicas do I need to start with to achieve the desired performance goals?
+2. Adjust to have a fast start-up time initially.
+  * What is the best resource requirement for the startup time I need?
+  * Not applicable to every use case
+3. What’s my breakpoint with one pod - Note the resource usage.
+  * Is the breakpoint lower than my desired performance goal?
+  * How many replicas do I need to start with to achieve the desired performance goals?
 4. What’s the resource required to achieve the desired throughput with a normal workload? (You need to run this for a period of time say 1 day to 1 week)
 5. What’s the resource requirement to cope with spikes and "Black Friday" requests?
-   * How many pods does the application need to cope effectively?
-   * What's the required memory or CPU utilization to scale up?
+  * How many pods does the application need to cope effectively?
+  * What's the required memory or CPU utilization to scale up?
 6. Estimate the resource usage per pod/container.
 7. Use that to determine the quota.
-
+ 
 #### Step 1: Determine the right resources to achieve the required startup time
-
-We have a start up time requirement of <= 40sec. This is important because during peak periods like "Black Friday", we want to be able to possibly scale by adding more pod replicas to cater for the load. Our current configuration will fail [`Startup probe`](https://docs.openshift.com/container-platform/4.7/applications/application-health.html) because the application will take a long time to initialize. The CPU is throttled based on the current CPU request and limit configurations. 
-
+ 
+We have a start up time requirement of <= 40sec. This is important because during peak periods like "Black Friday", we want to possibly scale by adding more pod replicas to cater to the load. Our current configuration will fail [`Startup probe`](https://docs.openshift.com/container-platform/4.7/applications/application-health.html) because the application will take a long time to initialize. The CPU is throttled based on the current CPU request and limit configurations.
+ 
 ```yaml
 ...
 spec:
-      containers:
-        - image: 'quay.io/ooteniya/todo-spring:v1.3.8'
-          imagePullPolicy: Always
-          name: todo-spring
-          resources:
-            limits:
-              memory: "512Mi"
-              cpu: "60m"  
-            requests:
-              memory: "128Mi"
-              cpu: "30m"
-          ports:
-            - containerPort: 8080
-              protocol: TCP
-          ...
-          startupProbe: 
-            httpGet: 
-              path: /health
-              port: 8080 
-            failureThreshold: 3
-            periodSeconds: 40 
-...            
+     containers:
+       - image: 'quay.io/ooteniya/todo-spring:v1.3.8'
+         imagePullPolicy: Always
+         name: todo-spring
+         resources:
+           limits:
+             memory: "512Mi"
+             cpu: "60m" 
+           requests:
+             memory: "128Mi"
+             cpu: "30m"
+         ports:
+           - containerPort: 8080
+             protocol: TCP
+         ...
+         startupProbe:
+           httpGet:
+             path: /health
+             port: 8080
+           failureThreshold: 3
+           periodSeconds: 40
+...           
 ```
-
+ 
 The Pod will be killed and restarted based on its `restartPolicy`
-
+ 
 ![CrashLoopBackOff](images/crash_loop.png)
 *CrashLoopBackOff*
-
+ 
 ![Failed Startup Probe](images/failed_startup_probe.png)
 *Failed Startup Probe*
-
+ 
 ![Failed Startup Probe](images/failed_pod.png)
-
+ 
 *Failed Pod*
-
+ 
 The solution to this is to bump up the CPU resources required to give it enough processing power to startup at the required less than 40 secs startup target. Below is the new configuration.
-
+ 
 ```yaml
 ...
 resources:
-  limits:
-    memory: "512Mi"
-    cpu: "240m"  
-  requests:
-    memory: "128Mi"
-    cpu: "200m"
+ limits:
+   memory: "512Mi"
+   cpu: "240m" 
+ requests:
+   memory: "128Mi"
+   cpu: "200m"
 ...
 ```
-
+ 
 With a CPU resource request of 200m and 240m (20% of request value) limit, the startup time of 73.902seconds does not meet the startup performance target. The pod will be restarted because it's lower than the startup probe of `
-
+ 
 ![Failed Startup Probe](images/startup_notokay.png)
 *Startup not up to Target*
-
- We need to play around with the request and limit (20% of request) to ahieve that target.  
-
- ```yaml
+ 
+We need to play around with the request and limit (20% of request) to ahieve that target. 
+ 
+```yaml
 ...
 resources:
-  limits:
-    memory: "768Mi"
-    cpu: "480m"  
-  requests:
-    memory: "512Mi"
-    cpu: "400m"
+ limits:
+   memory: "768Mi"
+   cpu: "480m" 
+ requests:
+   memory: "512Mi"
+   cpu: "400m"
 ...
 ```
-
-With this new configuration, we are able to meet the startup target of less than 40sec. 
+ 
+With this new configuration, we can meet the startup target of less than 40sec.
 ![Startup Target Met](images/startup_success.png)
 *Startup Target Met*
-
+ 
 > Do not forget to tune the runtime paramaters such as [JVM parameters for Java](https://learning.oreilly.com/library/view/java-performance-2nd/9781492056102/) etc, to achieve the optimal performance.
-
-
+ 
+ 
 #### Step 2: Determine the resource requirement for a normal load.
-
-Now that we have achieved the required startup time, next is to determine the amount of resources required to achieve the target throughput under a normal workload. It is also important to note that the Todo application is more CPU intensive than memory. It does not require any data transformation etc. 
-
-The table below highlights the resource estimation for a normal load of 2000 virtual user per sec over a period of 2 minutes.
-
+ 
+Now that we have achieved the required startup time, next is to determine the number of resources required to achieve the target throughput under a normal workload. It is also important to note that the Todo application is more CPU intensive than memory. It does not require any data transformation etc.
+ 
+The table below highlights the resource estimation for a normal load of 2000 virtual user per sec for 2 minutes.
+ 
 > For a more accurate result, you need to run the workload over a period of at least 5hours to 2 weeks.
-##### With CPU request of 400m and limit of 480m. 
-
+##### With CPU request of 400m and limit of 480m.
+ 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1  |   480m         |   768Mi         |     1     |     171.75     |     0      |        480m        |         768Mi         |
 | 2  |   480m         |   768Mi         |     2     |     475.55     |     0      |        960m        |         1536Mi        |
 | 3  |   480m         |   768Mi         |     3     |     748.42     |     0      |       1440m        |         2304Mi        |
 | 4  |   480m         |   768Mi         |     4     |   1,169.61     |     0      |       1920m        |         3072Mi        |
-
+ 
 *Table 1*
-
-From table 1 above, to achieve our performance target of minimum of 1000tps and maximum 0.06% allowed error rate, we need 4 pods with memory limits of 512mi and 480m of cpu. If we are to request a quota based on this, we would require 2 cores of cpu and 2Gi of memory in the namespace. Below is the configuration used for the above table.
-
+ 
+From table 1 above, to achieve our performance target of a minimum of 1000tps and a maximum 0.06% allowed error rate, we need 4 pods with memory limits of 512mi and 480m of cpu. If we are to request a quota based on this, we would require 2 cores of cpu and 2Gi of memory in the namespace. Below is the configuration used for the above table.
+ 
 For a Bustable configuration:
 ```yaml
 ...
 resources:
-  limits:
-    memory: "512Mi"
-    cpu: "480m"  
-  requests:
-    memory: "128Mi"
-    cpu: "400m"
+ limits:
+   memory: "512Mi"
+   cpu: "480m" 
+ requests:
+   memory: "128Mi"
+   cpu: "400m"
 ...
 ```
-
+ 
 For a Guranteed configuration:
 ```yaml
 ...
 resources:
-  limits:
-    memory: "512Mi"
-    cpu: "480m"  
-  requests:
-    memory: "512Mi"
-    cpu: "480m"
+ limits:
+   memory: "512Mi"
+   cpu: "480m" 
+ requests:
+   memory: "512Mi"
+   cpu: "480m"
 ...
 ```
-##### With CPU request of 480m and limit of 576m i.e 20% increase. 
+##### With CPU request of 480m and limit of 576m i.e 20% increase.
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1  |   576m         |   768Mi         |     1     |     216.06     |     0      |         576m       |           768Mi       |
 | 2  |   576m         |   768Mi         |     2     |     716.65     |     0      |       1,152m       |          1536Mi       |
 | 3  |   576m         |   768Mi         |     3     |   1,066.61     |     0      |       1,728m       |          2304Mi       |
-
+ 
 *Table 2*
-
+ 
 Table 2 above show that 3 pod replicas are required to meet our performance target with memory limits of 512Mi and 576m of cpu limit, which is 20% cpu resource increase over the configuration we have in table 1. If we are to request a quota based on this, we would require 1.7 cores of cpu and 1.5Gi of memory in the namespace.
-
+ 
 ##### With CPU request of 576m and limit of 692m i.e 20% increase.
 | # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-:| :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1 |   692m         |   768Mi         |     1     |     587.20     |     0      |         692m       |           768Mi       |
 |*2*|   **692m**     |   **768Mi**     |   **2**   | **1,059.88**   |   **0**    |       **1,384m**   |         **1536Mi**   |
-
+ 
 *Table 3*
-
-With Table 3 above, we see that 2 pod replicas are required to meet our performance target with memory limits of 512Mi and 692m of cpu limit, which is 20% cpu resource increase over the configuration we have in table 2. If we are to request a quota based on this, we would require 1.3 cores of cpu and 1Gi of memory in the namespace.
-
-If we reduce the memory by 20% to optimize the resources, the application gets killed. This indicates that the memory requirement set for the application is the optimal since it can sustain the normal load but the pods gets killed once reduced by 20% of the current value.
-
+ 
+With Table 3 above, we see that 2 pod replicas are required to meet our performance target with memory limits of 512Mi and 692m of CPU limit, which is 20% CPU resource increase over the configuration we have in table 2. If we are to request a quota based on this, we would require 1.3 cores of CPU and 1Gi of memory in the namespace.
+ 
+If we reduce the memory by 20% to optimize the resources, the application gets killed. This indicates that the memory requirement set for the application is optimal since it can sustain the normal load, but the pods get killed once reduced by 20% of the current value.
+ 
 ##### With CPU request of 692m and limit of 830m i.e 20% increase.
 | # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-:| :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1 |   830m         |   768Mi         |     1     |     858.01     |     0      |         830m       |           768Mi       |
 | 2 |   830m         |   768Mi         |     2     |   1,356.94     |  0.06      |       1,660m       |          1536Mi       |
-
+ 
 *Table 4*
-
-Lastly, Table 4 indicates further increase of the cpu by 20% improved the throughput but our error rate increase above the allowed threshold. 
-
->> So, the optimal configuration for the performance target is the values we have in table 3 which is memory limits of 512Mi and 692m of cpu limit with 2 pod replicas. 
-
+ 
+Lastly, Table 4 indicates further increase of the cpu by 20% improved the throughput but our error rate increase above the allowed threshold.
+ 
+>> So, the optimal configuration for the performance target is the values we have in table 3 which is memory limits of 512Mi and 692m of cpu limit with 2 pod replicas.
+ 
 #### Step 3: Determine the resource requirement for a Peak load.
-
-Starting with the optimal resource requirement for a normal workload, let's put a peak workload on the system and determine how many replicas we need need to handle the load and still able to achieve the performance target.
-
+ 
+Starting with the optimal resource requirement for a normal workload, let's put a peak workload on the system and determine how many replicas we need to handle the load and still achieve the performance target.
+ 
 | #  | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-: | :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1  |   692m         |   768Mi         |     2     |     571.30     |     0      |        1384m       |          768Mi        |
 | 2  |   692m         |   768Mi         |     3     |   1,064.50     |     0.05   |        2076m       |         1536Mi        |
-
+ 
 *Table 5*
-
+ 
 ![CPU at Peak](images/cpu_peak.png)
 *CPU at Peak*
-
+ 
 ![Memory at Peak](images/memory_peak.png)
 *Memory at Peak*
-
+ 
 #### Step 4: Calculate the Resource Quota for the application namespace.
-
-For the To-do application, based on the normal and peak "Black Friday" workloads, Table 5 indicates the amount of resources required to successfully run the application. 
-
+ 
+For the To-do application, based on the normal and peak "Black Friday" workloads, Table 5 indicates the number of resources required to run the application successfully.
+ 
 |    Application   |# of Pods|mem. req/pod|mem. lim/Pod|Total mem req|Total mem lim|CPU req/Pod|CPU lim/Pod|Total CPU req |Total CPU lim |
 | :--------------  |:-------:|:----------:|:----------:|:-----------:|:-----------:|:--------: |:--------: |:-----------: |:-----------: |
 | Todo Application |    2    |  512Mi     |   768Mi    |     1024Mi  |     1536Mi  |    576m   |    692m   |      1152m   |      1384m   |
@@ -763,24 +771,29 @@ For the To-do application, based on the normal and peak "Black Friday" workloads
 | Margin to Deploy |         |  256Mi     |   256Mi    |      256Mi  |      256Mi  |    100m   |    100m   |       100m   |       100m   |
 | **Total**        |    3    |1,280Mi     | 1,536Mi    |     1792Mi  |     2304Mi  |    876m   |    992m   |      1452m   |      1684m   |
 |**Resource Quota**|  **3**  |            |            | **1792Mi**  |  **2304Mi** |           |           |   **1452m**  |   **1684m**  |
-
+ 
 *Table 6*
-
+ 
 ```yaml
 kind: ResourceQuota
 apiVersion: v1
 metadata:
-  name: resource-estimation-rq
-  namespace: resource-estimation
+ name: resource-estimation-rq
+ namespace: resource-estimation
 spec:
-  hard:
-    limits.cpu: 1684m
-    limits.memory: 2304Mi
-    pods: '3'
-    requests.cpu: 1452m
-    requests.memory: 1792Mi
-  scopes:
-    - NotTerminating
+ hard:
+   limits.cpu: 1684m
+   limits.memory: 2304Mi
+   pods: '3'
+   requests.cpu: 1452m
+   requests.memory: 1792Mi
+ scopes:
+   - NotTerminating
 ```
-
+ 
 ### Conclusion
+ 
+Estimating the resources an application need is very challenging. It takes time and effort; hence the process is more of an art than science. You’ll first want to identify a good starting point for the application, aiming for a good balance of CPU and memory. After you’ve decided on a suitable resource size for the application, you will also need to set up a process where you can constantly monitor the application's resource actual usage over a period of time. Openshift/Kubernetes provides objects and concepts such as Limit Ranges, ResourceQuota, Request and Limits to aid in the process.
+ 
+To estimate the resources an application needs, you need to start by first determining the performance target of the application, profile and tune the application, perform load testing to simulate the normal and peak loads, monitor the application over a period of time, and then review the estimated and actual resource usage.
+
