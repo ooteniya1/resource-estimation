@@ -740,7 +740,7 @@ If we reduce the memory by 20% to optimize the resources, the application gets k
  
 Lastly, Table 4 indicates further increase of the cpu by 20% improved the throughput but our error rate increase above the allowed threshold.
  
->> So, the optimal configuration for the performance target is the values we have in table 3 which is memory limits of 512Mi and 692m of cpu limit with 2 pod replicas.
+> So, the optimal configuration for the performance target is the values we have in table 3 which is memory limits of 512Mi and 692m of cpu limit with 2 pod replicas.
  
 #### Step 3: Determine the resource requirement for a Peak load.
  
