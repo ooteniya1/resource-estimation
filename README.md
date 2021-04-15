@@ -262,7 +262,7 @@ In summary, it is crucial to follow the recommendation below to arrive at a very
 2. Ed Seymour for the QoS and Limit Range diagrams
 
 
-Cloud-Native Application Resource Estimation - Part 2: Process
+# Cloud-Native Application Resource Estimation - Part 2: Process
 In the first part of this article, we touched on application resource estimation concepts and approaches. In this second part, we will be walking you through a practical example of Application resource estimation.
  
 ## Resource Estimation Setup
