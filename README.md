@@ -356,11 +356,11 @@ To estimate the resource requirements and determine the resource quota to use fo
 1. Define performance goals.
 2. Check the start-up time. This is important for scaling in peak periods.
 3. Adjust to have a fast start-up time initially.
-  - What is the best resource requirement for the startup time I need?
-  - Not applicable to every use case
+   - What is the best resource requirement for the startup time I need?
+   - Not applicable to every use case
 4. What’s my breakpoint with one pod - Note the resource usage.
-  - Is the breakpoint lower than my desired metrics?
-  - How many replicas do I need to start with to achieve the desired metrics/performance goals?
+   - Is the breakpoint lower than my desired metrics?
+   - How many replicas do I need to start with to achieve the desired metrics/performance goals?
 5. What’s the resource required to achieve the desired throughput with a typical workload? (You need to run this for a period of time say one day to one week)
 6. What’s the resource requirement to cope with spikes and "Black Friday" requests?
 7. Estimate the resource usage per pod/container
