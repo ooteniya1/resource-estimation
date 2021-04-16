@@ -359,8 +359,8 @@ To estimate the resource requirements and determine the resource quota to use fo
    - What is the best resource requirement for the startup time I need?
    - Not applicable to every use case
 4. What’s my breakpoint with one pod - Note the resource usage.
-   - Is the breakpoint lower than my desired metrics?
-   - How many replicas do I need to start with to achieve the desired metrics/performance goals?
+   - Is the breakpoint lower than my desired performance target?
+   - How many replicas do I need to start with to achieve the desired desired performance target?
 5. What’s the resource required to achieve the desired throughput with a typical workload? (You need to run this for a period of time say one day to one week)
 6. What’s the resource requirement to cope with spikes and "Black Friday" requests?
 7. Estimate the resource usage per pod/container
@@ -413,7 +413,7 @@ This will build the application, tag the created image as `v1.3.8` , push to htt
 ![Todo Application Topology](images/topology.png)
 *Todo Application Topology*
  
-If the application is failing readiness check, that's because the application does not have enough processing unit to complete the initialization process. We will talk more about this later. To meet the required startup time for the readiness probe, update the `Deployment` as follows:
+If the application fails readiness check, that's because the application does not have enough processing unit to complete the initialization process. We will talk more about this later. To meet the required startup time for the readiness probe, update the `Deployment` as follows:
  
 ``` yaml
 ...
@@ -429,7 +429,7 @@ If the application is failing readiness check, that's because the application do
  
 ...
 ```
-The startup time should be fast enough now.
+The startup time should be fast enough now for the application to pass the readiness check.
  
 ![Todo Application Page](images/todo-app2.png)
 *Todo Application Page*
@@ -523,29 +523,28 @@ Check : https://jmeter.apache.org/usermanual/best-practices.html
  
 ### Designing the Load Testing Plan
  
-The first step in design a lod testing plan is to understand the performance goal/target opf the system under test from business perspectives.
+The first step in design a load testing plan is to understand the performance goal/target of the system under test from business perspectives.
  
 For our Todo application, we have the following performance requirements that the application must meet.
  
 1. **Throughput**: must be able to process minimum 1000 transactions/sec
-2. **Error rate**: 0.06% error rate, which means the application must perform at a minimum of 99.96%
-3. **Boot-up time**: relatively fast boot time <= 40sec. This is neccessary in case there is a need for scaling.
+2. **Error rate**: 0.06% error rate, which means the application must perform at a minimum of 99.94%
+3. **Boot-up time**: relatively fast boot time <= 40sec. This is neccessary in case there is need for scaling.
 4. **Concurrent users**: handle up to 2000 users or requests/sec
-5. **Peak Period Users**: handle up to 4000 users or requests/sec within 1 min windows
-6. **Black Friday Peak Period User**: handle up to 6000 users or requests/sec within 3 min windows
+5. **Peak/Black Friday Period Users**: handle up to 4000 users or requests/sec within 1 min windows
  
 One of the ways of setting up your test script is using the Test Script Recorder. See the [step-by-step guide](https://jmeter.apache.org/usermanual/jmeter_proxy_step_by_step.html) for more information.
  
 Once you have the test scripts that mimicks the type of user interaction you would like to perform, next is to configure the [Thread Group](https://jmeter.apache.org/usermanual/component_reference.html#Thread_Group) which defines a pool of virtual users that will execute the test case against the system. See the [Elements of a Test Plan]( https://jmeter.apache.org/usermanual/test_plan.html) for more information.
  
-We have designed three test scripts to execute on the Todo application:
+We have designed three test scripts to execute the Todo application:
  
 1. **Normal Load** - at any given point in time, there will be 2000 concurrent users on the system per sec. For this workshop’s purpose, we will run the normal load for 1 hour and then monitor the performance and our configuration’s ability to handle such requests.
  
 ![Normal Load Test Script](images/normal_load.png)
 *Normal Load Test Script*
  
-2. **Peak Load** - For a peak load, we expect 4000 additional concurrent users to be on the system for several cycles within a second for a total of 1 minute. This is in addition to the 2000 concurrent users on the system per sec in a normal load, making a total of 6000 concurrent users/sec.
+2. **Peak/Black Friday Load** - For a peak load, we expect 4000 additional concurrent users to be on the system for several cycles within a second for a total of 1 minute. This is in addition to the 2000 concurrent users on the system per sec in a normal load, making a total of 6000 concurrent users/sec.
  
 ![Peak Load Test Script](images/peak_load.png)
 *Peak Load Test Script*
@@ -628,10 +627,10 @@ The solution to this is to bump up the CPU resources required to give it enough 
 ...
 resources:
  limits:
-   memory: "512Mi"
+   memory: "768Mi"
    cpu: "240m" 
  requests:
-   memory: "128Mi"
+   memory: "512Mi"
    cpu: "200m"
 ...
 ```
@@ -641,7 +640,7 @@ With a CPU resource request of 200m and 240m (20% of request value) limit, the s
 ![Failed Startup Probe](images/startup_notokay.png)
 *Startup not up to Target*
  
-We need to play around with the request and limit (20% of request) to ahieve that target. 
+We need to play around with the request and limit (20% of request) to achieve that target. 
  
 ```yaml
 ...
@@ -687,10 +686,10 @@ For a Bustable configuration:
 ...
 resources:
  limits:
-   memory: "512Mi"
+   memory: "768Mi"
    cpu: "480m" 
  requests:
-   memory: "128Mi"
+   memory: "512Mi"
    cpu: "400m"
 ...
 ```
@@ -700,10 +699,10 @@ For a Guranteed configuration:
 ...
 resources:
  limits:
-   memory: "512Mi"
+   memory: "768Mi"
    cpu: "480m" 
  requests:
-   memory: "512Mi"
+   memory: "768Mi"
    cpu: "480m"
 ...
 ```
@@ -722,11 +721,11 @@ Table 2 above show that 3 pod replicas are required to meet our performance targ
 | # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-:| :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1 |   692m         |   768Mi         |     1     |     587.20     |     0      |         692m       |           768Mi       |
-|*2*|   **692m**     |   **768Mi**     |   **2**   | **1,059.88**   |   **0**    |       **1,384m**   |         **1536Mi**   |
+|*2*|   **692m**     |   **768Mi**     |   **2**   | **1,059.88**   |   **0**    |        **1384m**   |         **1536Mi**   |
  
 *Table 3*
  
-With Table 3 above, we see that 2 pod replicas are required to meet our performance target with memory limits of 512Mi and 692m of CPU limit, which is 20% CPU resource increase over the configuration we have in table 2. If we are to request a quota based on this, we would require 1.3 cores of CPU and 1Gi of memory in the namespace.
+With Table 3 above, we see that 2 pod replicas are required to meet our performance target with memory limits of 768Mi and 692m of CPU limit, which is 20% CPU resource increase over the configuration we have in table 2. If we are to request a quota based on this, we would require 1384m of CPU and 1536Mi of memory in the namespace.
  
 If we reduce the memory by 20% to optimize the resources, the application gets killed. This indicates that the memory requirement set for the application is optimal since it can sustain the normal load, but the pods get killed once reduced by 20% of the current value.
  
@@ -734,13 +733,13 @@ If we reduce the memory by 20% to optimize the resources, the application gets k
 | # | max CPU/Pod    | max Memory/Pod  | # of Pods | Throughput(tps)| % in error |Resource Quota (CPU)|Resource Quota (Memory)|
 |:-:| :------------: | :-------------: | :-------: |:-------------: |:---------: | :----------------: | :-------------------: |
 | 1 |   830m         |   768Mi         |     1     |     858.01     |     0      |         830m       |           768Mi       |
-| 2 |   830m         |   768Mi         |     2     |   1,356.94     |  0.06      |       1,660m       |          1536Mi       |
+| 2 |   830m         |   768Mi         |     2     |   1,356.94     |  0.09      |       1,660m       |          1536Mi       |
  
 *Table 4*
  
-Lastly, Table 4 indicates further increase of the cpu by 20% improved the throughput but our error rate increase above the allowed threshold.
+Lastly, Table 4 indicates further increase of the cpu by 20% improved the throughput but our error rate increased above the allowed threshold.
  
-> So, the optimal configuration for the performance target is the values we have in table 3 which is memory limits of 512Mi and 692m of cpu limit with 2 pod replicas.
+> So, the optimal configuration for the performance target is the what we have in table 3 which is memory limits of 768Mi and 692m of cpu limit with 2 pod replicas.
  
 #### Step 3: Determine the resource requirement for a Peak load.
  
@@ -753,15 +752,15 @@ Starting with the optimal resource requirement for a normal workload, let's put 
  
 *Table 5*
  
-![CPU at Peak](images/cpu_peak.png)
+<!-- ![CPU at Peak](images/cpu_peak.png)
 *CPU at Peak*
  
 ![Memory at Peak](images/memory_peak.png)
-*Memory at Peak*
+*Memory at Peak* -->
  
 #### Step 4: Calculate the Resource Quota for the application namespace.
  
-For the To-do application, based on the normal and peak "Black Friday" workloads, Table 5 indicates the number of resources required to run the application successfully.
+Based on the normal and peak "Black Friday" workloads, Table 5 indicates the number of resources required to run the application successfully.
  
 |    Application   |# of Pods|mem. req/pod|mem. lim/Pod|Total mem req|Total mem lim|CPU req/Pod|CPU lim/Pod|Total CPU req |Total CPU lim |
 | :--------------  |:-------:|:----------:|:----------:|:-----------:|:-----------:|:--------: |:--------: |:-----------: |:-----------: |
@@ -793,7 +792,7 @@ spec:
  
 ### Conclusion
  
-Estimating the resources an application need is very challenging. It takes time and effort; hence the process is more of an art than science. You’ll first want to identify a good starting point for the application, aiming for a good balance of CPU and memory. After you’ve decided on a suitable resource size for the application, you will also need to set up a process where you can constantly monitor the application's resource actual usage over a period of time. Openshift/Kubernetes provides objects and concepts such as Limit Ranges, ResourceQuota, Request and Limits to aid in the process.
+Estimating the resources an application need is very challenging. It takes time and effort; hence the process is more of an art than science. You’ll first want to identify a good starting point, aiming for a good balance of CPU and memory. After you’ve decided on a suitable resource size for the application, you will also need to set up a process where you can constantly monitor the application's resource actual usage over a period of time. The Deploying Vertical Pod Autoscaler along with other monitoring tools such as Openshift Moniotirng console, can help with this.
  
-To estimate the resources an application needs, you need to start by first determining the performance target of the application, profile and tune the application, perform load testing to simulate the normal and peak loads, monitor the application over a period of time, and then review the estimated and actual resource usage.
+In summary, to estimate the resources an application needs, you need to start by first determining the performance target of the application, profile and tune the application, perform load testing to simulate the normal and peak loads, monitor the application over a period of time, and then review the estimated and actual resource usage. 
 
