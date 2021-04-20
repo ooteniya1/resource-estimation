@@ -288,9 +288,9 @@ We will use a script to set up the environment. You will need the following tool
  
 - [Helm](https://helm.sh/docs/intro/install/) : `helm` version
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) : `git` version
-- [oc](https://docs.openshift.com/container-platform/4.5/cli_reference/openshift_cli/getting-started-cli.html) : `oc` version
-- [kustomize](https://kubernetes-sigs.github.io/kustomize/installation/) v3.1.0 or higher: `customize` version
-- [tkn](https://github.com/tektoncd/cli) (optional Tekton CLI): `tkn` version
+- [oc](https://docs.openshift.com/container-platform/4.5/cli_reference/openshift_cli/getting-started-cli.html) : `oc` version [download](https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.7.7/)
+<!-- - [kustomize](https://kubernetes-sigs.github.io/kustomize/installation/) v3.1.0 or higher: `customize` version -->
+- [tkn](https://github.com/tektoncd/cli) (optional Tekton CLI): `tkn` version [download Red Hat Build](https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/0.15.0/)
 - envsubst (gettext): `envsubst` --help
  
 To get started, clone or fork the source code repository:
