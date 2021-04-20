@@ -28,14 +28,16 @@ Table of Contents
             * [Apply a VPA custome resource to monitor the application's resource usage](#apply-a-vpa-custome-resource-to-monitor-the-applications-resource-usage)
             * [Record Test Plans using Apache JMeter](#record-test-plans-using-apache-jmeter)
          * [Designing the Load Testing Plan](#designing-the-load-testing-plan)
-         * [Test Script Execution, Performance and Resource Monitoring](#test-script-execution-performance-and-resource-monitoring)
+         * [Test Script Execution, Performance, and Resource Monitoring](#test-script-execution-performance-and-resource-monitoring)
             * [Step 1: Determine the right resources to achieve the required startup time](#step-1-determine-the-right-resources-to-achieve-the-required-startup-time)
             * [Step 2: Determine the resource requirement for a normal load.](#step-2-determine-the-resource-requirement-for-a-normal-load)
                * [With CPU request of 400m and limit of 480m.](#with-cpu-request-of-400m-and-limit-of-480m)
                * [With CPU request of 480m and limit of 576m i.e 20% increase.](#with-cpu-request-of-480m-and-limit-of-576m-ie-20-increase)
                * [With CPU request of 576m and limit of 692m i.e 20% increase.](#with-cpu-request-of-576m-and-limit-of-692m-ie-20-increase)
-      * [Normal load CLI command](#normal-load-cli-command)
-      * [Peak load CLI command](#peak-load-cli-command)
+               * [With CPU request of 692m and limit of 830m i.e 20% increase.](#with-cpu-request-of-692m-and-limit-of-830m-ie-20-increase)
+            * [Step 3: Determine the resource requirement for a Peak load.](#step-3-determine-the-resource-requirement-for-a-peak-load)
+            * [Step 4: Calculate the Resource Quota for the application namespace.](#step-4-calculate-the-resource-quota-for-the-application-namespace)
+         * [Conclusion](#conclusion-1)
 
 # Cloud-Native Application Resource Estimation - Part 1: Concepts
 As a developer or an Architect, one of the first decisions you need to make when deploying an application to the cloud (whether public, private or on-prem) is to determine how much memory and CPU resources the application needs. More often, teams get their applications to production before realizing the resources the application needs are either under or over estimated, which often leads to fire fighting in the production environment. Most of the operational challenges faced in production are because this process is often overlooked.
