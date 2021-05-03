@@ -5,9 +5,6 @@ metadata:
   name: build-app
 spec:
   stepTemplate:
-    securityContext:
-      runAsUser: 0
-      privileged: true
     volumeMounts:
       - name: varlibc
         mountPath: /var/lib/containers
@@ -56,37 +53,26 @@ spec:
         - name: user.home
           value: /home/tekton
     - name: build-image
-      image: quay.io/buildah/stable
+      #image: quay.io/buildah/stable:latest
+      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
       workingDir: "/workspace/source/$(inputs.params.contextDir)"
-      command:
-        - "buildah"
-      args:
-        - "bud"
-        - "--layers"
-        - "-f"
-        - "$(inputs.params.dockerFile)"
-        - "-t"
-        - "$(outputs.resources.builtImage.url):$(inputs.params.imageTag)"
-        - "."
-      securityContext:
-        privileged: true
-        runAsUser: 0
+      resources: {}
+      script: |
+        buildah --storage-driver=vfs bud \
+          --layers --format=docker \
+          -f $(inputs.params.dockerFile) -t $(outputs.resources.builtImage.url):$(inputs.params.imageTag) .
       volumeMounts:
         - name: varlibc
           mountPath: /var/lib/containers
     - name: push-image
-      image: quay.io/buildah/stable
+      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
       workingDir: "/workspace/source/$(inputs.params.contextDir)"
-      command:
-        - "buildah"
-      args:
-        - "push"
-        - "--tls-verify=$(inputs.params.tlsVerify)"
-        - $(outputs.resources.builtImage.url):$(inputs.params.imageTag)
-        - "docker://$(outputs.resources.builtImage.url):$(inputs.params.imageTag)"
-      securityContext:
-        runAsUser: 0
-        privileged: true
+      resources: {}
+      script: |
+        buildah --storage-driver=vfs push \
+          --tls-verify=$(inputs.params.tlsVerify) \
+          --digestfile $(workspaces.source.path)/image-digest $(outputs.resources.builtImage.url):$(inputs.params.imageTag) \
+          docker://$(outputs.resources.builtImage.url):$(inputs.params.imageTag)
       volumeMounts:
         - name: varlibc
           mountPath: /var/lib/containers
